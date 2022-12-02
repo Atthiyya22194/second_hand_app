@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/product_response.dart';
+import '../pages/product_detail/product_detail_page.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductResponse product;
@@ -24,6 +25,12 @@ class ProductCard extends StatelessWidget {
           product.name,
         ),
         subtitle: Text(product.basePrice.toString()),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailpage(id: product.id.toString()),
+          ),
+        ),
       ),
     );
   }
