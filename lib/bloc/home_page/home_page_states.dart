@@ -2,8 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:second_hand_app/models/product_response.dart';
 
-import '../../models/product_detail_response.dart';
-
 @immutable
 abstract class HomePageState extends Equatable {}
 
