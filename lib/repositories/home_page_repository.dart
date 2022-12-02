@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:second_hand_app/models/product_response.dart';
 
 import '../common/common.dart';
-import '../models/product_detail_response.dart';
 
 class HomePageRepository {
   Future<List<ProductResponse>> getProducts() async {
@@ -16,8 +15,6 @@ class HomePageRepository {
 
     final response = await http.get(Uri.parse('${baseUrl()}buyer/product')
         .replace(queryParameters: queryParameters));
-    print("response : ${response.body}");
-    print("url : ${baseUrl()}buyer/product");
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);
       return result.map((e) => ProductResponse.fromJson(e)).toList();
