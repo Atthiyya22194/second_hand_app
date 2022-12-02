@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/models/product_response.dart';
+import 'package:second_hand_app/models/product_detail_response.dart';
 
 import '../../bloc/product_detail/product_detail_page_bloc.dart';
 import '../../bloc/product_detail/product_detail_page_events.dart';
@@ -31,7 +31,7 @@ class ProductDetailpage extends StatelessWidget {
             }
 
             if (state is ProductDetailPageLoadedState) {
-              ProductResponse product = state.products;
+              final ProductDetailResponse product = state.products;
               return Content(
                 product: product,
               );
@@ -50,7 +50,7 @@ class ProductDetailpage extends StatelessWidget {
 }
 
 class Content extends StatelessWidget {
-  final ProductResponse product;
+  final ProductDetailResponse product;
   const Content({super.key, required this.product});
 
   @override
@@ -97,7 +97,7 @@ class Content extends StatelessWidget {
 }
 
 class ImageLoader extends StatelessWidget {
-  final ProductResponse product;
+  final ProductDetailResponse product;
   const ImageLoader({super.key, required this.product});
 
   @override
@@ -116,3 +116,4 @@ class ImageLoader extends StatelessWidget {
     );
   }
 }
+

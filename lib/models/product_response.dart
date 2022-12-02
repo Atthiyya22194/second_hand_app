@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-List<ProductResponse> productModelFromJson(String str) =>
+List<ProductResponse> productResponseFromJson(String str) =>
     List<ProductResponse>.from(
         json.decode(str).map((x) => ProductResponse.fromJson(x)));
 
-String productModelToJson(List<ProductResponse> data) =>
+String productResponseToJson(List<ProductResponse> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ProductResponse {
@@ -17,11 +17,10 @@ class ProductResponse {
       required this.imageName,
       required this.location,
       required this.userId,
-      this.status,
+      required this.status,
       required this.createdAt,
       required this.updatedAt,
-      required this.categories,
-      this.user});
+      required this.categories});
 
   int id;
   String name;
@@ -31,11 +30,10 @@ class ProductResponse {
   String imageName;
   String location;
   int userId;
-  String? status;
+  String status;
   DateTime createdAt;
   DateTime updatedAt;
   List<Category> categories;
-  User? user;
 
   factory ProductResponse.fromJson(Map<String, dynamic> json) =>
       ProductResponse(
@@ -51,8 +49,7 @@ class ProductResponse {
           createdAt: DateTime.parse(json["createdAt"]),
           updatedAt: DateTime.parse(json["updatedAt"]),
           categories: List<Category>.from(
-              json["Categories"].map((x) => Category.fromJson(x))),
-          user: User.fromJson(json["User"]));
+              json["Categories"].map((x) => Category.fromJson(x))));
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -67,7 +64,6 @@ class ProductResponse {
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "Categories": List<dynamic>.from(categories.map((x) => x.toJson())),
-        "User": user?.toJson(),
       };
 }
 
@@ -88,45 +84,5 @@ class Category {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-      };
-}
-
-class User {
-  User({
-    required this.id,
-    required this.fullName,
-    required this.email,
-    required this.phoneNumber,
-    required this.address,
-    required this.imageUrl,
-    required this.city,
-  });
-
-  int id;
-  String fullName;
-  String email;
-  String phoneNumber;
-  String address;
-  String imageUrl;
-  String city;
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json["id"],
-        fullName: json["full_name"],
-        email: json["email"],
-        phoneNumber: json["phone_number"],
-        address: json["address"],
-        imageUrl: json["image_url"],
-        city: json["city"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "full_name": fullName,
-        "email": email,
-        "phone_number": phoneNumber,
-        "address": address,
-        "image_url": imageUrl,
-        "city": city,
       };
 }
