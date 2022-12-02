@@ -21,7 +21,7 @@ class ProductDetailResponse {
     required this.createdAt,
     required this.updatedAt,
     required this.categories,
-    required this.user,
+     this.user,
   });
 
   int id;
@@ -36,7 +36,7 @@ class ProductDetailResponse {
   DateTime createdAt;
   DateTime updatedAt;
   List<Category> categories;
-  User user;
+  User? user;
 
   factory ProductDetailResponse.fromJson(Map<String, dynamic> json) =>
       ProductDetailResponse(
@@ -69,7 +69,7 @@ class ProductDetailResponse {
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "Categories": List<dynamic>.from(categories.map((x) => x.toJson())),
-        "User": user.toJson(),
+        "User": user?.toJson(),
       };
 }
 
