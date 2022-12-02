@@ -14,7 +14,7 @@ class ProductResponse {
         required this.imageName,
         required this.location,
         required this.userId,
-        required this.status,
+        this.status,
         required this.createdAt,
         required this.updatedAt,
         required this.categories,
@@ -28,7 +28,7 @@ class ProductResponse {
     String imageName;
     String location;
     int userId;
-    String status;
+    String? status;
     DateTime createdAt;
     DateTime updatedAt;
     List<Category> categories;
