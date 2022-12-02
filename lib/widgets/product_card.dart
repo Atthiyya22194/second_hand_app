@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../models/product_response.dart';
 
@@ -25,14 +24,6 @@ class ProductCard extends StatelessWidget {
           product.name,
         ),
         subtitle: Text(product.basePrice.toString()),
-        // onTap: () => Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => ProductDetailpage(
-        //       id: product.id.toString(),
-        //     ),
-        //   ),
-        // ),
       ),
     );
   }
