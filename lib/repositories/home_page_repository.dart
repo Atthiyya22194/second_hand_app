@@ -6,10 +6,10 @@ import '../models/product_response.dart';
 
 class HomePageRepository {
   static const String _baseUrl =
-      'https://market-final-project.herokuapp.com/buyer/product';
+      'https://market-final-project.herokuapp.com/';
 
   Future<List<ProductResponse>> getProducts() async {
-    final response = await http.get(Uri.parse(_baseUrl));
+    final response = await http.get(Uri.parse('${_baseUrl}buyer/product'));
 
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);
