@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:second_hand_app/models/login_response.dart';
+
+import '../../models/login_response.dart';
 
 abstract class LoginState extends Equatable {}
 

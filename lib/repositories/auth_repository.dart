@@ -20,4 +20,30 @@ class AuthRepository {
       throw Exception(error['message']);
     }
   }
+
+  Future<String> register(
+      {required String fullName,
+      required String email,
+      required String password,
+      required String phoneNumber,
+      required String address,
+      required String city}) async {
+    final body = {
+      'full_name': fullName,
+      'email': email,
+      'password': password,
+      'phone_number': phoneNumber,
+      'address': address,
+      'city': city
+    };
+
+    final response =
+        await http.post(Uri.parse('${baseUrl()}auth/register'), body: body);
+    if (response.statusCode == 201) {
+      return 'Register Success';
+    } else {
+      final error = json.decode(response.body);
+      throw Exception(error['message']);
+    }
+  }
 }
