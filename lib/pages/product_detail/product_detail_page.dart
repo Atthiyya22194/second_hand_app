@@ -2,11 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_app/models/product_detail_response.dart';
+import 'package:second_hand_app/repositories/home_page_repository.dart';
 
 import '../../bloc/product_detail/product_detail_page_bloc.dart';
 import '../../bloc/product_detail/product_detail_page_events.dart';
 import '../../bloc/product_detail/product_detail_page_states.dart';
-import '../../repositories/product_detail_page_repository.dart';
 
 class ProductDetailpage extends StatelessWidget {
   final String id;
@@ -18,7 +18,7 @@ class ProductDetailpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductDetailBloc(ProductDetailPageRepository(), id)
+      create: (context) => ProductDetailBloc(MarketRepository(), id)
         ..add(LoadProductDetailPageEvent()),
       child: Scaffold(
         appBar: AppBar(

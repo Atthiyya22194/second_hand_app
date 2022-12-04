@@ -5,7 +5,7 @@ import 'home_page_events.dart';
 import 'home_page_states.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
-  final HomePageRepository _repository;
+  final MarketRepository _repository;
 
   HomePageBloc(this._repository) : super(HomePageLoadingState()) {
     on<LoadHomePageEvent>((event, emit) async {
