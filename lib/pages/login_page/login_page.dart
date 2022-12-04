@@ -13,29 +13,26 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: BlocBuilder<LoginBloc, LoginState>(
-          builder: ((context, state) {
-            if (state is LoginInitState) {
-              return const LoginForm();
-            }
-            if (state is LoginLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is LoginSuccessState) {
-              return const BottomNavBar();
-            }
-            if (state is LoginErrorState) {
-              return LoginForm(
-                errorMessage: state.error,
-              );
-            }
-            return Container();
-          }),
-        ),
+      body: BlocBuilder<LoginBloc, LoginState>(
+        builder: ((context, state) {
+          if (state is LoginInitState) {
+            return const LoginForm();
+          }
+          if (state is LoginLoadingState) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state is LoginSuccessState) {
+            return const BottomNavBar();
+          }
+          if (state is LoginErrorState) {
+            return LoginForm(
+              errorMessage: state.error,
+            );
+          }
+          return Container();
+        }),
       ),
     );
   }
