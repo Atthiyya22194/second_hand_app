@@ -45,6 +45,9 @@ dependencies:
   # Use for load image
   cached_network_image: ^3.2.1
 
+  # Use for bottom navigation bar
+  persistent_bottom_nav_bar: ^5.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
