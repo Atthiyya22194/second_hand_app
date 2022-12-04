@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:second_hand_app/bloc/login/login_bloc.dart';
 import 'package:second_hand_app/pages/home_page/home_page.dart';
+import 'package:second_hand_app/pages/login_page/login_page.dart';
 import 'package:second_hand_app/pages/notification/notification_page.dart';
 import 'package:second_hand_app/pages/profile_page/profile_page.dart';
 import 'package:second_hand_app/pages/sell_product_page/sell_product_page.dart';
+import 'package:second_hand_app/repositories/auth_repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +24,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const BottomNavBar(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<LoginBloc>(
+              create: (context) => LoginBloc(authRepository: AuthRepository()))
+        ],
+        child: const LoginPage(),
+      ),
     );
   }
 }
