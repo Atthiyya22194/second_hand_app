@@ -28,7 +28,7 @@ class LoginPage extends StatelessWidget {
             } else {
               return const LoginForm();
             }
-            ;
+            
           }
           if (state is LoginLoadingState) {
             return const Center(
