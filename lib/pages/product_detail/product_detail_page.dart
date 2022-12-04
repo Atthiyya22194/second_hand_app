@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_app/models/product_detail_response.dart';
-import 'package:second_hand_app/repositories/home_page_repository.dart';
+import 'package:second_hand_app/repositories/market_repository.dart';
 
 import '../../bloc/product_detail/product_detail_page_bloc.dart';
 import '../../bloc/product_detail/product_detail_page_events.dart';

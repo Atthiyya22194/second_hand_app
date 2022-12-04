@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../repositories/home_page_repository.dart';
+import '../../repositories/market_repository.dart';
 import 'home_page_events.dart';
 import 'home_page_states.dart';
 
