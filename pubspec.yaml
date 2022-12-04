@@ -48,6 +48,9 @@ dependencies:
   # Use for bottom navigation bar
   persistent_bottom_nav_bar: ^5.0.2
 
+  # Use for save access token locally
+  shared_preferences: ^2.0.15
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
