@@ -4,8 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_app/bloc/login/login_bloc.dart';
 import 'package:second_hand_app/bloc/login/login_events.dart';
 import 'package:second_hand_app/widgets/bottom_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../bloc/login/login_states.dart';
+
+accessToken() async {
+  final prefs = await SharedPreferences.getInstance();
+  final accessToken = prefs.getString('accessToken');
+  return accessToken;
+}
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -16,7 +23,12 @@ class LoginPage extends StatelessWidget {
       body: BlocBuilder<LoginBloc, LoginState>(
         builder: ((context, state) {
           if (state is LoginInitState) {
-            return const LoginForm();
+            if (accessToken() != null) {
+              return const BottomNavBar();
+            } else {
+              return const LoginForm();
+            }
+            ;
           }
           if (state is LoginLoadingState) {
             return const Center(
@@ -31,6 +43,7 @@ class LoginPage extends StatelessWidget {
               errorMessage: state.error,
             );
           }
+
           return Container();
         }),
       ),

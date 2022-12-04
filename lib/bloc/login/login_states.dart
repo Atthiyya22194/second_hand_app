@@ -15,16 +15,16 @@ class LoginLoadingState extends LoginState {
 
 class LoginSuccessState extends LoginState {
   LoginSuccessState(this._loginResponse);
-
   final LoginResponse _loginResponse;
+
   @override
   List<Object?> get props => [_loginResponse];
 }
 
 class LoginErrorState extends LoginState {
   LoginErrorState(this.error);
-
   final String error;
+
   @override
   List<Object?> get props => [error];
 }

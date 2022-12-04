@@ -25,8 +25,7 @@ class ProductCard extends StatelessWidget {
           product.name,
         ),
         subtitle: Text(product.basePrice.toString()),
-        onTap: () => Navigator.push(
-          context,
+        onTap: () => Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
             builder: (context) => ProductDetailpage(id: product.id.toString()),
           ),

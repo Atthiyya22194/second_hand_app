@@ -25,13 +25,17 @@ class HomePage extends StatelessWidget {
         body: BlocBuilder<HomePageBloc, HomePageState>(
           builder: (context, state) {
             if (state is HomePageLoadingState) {
-              return Center(
-                child: Column(
-                  children: const [
-                    CircularProgressIndicator(),
-                    Text('Loading...'),
-                  ],
-                ),
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      CircularProgressIndicator(),
+                      Text('Loading...'),
+                    ],
+                  ),
+                ],
               );
             }
 
