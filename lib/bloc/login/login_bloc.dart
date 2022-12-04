@@ -11,7 +11,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<Login>((event, emit) async {
       emit(LoginLoadingState());
       try {
-        final result = await authRepository.getProducts(
+        final result = await authRepository.login(
             email: event.email, password: event.password);
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('accessToken', result.accessToken);

@@ -6,7 +6,7 @@ import 'package:second_hand_app/models/login_response.dart';
 import '../common/common.dart';
 
 class AuthRepository {
-  Future<LoginResponse> getProducts(
+  Future<LoginResponse> login(
       {required String email, required String password}) async {
     final body = {'email': email, 'password': password};
 
