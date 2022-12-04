@@ -3,6 +3,11 @@ import 'package:second_hand_app/models/login_response.dart';
 
 abstract class LoginState extends Equatable {}
 
+class LoginInitState extends LoginState {
+  @override
+  List<Object?> get props => [];
+}
+
 class LoginLoadingState extends LoginState {
   @override
   List<Object?> get props => [];

@@ -6,7 +6,7 @@ import 'package:second_hand_app/repositories/auth_repository.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository authRepository;
 
-  LoginBloc({required this.authRepository}) : super(LoginLoadingState()) {
+  LoginBloc({required this.authRepository}) : super(LoginInitState()) {
     on<Login>((event, emit) async {
       emit(LoginLoadingState());
       try {
