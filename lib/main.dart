@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/bloc/login/login_bloc.dart';
 import 'package:second_hand_app/pages/login_page/login_page.dart';
-import 'package:second_hand_app/repositories/auth_repository.dart';
+import 'package:second_hand_app/widgets/bottom_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final accessToken = prefs.getString('accessToken');
+  print(accessToken);
+  runApp(MyApp(accessToken: accessToken));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final String? accessToken;
+  const MyApp({Key? key, this.accessToken}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +22,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider<LoginBloc>(
-              create: (context) => LoginBloc(authRepository: AuthRepository()))
-        ],
-        child: const LoginPage(),
-      ),
+      home: _sessionCheck(accessToken),
     );
+  }
+}
+
+_sessionCheck(String? accessToken) {
+  if (accessToken != null) {
+    return const BottomNavBar();
+  } else {
+    return const LoginPage();
   }
 }
