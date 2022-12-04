@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_app/bloc/login/login_bloc.dart';
 import 'package:second_hand_app/bloc/login/login_events.dart';
-import 'package:second_hand_app/pages/home_page/home_page.dart';
-import 'package:second_hand_app/repositories/auth_repository.dart';
 import 'package:second_hand_app/widgets/bottom_nav_bar.dart';
 
 import '../../bloc/login/login_states.dart';
