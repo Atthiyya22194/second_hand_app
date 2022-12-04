@@ -22,9 +22,6 @@ class HomePage extends StatelessWidget {
           LoadHomePageEvent(),
         ),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Second Hand'),
-        ),
         body: BlocBuilder<HomePageBloc, HomePageState>(
           builder: (context, state) {
             if (state is HomePageLoadingState) {
