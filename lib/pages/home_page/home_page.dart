@@ -1,6 +1,9 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_app/models/product_response.dart';
+import 'package:second_hand_app/widgets/show_loading.dart';
+import 'package:second_hand_app/widgets/show_snack_bar.dart';
 
 import '../../bloc/home_page/home_page_bloc.dart';
 import '../../bloc/home_page/home_page_events.dart';
@@ -21,45 +24,61 @@ class HomePage extends StatelessWidget {
       )..add(
           LoadHomePageEvent(),
         ),
-      child: BlocBuilder<HomePageBloc, HomePageState>(
-        builder: (context, state) {
-          if (state is HomePageLoadingState) {
+      child: Scaffold(
+        body: BlocConsumer<HomePageBloc, HomePageState>(
+          builder: (context, state) {
+            if (state is HomePageLoadingState) {
+              return const ShowLoading();
+            }
+
+            if (state is HomePageLoadedState) {
+              List<ProductResponse> data = state.products;
+              return HomePageContent(data: data);
+            }
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    CircularProgressIndicator(),
-                    Text('Loading...'),
+                    Text('Something went wrong...'),
                   ],
                 ),
               ],
             );
-          }
-
-          if (state is HomePageLoadedState) {
-            List<ProductResponse> data = state.products;
-            return ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (_, index) {
-                final product = data[index];
-                return ProductCard(product: product);
-              },
-            );
-          }
-
-          if (state is HomePageErrorState) {
-            return Center(
-              child: Text(state.error),
-            );
-          }
-
-          return const Center(
-            child: Text('List is empty'),
-          );
-        },
+          },
+          listener: (context, state) {
+            if (state is HomePageErrorState) {
+              showSnackBar(context, 'Something went wrong', state.error,
+                  ContentType.failure);
+            }
+          },
+        ),
       ),
+    );
+  }
+}
+
+class HomePageContent extends StatelessWidget {
+  final List<ProductResponse> data;
+  const HomePageContent({super.key, required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (_, index) {
+              final product = data[index];
+              return ProductCard(product: product);
+            },
+          ),
+        )
+      ],
     );
   }
 }

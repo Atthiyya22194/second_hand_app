@@ -1,6 +1,9 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:second_hand_app/pages/login_page/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../widgets/show_snack_bar.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -26,8 +29,11 @@ class ProfilePage extends StatelessWidget {
 _logout(dynamic context) async {
   final prefs = await SharedPreferences.getInstance();
   prefs.remove('accessToken');
-  Navigator.pushReplacement(
-    context,
+
+  showSnackBar(context, "Successfully Logout!", "You have Successfully logout",
+      ContentType.success);
+
+  Navigator.of(context, rootNavigator: true).push(
     MaterialPageRoute(
       builder: (context) => const LoginPage(),
     ),

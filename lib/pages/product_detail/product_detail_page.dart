@@ -1,12 +1,15 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_app/models/product_detail_response.dart';
 import 'package:second_hand_app/repositories/market_repository.dart';
+import 'package:second_hand_app/widgets/show_loading.dart';
 
 import '../../bloc/product_detail/product_detail_page_bloc.dart';
 import '../../bloc/product_detail/product_detail_page_events.dart';
 import '../../bloc/product_detail/product_detail_page_states.dart';
+import '../../widgets/show_snack_bar.dart';
 
 class ProductDetailpage extends StatelessWidget {
   final String id;
@@ -24,10 +27,10 @@ class ProductDetailpage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Detail'),
         ),
-        body: BlocBuilder<ProductDetailBloc, ProductDetailPageState>(
+        body: BlocConsumer<ProductDetailBloc, ProductDetailPageState>(
           builder: (context, state) {
             if (state is ProductDetailPageLoadingState) {
-              return const Center(child: CircularProgressIndicator());
+              return const ShowLoading();
             }
 
             if (state is ProductDetailPageLoadedState) {
@@ -36,12 +39,23 @@ class ProductDetailpage extends StatelessWidget {
                 product: product,
               );
             }
-
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text('Something went wrong...'),
+                  ],
+                ),
+              ],
+            );
+          },
+          listener: (context, state) {
             if (state is ProductDetailPageErrorState) {
-              return Center(child: Text(state.error));
+              showSnackBar(context, 'Something went wrong', state.error,
+                  ContentType.failure);
             }
-
-            return const Center(child: Text('List is empty'));
           },
         ),
       ),
@@ -83,7 +97,6 @@ class Content extends StatelessWidget {
             children: [const Text('Description'), Text(product.description)],
           ),
         ),
-
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
           child: ElevatedButton(
@@ -116,4 +129,3 @@ class ImageLoader extends StatelessWidget {
     );
   }
 }
-

@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,44 +6,71 @@ import 'package:second_hand_app/bloc/login/login_bloc.dart';
 import 'package:second_hand_app/bloc/login/login_events.dart';
 import 'package:second_hand_app/pages/register_page/register_page.dart';
 import 'package:second_hand_app/widgets/bottom_nav_bar.dart';
+import 'package:second_hand_app/widgets/show_loading.dart';
+import 'package:second_hand_app/widgets/show_snack_bar.dart';
 
 import '../../bloc/login/login_states.dart';
 import '../../repositories/auth_repository.dart';
-
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<LoginBloc>(
-      create: (context) => LoginBloc(authRepository: AuthRepository()),
+    return BlocProvider(
+      create: (_) => LoginBloc(authRepository: AuthRepository()),
       child: Scaffold(
-        body: BlocBuilder<LoginBloc, LoginState>(
-          builder: ((context, state) {
-            if (state is LoginInitState) {
-              return const LoginForm();
-            }
+        body: BlocConsumer<LoginBloc, LoginState>(
+          builder: (context, state) {
             if (state is LoginLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const ShowLoading();
             }
+            return const LoginForm();
+          },
+          listener: (context, state) {
             if (state is LoginSuccessState) {
-              return const BottomNavBar();
+              Navigator.of(context, rootNavigator: true).push(
+                MaterialPageRoute(builder: (context) => const BottomNavBar()),
+              );
             }
             if (state is LoginErrorState) {
-              return LoginForm(
-                errorMessage: state.error,
-              );
+              showSnackBar(
+                  context, "Login Failed!", state.error, ContentType.failure);
             }
-
-            return Container();
-          }),
+          },
         ),
       ),
     );
   }
 }
+
+// BlocProvider<LoginBloc>(
+//       create: (context) => LoginBloc(authRepository: AuthRepository()),
+//       child: Scaffold(
+//         body: BlocBuilder<LoginBloc, LoginState>(
+//           builder: ((context, state) {
+//             if (state is LoginInitState) {
+//               return const LoginForm();
+//             }
+//             if (state is LoginLoadingState) {
+//               return const Center(
+//                 child: CircularProgressIndicator(),
+//               );
+//             }
+//             if (state is LoginSuccessState) {
+//               // showSnackBar(context, "Successfullt Login!", "You have Successfully login", ContentType.success);
+//               return const BottomNavBar();
+//             }
+//             if (state is LoginErrorState) {
+//               return LoginForm(
+//                 errorMessage: state.error,
+//               );
+//             }
+
+//             return Container();
+//           }),
+//         ),
+//       ),
+//     );
 
 class LoginForm extends StatelessWidget {
   final String? errorMessage;

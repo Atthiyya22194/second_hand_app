@@ -1,12 +1,15 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_app/pages/login_page/login_page.dart';
+import 'package:second_hand_app/widgets/show_loading.dart';
 
 import '../../bloc/register/register_bloc.dart';
 import '../../bloc/register/register_events.dart';
 import '../../bloc/register/register_states.dart';
 import '../../repositories/auth_repository.dart';
+import '../../widgets/show_snack_bar.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -15,31 +18,28 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<RegisterBloc>(
       create: (context) => RegisterBloc(authRepository: AuthRepository()),
-      child: Center(
-        child: Scaffold(
-          body: BlocBuilder<RegisterBloc, RegisterState>(
-            builder: ((context, state) {
-              if (state is RegisterInitState) {
-                {
-                  return const RegisterForm();
-                }
-              }
-              if (state is RegisterLoadingState) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (state is RegisterSuccessState) {
-                return const LoginPage();
-              }
-              if (state is RegisterErrorState) {
-                return RegisterForm(
-                  errorMessage: state.error,
-                );
-              }
-              return Container();
-            }),
-          ),
+      child: Scaffold(
+        body: BlocConsumer<RegisterBloc, RegisterState>(
+          builder: (context, state) {
+            if (state is RegisterLoadingState) {
+              return const ShowLoading();
+            }
+            return const RegisterForm();
+          },
+          listener: (context, state) {
+            if (state is RegisterSuccessState) {
+              showSnackBar(context, "Successfully Register!",
+                  "You have register successfully", ContentType.failure);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+            }
+            if (state is RegisterErrorState) {
+              showSnackBar(
+                  context, "Login Failed!", state.error, ContentType.failure);
+            }
+          },
         ),
       ),
     );
@@ -96,25 +96,28 @@ class RegisterForm extends StatelessWidget {
             decoration: const InputDecoration(
                 labelText: 'City', icon: Icon(CupertinoIcons.location)),
           ),
-          ElevatedButton(
-            onPressed: () => BlocProvider.of<RegisterBloc>(context).add(
-                Register(
-                    email: emailController.text,
-                    password: passwordController.text,
-                    fullName: fullNameController.text,
-                    phoneNumber: phoneNumberController.text,
-                    address: addressController.text,
-                    city: cityController.text)),
-            child: const Text("Register"),
-          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                errorMessage ?? "",
-                style: const TextStyle(color: CupertinoColors.destructiveRed),
-              )
+              ElevatedButton(
+                onPressed: () => BlocProvider.of<RegisterBloc>(context).add(
+                    Register(
+                        email: emailController.text,
+                        password: passwordController.text,
+                        fullName: fullNameController.text,
+                        phoneNumber: phoneNumberController.text,
+                        address: addressController.text,
+                        city: cityController.text)),
+                child: const Text("Register"),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                ),
+                child: const Text("To login page"),
+              ),
             ],
           )
         ],

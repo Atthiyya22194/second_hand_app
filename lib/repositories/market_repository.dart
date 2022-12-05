@@ -9,7 +9,6 @@ import '../models/product_detail_response.dart';
 class MarketRepository {
   Future<List<ProductResponse>> getProducts() async {
     final queryParameters = {
-      'status': 'available',
       'page': '1',
       'per_page': "30"
     };
