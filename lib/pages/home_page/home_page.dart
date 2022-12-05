@@ -21,46 +21,44 @@ class HomePage extends StatelessWidget {
       )..add(
           LoadHomePageEvent(),
         ),
-      child: Scaffold(
-        body: BlocBuilder<HomePageBloc, HomePageState>(
-          builder: (context, state) {
-            if (state is HomePageLoadingState) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      CircularProgressIndicator(),
-                      Text('Loading...'),
-                    ],
-                  ),
-                ],
-              );
-            }
-
-            if (state is HomePageLoadedState) {
-              List<ProductResponse> data = state.products;
-              return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (_, index) {
-                  final product = data[index];
-                  return ProductCard(product: product);
-                },
-              );
-            }
-
-            if (state is HomePageErrorState) {
-              return Center(
-                child: Text(state.error),
-              );
-            }
-
-            return const Center(
-              child: Text('List is empty'),
+      child: BlocBuilder<HomePageBloc, HomePageState>(
+        builder: (context, state) {
+          if (state is HomePageLoadingState) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    CircularProgressIndicator(),
+                    Text('Loading...'),
+                  ],
+                ),
+              ],
             );
-          },
-        ),
+          }
+
+          if (state is HomePageLoadedState) {
+            List<ProductResponse> data = state.products;
+            return ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (_, index) {
+                final product = data[index];
+                return ProductCard(product: product);
+              },
+            );
+          }
+
+          if (state is HomePageErrorState) {
+            return Center(
+              child: Text(state.error),
+            );
+          }
+
+          return const Center(
+            child: Text('List is empty'),
+          );
+        },
       ),
     );
   }
