@@ -43,35 +43,6 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-// BlocProvider<LoginBloc>(
-//       create: (context) => LoginBloc(authRepository: AuthRepository()),
-//       child: Scaffold(
-//         body: BlocBuilder<LoginBloc, LoginState>(
-//           builder: ((context, state) {
-//             if (state is LoginInitState) {
-//               return const LoginForm();
-//             }
-//             if (state is LoginLoadingState) {
-//               return const Center(
-//                 child: CircularProgressIndicator(),
-//               );
-//             }
-//             if (state is LoginSuccessState) {
-//               // showSnackBar(context, "Successfullt Login!", "You have Successfully login", ContentType.success);
-//               return const BottomNavBar();
-//             }
-//             if (state is LoginErrorState) {
-//               return LoginForm(
-//                 errorMessage: state.error,
-//               );
-//             }
-
-//             return Container();
-//           }),
-//         ),
-//       ),
-//     );
-
 class LoginForm extends StatelessWidget {
   final String? errorMessage;
   const LoginForm({super.key, this.errorMessage});
