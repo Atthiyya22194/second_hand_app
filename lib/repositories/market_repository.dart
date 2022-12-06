@@ -8,10 +8,7 @@ import '../models/product_detail_response.dart';
 
 class MarketRepository {
   Future<List<ProductResponse>> getProducts() async {
-    final queryParameters = {
-      'page': '1',
-      'per_page': "30"
-    };
+    final queryParameters = {'page': '1', 'per_page': "30"};
 
     final response = await http.get(Uri.parse('${baseUrl()}buyer/product')
         .replace(queryParameters: queryParameters));
@@ -23,13 +20,30 @@ class MarketRepository {
     }
   }
 
-  Future<ProductDetailResponse> getDetail(String id) async {
+  Future<ProductDetailResponse> getDetail({required String id}) async {
     final response = await http.get(Uri.parse('${baseUrl()}buyer/product/$id'));
     if (response.statusCode == 200) {
       final result = ProductDetailResponse.fromJson(json.decode(response.body));
       return result;
     } else {
       throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future<String> order(
+      {required String accessToken,
+      required String productId,
+      required String bidPrice}) async {
+    final body = {'product_id': productId, 'bid_price': bidPrice};
+    final header = {'access_token': accessToken};
+
+    final response = await http.post(Uri.parse('${baseUrl()}buyer/order'),
+        body: body, headers: header);
+    if (response.statusCode == 201) {
+      return 'Order Successful';
+    } else {
+      final error = json.decode(response.body);
+      throw Exception(error['message']);
     }
   }
 }

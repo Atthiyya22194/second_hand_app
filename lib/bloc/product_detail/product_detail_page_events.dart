@@ -1,13 +1,20 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 
-@immutable
 abstract class ProductDetailPageEvent extends Equatable {
-  const ProductDetailPageEvent();
+  @override
+  List<Object> get props => [];
 }
 
-class LoadProductDetailPageEvent extends ProductDetailPageEvent {
-  @override
-  List<Object?> get props => [];
-  
+class GetData extends ProductDetailPageEvent {
+  final String id;
+
+  GetData(this.id);
 }
+
+class Order extends ProductDetailPageEvent {
+  final String productId;
+  final String bidPrice;
+
+  Order(this.productId, this.bidPrice);
+}
+
