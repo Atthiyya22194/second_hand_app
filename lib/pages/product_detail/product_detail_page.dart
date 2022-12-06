@@ -21,8 +21,8 @@ class ProductDetailpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductDetailBloc(MarketRepository(), id)
-        ..add(LoadProductDetailPageEvent()),
+      create: (context) =>
+          ProductDetailBloc(MarketRepository())..add(GetData(id)),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Detail'),
@@ -56,6 +56,14 @@ class ProductDetailpage extends StatelessWidget {
               showSnackBar(context, 'Something went wrong', state.error,
                   ContentType.failure);
             }
+            if (state is BidSuccessState) {
+              showSnackBar(context, 'Bid Successful', state.response,
+                  ContentType.success);
+            }
+            if (state is BidFailedState) {
+              showSnackBar(context, 'Something went wrong', state.error,
+                  ContentType.failure);
+            }
           },
         ),
       ),
@@ -69,42 +77,69 @@ class Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ImageLoader(product: product),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text(product.name), Text(product.basePrice.toString())],
+    final TextEditingController bidController = TextEditingController();
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: ImageLoader(product: product)),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(product.name),
+                Text(product.basePrice.toString())
+              ],
+            ),
           ),
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(product.user?.fullName ?? "No user information"),
-              Text(product.user?.city ?? "No user information")
-            ],
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(product.user?.fullName ?? "No user information"),
+                Text(product.user?.city ?? "No user information")
+              ],
+            ),
           ),
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [const Text('Description'), Text(product.description)],
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [const Text('Description'), Text(product.description)],
+            ),
           ),
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-          child: ElevatedButton(
-            onPressed: () {},
-            child: const Text("Start Bargain"),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+            child: Column(
+              children: [
+                TextField(
+                  keyboardType: TextInputType.number,
+                  controller: bidController,
+                  decoration: const InputDecoration(labelText: 'Bid Price'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (bidController.text.trim().isNotEmpty) {
+                      BlocProvider.of<ProductDetailBloc>(context).add(
+                        Order(
+                          product.id.toString(),
+                          bidController.text.trim(),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text("Start Bargain"),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -115,15 +150,19 @@ class ImageLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Row(
       mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <CachedNetworkImage>[
         CachedNetworkImage(
           imageUrl: product.imageUrl,
           progressIndicatorBuilder: (context, url, downloadProgress) =>
-              const Text('Loading image...'),
+              const Center(child: Text('Loading image...')),
           errorWidget: (context, url, error) => const Icon(Icons.error),
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
+          height: size.height * 0.4,
+          width: size.width,
         )
       ],
     );
