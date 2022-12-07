@@ -18,67 +18,76 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HomePageBloc(
-        MarketRepository(),
-      )..add(
-          LoadHomePageEvent(),
-        ),
-      child: Scaffold(
-        body: BlocConsumer<HomePageBloc, HomePageState>(
-          builder: (context, state) {
-            if (state is HomePageLoadingState) {
-              return const ShowLoading();
-            }
-
-            if (state is HomePageLoadedState) {
-              List<ProductResponse> data = state.products;
-              return HomePageContent(data: data);
-            }
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text('Something went wrong...'),
-                  ],
-                ),
-              ],
-            );
-          },
-          listener: (context, state) {
-            if (state is HomePageErrorState) {
-              showSnackBar(context, 'Something went wrong', state.error,
-                  ContentType.failure);
-            }
-          },
-        ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomePageBloc>(
+            create: (context) => HomePageBloc(MarketRepository()))
+      ],
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: const [SearchBar(), ProductList()],
       ),
     );
   }
 }
 
-class HomePageContent extends StatelessWidget {
-  final List<ProductResponse> data;
-  const HomePageContent({super.key, required this.data});
+class SearchBar extends StatelessWidget {
+  const SearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (_, index) {
-              final product = data[index];
-              return ProductCard(product: product);
-            },
-          ),
-        )
-      ],
+    final TextEditingController searchController = TextEditingController();
+
+    return Container(
+      margin: const EdgeInsets.all(20.0),
+      child: TextField(
+        controller: searchController,
+        decoration: const InputDecoration(labelText: 'Search Product'),
+        onChanged: (text) {
+          if (text.isNotEmpty) {
+            BlocProvider.of<HomePageBloc>(context).add(GetProducts(text));
+          }
+        },
+      ),
+    );
+  }
+}
+
+class ProductList extends StatelessWidget {
+  const ProductList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<HomePageBloc, HomePageState>(
+      builder: (context, state) {
+        if (state is HomePageInitState) {
+          BlocProvider.of<HomePageBloc>(context).add(GetProducts(""));
+        }
+        if (state is HomePageLoadingState) {
+          return const ShowLoading();
+        }
+
+        if (state is HomePageLoadedState) {
+          List<ProductResponse> data = state.products;
+          return Expanded(
+            child: ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (_, index) {
+                final product = data[index];
+                return ProductCard(product: product);
+              },
+            ),
+          );
+        }
+
+        return Container();
+      },
+      listener: (context, state) {
+        if (state is HomePageErrorState) {
+          showSnackBar(context, 'Something went wrong', state.error,
+              ContentType.failure);
+        }
+      },
     );
   }
 }

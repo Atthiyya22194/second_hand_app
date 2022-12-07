@@ -7,8 +7,8 @@ import '../common/common.dart';
 import '../models/product_detail_response.dart';
 
 class MarketRepository {
-  Future<List<ProductResponse>> getProducts() async {
-    final queryParameters = {'page': '1', 'per_page': "30"};
+  Future<List<ProductResponse>> getProducts(String productName) async {
+    final queryParameters = {'page': '1', 'per_page': "30", 'search': productName};
 
     final response = await http.get(Uri.parse('${baseUrl()}buyer/product')
         .replace(queryParameters: queryParameters));
