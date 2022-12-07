@@ -15,18 +15,14 @@ class NotificationBloc extends Bloc<HomePageEvent, NotificationState> {
   Future<void> _getNotification(
       GetNotification event, Emitter<NotificationState> emit) async {
     emit(NotificationLoadingState());
-    print('loading');
     try {
       final prefs = await SharedPreferences.getInstance();
       final accessToken = prefs.getString('accessToken');
       final data = await _repository.getNotification(
           accessToken: accessToken!, type: event.type);
       emit(NotificationLoadedState(data));
-      print('success');
-      print(data);
     } catch (e) {
       emit(NotificationErrorState(e.toString()));
-      print('error: $e');
     }
   }
 }
