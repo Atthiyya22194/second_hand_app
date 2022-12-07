@@ -18,14 +18,16 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<HomePageBloc>(
-            create: (context) => HomePageBloc(MarketRepository()))
-      ],
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: const [SearchBar(), ProductList()],
+    return Scaffold(
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<HomePageBloc>(
+              create: (context) => HomePageBloc(MarketRepository()))
+        ],
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: const [SearchBar(), ProductList()],
+        ),
       ),
     );
   }
