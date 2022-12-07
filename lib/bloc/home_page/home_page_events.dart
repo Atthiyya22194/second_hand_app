@@ -1,13 +1,12 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 
-@immutable
 abstract class HomePageEvent extends Equatable {
-  const HomePageEvent();
+  @override
+  List<Object> get props => [];
 }
 
-class LoadHomePageEvent extends HomePageEvent {
-  @override
-  List<Object?> get props => [];
-  
+class GetProducts extends HomePageEvent {
+  final String productName;
+
+  GetProducts(this.productName);
 }

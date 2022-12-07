@@ -5,6 +5,11 @@ import 'package:second_hand_app/models/product_response.dart';
 @immutable
 abstract class HomePageState extends Equatable {}
 
+class HomePageInitState extends HomePageState {
+  @override
+  List<Object?> get props => [];
+}
+
 class HomePageLoadingState extends HomePageState {
   @override
   List<Object?> get props => [];
