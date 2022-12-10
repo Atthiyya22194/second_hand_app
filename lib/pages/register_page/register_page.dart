@@ -29,15 +29,15 @@ class RegisterPage extends StatelessWidget {
           listener: (context, state) {
             if (state is RegisterSuccessState) {
               showSnackBar(context, "Successfully Register!",
-                  "You have register successfully", ContentType.failure);
+                  "You have register successfully", ContentType.success);
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginPage()),
               );
             }
             if (state is RegisterErrorState) {
-              showSnackBar(
-                  context, "Login Failed!", state.error, ContentType.failure);
+              showSnackBar(context, "Register Failed!", state.error,
+                  ContentType.failure);
             }
           },
         ),
