@@ -5,7 +5,7 @@ import 'package:second_hand_app/bloc/notification/notification_page_bloc.dart';
 import 'package:second_hand_app/pages/notification/seller/seller_notification_page.dart';
 import 'package:second_hand_app/repositories/market_repository.dart';
 
-import '../../widgets/notification_type.dart';
+import '../../widgets/list_menu.dart';
 import 'buyer/buyer_notification_page.dart';
 
 class NotificationPage extends StatelessWidget {
@@ -19,12 +19,12 @@ class NotificationPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: const [
-            NotificationType(
-              type: "Buyer Notification",
+            ListMenu(
+              title: "Buyer Notification",
               page: BuyerNotificationList(),
             ),
-            NotificationType(
-              type: "Seller Notification",
+            ListMenu(
+              title: "Seller Notification",
               page: SellerNotificationList(),
             )
           ],

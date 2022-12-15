@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class NotificationType extends StatelessWidget {
-  final String type;
+class ListMenu extends StatelessWidget {
+  final String title;
   final Widget page;
-  const NotificationType({super.key, required this.type, required this.page});
+  const ListMenu({super.key, required this.title, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,8 @@ class NotificationType extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+        Navigator.of(context, rootNavigator: true)
+            .push(MaterialPageRoute(builder: (context) => page));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -22,7 +23,7 @@ class NotificationType extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text(type), const Icon(CupertinoIcons.arrow_right)]),
+              children: [Text(title), const Icon(CupertinoIcons.arrow_right)]),
         ),
       ),
     );

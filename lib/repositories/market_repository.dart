@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:http_parser/http_parser.dart';
 import 'package:second_hand_app/models/notification_response.dart';
+import 'package:second_hand_app/models/order_response.dart';
 import 'package:second_hand_app/models/product_response.dart';
 
 import '../common/common.dart';
@@ -107,6 +108,37 @@ class MarketRepository {
       return 'Successfuly upload';
     } else {
       throw Exception(response.stream.bytesToString());
+    }
+  }
+
+  Future<List<ProductResponse>> getMyProducts(
+      {required String accessToken}) async {
+    final header = {'access_token': accessToken};
+    final response = await http.get(Uri.parse('${baseUrl()}seller/product'),
+        headers: header);
+
+    if (response.statusCode == 200) {
+      final List result = jsonDecode(response.body);
+      return result.map((e) => ProductResponse.fromJson(e)).toList();
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future<List<OrderResponse>> getOfferedProduct(
+      {required String accessToken, required String status}) async {
+    final header = {'access_token': accessToken};
+    final queryParameter = {'status': status};
+    final response = await http.get(
+        Uri.parse('${baseUrl()}seller/order')
+            .replace(queryParameters: queryParameter),
+        headers: header);
+
+    if (response.statusCode == 200) {
+      final List result = jsonDecode(response.body);
+      return result.map((e) => OrderResponse.fromJson(e)).toList();
+    } else {
+      throw Exception(response.reasonPhrase);
     }
   }
 }
