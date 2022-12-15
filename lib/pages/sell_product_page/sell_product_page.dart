@@ -6,6 +6,7 @@ import 'package:second_hand_app/bloc/sell_product/sell_product_event.dart';
 import 'package:second_hand_app/bloc/sell_product/sell_product_state.dart';
 import 'package:second_hand_app/common/common.dart';
 import 'package:second_hand_app/repositories/market_repository.dart';
+import 'package:second_hand_app/widgets/show_loading.dart';
 import 'package:second_hand_app/widgets/show_snack_bar.dart';
 
 class SellProductPage extends StatelessWidget {
@@ -15,29 +16,23 @@ class SellProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<SellProductBloc>(
       create: (context) => SellProductBloc(MarketRepository()),
-      child: Scaffold(body: BlocListener(
-        listener: (context, state) {
-          if (state is SellProductSuccessState) {
-            showSnackBar(
-                context, 'Success!', state.response, ContentType.success);
-          }
-          if (state is SellProductErrorState) {
-            showSnackBar(context, 'Failed', state.error, ContentType.failure);
-          }
-        },
-      )),
+      child: const Scaffold(body: SellProductForm()),
     );
   }
 }
 
 class SellProductForm extends StatefulWidget {
   const SellProductForm({super.key});
-
   @override
   State<SellProductForm> createState() => _SellProductForm();
 }
 
 class _SellProductForm extends State<SellProductForm> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController descController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
+
   String? categoryId;
   String? selectedCategory;
   var list = [
@@ -66,20 +61,25 @@ class _SellProductForm extends State<SellProductForm> {
     'Souvenir dan Pesta',
     'Fotografi'
   ];
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    descController.dispose();
+    priceController.dispose();
+    locationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController descController = TextEditingController();
-    final TextEditingController priceController = TextEditingController();
-    final TextEditingController locationController = TextEditingController();
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Register'),
+          const Text('Upload a product'),
           TextField(
             controller: nameController,
             decoration: const InputDecoration(labelText: 'Product Name'),
@@ -115,23 +115,38 @@ class _SellProductForm extends State<SellProductForm> {
                 BlocProvider.of<SellProductBloc>(context).add(GetImage());
               },
               child: const Text('Choose Image')),
-          BlocBuilder<SellProductBloc, SellProductState>(
-              builder: (context, state) {
-            if (state is LoadImageState) {
-              return ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<SellProductBloc>(context).add(UploadProduct(
-                        productName: nameController.text,
-                        description: descController.text,
-                        basePrice: priceController.text,
-                        category: categoryId!,
-                        location: locationController.text,
-                        image: state.image));
-                  },
-                  child: const Text('Upload'));
-            }
-            return Container();
-          })
+          BlocConsumer<SellProductBloc, SellProductState>(
+            builder: (context, state) {
+              if (state is LoadImageState) {
+                return ElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<SellProductBloc>(context).add(
+                          UploadProduct(
+                              productName: nameController.text,
+                              description: descController.text,
+                              basePrice: priceController.text,
+                              category: categoryId!,
+                              location: locationController.text,
+                              image: state.image));
+                    },
+                    child: const Text('Upload'));
+              }
+              if (state is SellProductLoadingState) {
+                return const ShowLoading();
+              }
+              return Container();
+            },
+            listener: (context, state) {
+              if (state is SellProductSuccessState) {
+                showSnackBar(
+                    context, 'Success!', state.response, ContentType.success);
+              }
+              if (state is SellProductErrorState) {
+                showSnackBar(
+                    context, 'Failed', state.error, ContentType.failure);
+              }
+            },
+          )
         ],
       ),
     );

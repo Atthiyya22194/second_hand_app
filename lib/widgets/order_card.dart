@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:second_hand_app/models/order_response.dart';
+import 'package:second_hand_app/pages/offer_detail_page/offer_detail_page.dart';
 
-import '../pages/product_detail/product_detail_page.dart';
 
 class OrderCard extends StatelessWidget {
   final OrderResponse order;
-  final bool isPending;
 
-  const OrderCard({Key? key, required this.order, required this.isPending})
-      : super(key: key);
+  const OrderCard({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +23,12 @@ class OrderCard extends StatelessWidget {
         ),
         subtitle: Text(order.basePrice.toString()),
         onTap: () => {
-          if (isPending == true)
-            {
-              Navigator.of(context, rootNavigator: true).push(
-                MaterialPageRoute(
-                  builder: (context) =>
-                      ProductDetailpage(id: order.productId.toString()),
-                ),
-              ),
-            }
-          else
-            {null}
+          Navigator.of(context, rootNavigator: true).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  OfferDetailPage(orderId: order.id.toString().trim()),
+            ),
+          )
         },
       ),
     );

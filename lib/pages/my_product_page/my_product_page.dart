@@ -12,53 +12,52 @@ class MyProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: DefaultTabController(
-          length: 4,
-          child: Column(
-            children: [
-              ButtonsTabBar(
-                backgroundColor: Colors.blue[600],
-                unselectedBackgroundColor: Colors.white,
-                labelStyle: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-                unselectedLabelStyle: TextStyle(
-                    color: Colors.blue[600], fontWeight: FontWeight.bold),
-                borderWidth: 1,
-                borderColor: Colors.blue,
-                unselectedBorderColor: Colors.blue,
-                radius: 100,
-                tabs: const [
-                  Tab(
-                    icon: Icon(CupertinoIcons.cube_box_fill),
-                    text: 'My Product',
-                  ),
-                  Tab(
-                    icon: Icon(CupertinoIcons.cart_fill),
-                    text: 'Pending Order',
-                  ),
-                  Tab(
-                    icon: Icon(CupertinoIcons.checkmark_seal_fill),
-                    text: 'Completed Order',
-                  ),
-                  Tab(
-                    icon: Icon(CupertinoIcons.xmark_seal_fill),
-                    text: 'Decilned Order',
-                  ),
+      appBar: AppBar(),
+      body: DefaultTabController(
+        length: 4,
+        child: Column(
+          children: [
+            ButtonsTabBar(
+              backgroundColor: Colors.blue[600],
+              unselectedBackgroundColor: Colors.white,
+              labelStyle: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
+              unselectedLabelStyle: TextStyle(
+                  color: Colors.blue[600], fontWeight: FontWeight.bold),
+              borderWidth: 1,
+              borderColor: Colors.blue,
+              unselectedBorderColor: Colors.blue,
+              radius: 100,
+              tabs: const [
+                Tab(
+                  icon: Icon(CupertinoIcons.cube_box_fill),
+                  text: 'My Product',
+                ),
+                Tab(
+                  icon: Icon(CupertinoIcons.cart_fill),
+                  text: 'Pending Order',
+                ),
+                Tab(
+                  icon: Icon(CupertinoIcons.checkmark_seal_fill),
+                  text: 'Completed Order',
+                ),
+                Tab(
+                  icon: Icon(CupertinoIcons.xmark_seal_fill),
+                  text: 'Decilned Order',
+                ),
+              ],
+            ),
+            const Expanded(
+              child: TabBarView(
+                children: [
+                  MyProductListPage(),
+                  PendingOrderPage(),
+                  CompletedOrderPage(),
+                  DeclinedOrderPage()
                 ],
               ),
-              const Expanded(
-                child: TabBarView(
-                  children: [
-                    MyProductListPage(),
-                    PendingOrderPage(),
-                    CompletedOrderPage(),
-                    DeclinedOrderPage()
-                  ],
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

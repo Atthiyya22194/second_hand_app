@@ -141,4 +141,32 @@ class MarketRepository {
       throw Exception(response.reasonPhrase);
     }
   }
+
+  Future<OrderResponse> getOfferedDetail(
+      {required String accessToken, required String orderId}) async {
+    final header = {'access_token': accessToken};
+    final response = await http
+        .get(Uri.parse('${baseUrl()}seller/order/$orderId'), headers: header);
+
+    if (response.statusCode == 200) {
+      final result = OrderResponse.fromJson(json.decode(response.body));
+      return result;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future<String> patchOffered(
+      {required String accessToken, required String orderId,required String status}) async {
+    final header = {'access_token': accessToken};
+    final body = {'status':status};
+    final response = await http
+        .patch(Uri.parse('${baseUrl()}seller/order/$orderId'), headers: header,body: body);
+
+    if (response.statusCode == 200) {
+      return status;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
 }

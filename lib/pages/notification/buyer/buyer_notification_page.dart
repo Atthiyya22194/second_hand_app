@@ -18,7 +18,7 @@ class BuyerNotificationList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Buyer Notification")),
-      body: Column(children: [
+      body: Column(mainAxisSize: MainAxisSize.max, children: [
         BlocProvider(
           create: (context) => NotificationBloc(MarketRepository()),
           child: BlocConsumer<NotificationBloc, NotificationState>(

@@ -34,10 +34,7 @@ class CompletedOrderPage extends StatelessWidget {
                   itemCount: data.length,
                   itemBuilder: (_, index) {
                     final order = data[index];
-                    return OrderCard(
-                      order: order,
-                      isPending: false,
-                    );
+                    return OrderCard(order: order);
                   },
                 );
               } else {

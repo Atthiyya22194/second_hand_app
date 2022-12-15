@@ -36,7 +36,6 @@ class PendingOrderPage extends StatelessWidget {
                     final order = data[index];
                     return OrderCard(
                       order: order,
-                      isPending: true,
                     );
                   },
                 );

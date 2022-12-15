@@ -123,6 +123,7 @@ class User {
         required this.email,
         required this.phoneNumber,
         required this.address,
+        required this.imageUrl,
         required this.city,
     });
 
@@ -131,6 +132,7 @@ class User {
     String email;
     String phoneNumber;
     String address;
+    String? imageUrl;
     String city;
 
     factory User.fromJson(Map<String, dynamic> json) => User(
@@ -139,6 +141,7 @@ class User {
         email: json["email"],
         phoneNumber: json["phone_number"],
         address: json["address"],
+        imageUrl: json["image_url"],
         city: json["city"],
     );
 
@@ -148,6 +151,7 @@ class User {
         "email": email,
         "phone_number": phoneNumber,
         "address": address,
+        "image_url": imageUrl,
         "city": city,
     };
 }

@@ -14,20 +14,22 @@ class NotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => NotificationBloc(MarketRepository()),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            ListMenu(
-              title: "Buyer Notification",
-              page: BuyerNotificationList(),
-            ),
-            ListMenu(
-              title: "Seller Notification",
-              page: SellerNotificationList(),
-            )
-          ],
+      body: SafeArea(
+        child: BlocProvider(
+          create: (context) => NotificationBloc(MarketRepository()),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              ListMenu(
+                title: "Buyer Notification",
+                page: BuyerNotificationList(),
+              ),
+              ListMenu(
+                title: "Seller Notification",
+                page: SellerNotificationList(),
+              )
+            ],
+          ),
         ),
       ),
     );

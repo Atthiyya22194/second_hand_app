@@ -35,8 +35,7 @@ class DeclinedOrderPage extends StatelessWidget {
                   itemBuilder: (_, index) {
                     final order = data[index];
                     return OrderCard(
-                      order: order,
-                      isPending: false,
+                      order: order
                     );
                   },
                 );

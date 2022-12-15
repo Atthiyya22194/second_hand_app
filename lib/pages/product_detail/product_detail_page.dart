@@ -1,5 +1,4 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_app/models/product_detail_response.dart';
@@ -9,6 +8,7 @@ import 'package:second_hand_app/widgets/show_loading.dart';
 import '../../bloc/product_detail/product_detail_page_bloc.dart';
 import '../../bloc/product_detail/product_detail_page_events.dart';
 import '../../bloc/product_detail/product_detail_page_states.dart';
+import '../../widgets/image_loader.dart';
 import '../../widgets/show_snack_bar.dart';
 
 class ProductDetailpage extends StatelessWidget {
@@ -90,13 +90,14 @@ class _ContentState extends State<Content> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
               padding: const EdgeInsets.only(bottom: 8.0),
-              child: ImageLoader(product: widget.product)),
+              child: ImageLoader(imageUrl: widget.product.imageUrl,height: size.height * 0.4,width: size.width,)),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
             child: Column(
@@ -154,31 +155,6 @@ class _ContentState extends State<Content> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class ImageLoader extends StatelessWidget {
-  final ProductDetailResponse product;
-  const ImageLoader({super.key, required this.product});
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <CachedNetworkImage>[
-        CachedNetworkImage(
-          imageUrl: product.imageUrl,
-          progressIndicatorBuilder: (context, url, downloadProgress) =>
-              const Center(child: Text('Loading image...')),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
-          fit: BoxFit.cover,
-          height: size.height * 0.4,
-          width: size.width,
-        )
-      ],
     );
   }
 }
