@@ -5,7 +5,7 @@ import '../../repositories/market_repository.dart';
 import 'notification_page_events.dart';
 import 'notification_page_states.dart';
 
-class NotificationBloc extends Bloc<HomePageEvent, NotificationState> {
+class NotificationBloc extends Bloc<NotificationPageEvent, NotificationState> {
   final MarketRepository _repository;
 
   NotificationBloc(this._repository) : super(NotificationInitState()) {

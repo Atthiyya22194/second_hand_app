@@ -14,12 +14,9 @@ class ProductCard extends StatelessWidget {
       child: ListTile(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        leading: Hero(
-          tag: product.imageName,
-          child: Image.network(
-            product.imageUrl,
-            width: 100,
-          ),
+        leading: Image.network(
+          product.imageUrl,
+          width: 100,
         ),
         title: Text(
           product.name,
