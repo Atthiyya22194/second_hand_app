@@ -1,6 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:second_hand_app/widgets/center_text_info.dart';
 
 import '../../../bloc/my_product/my_product_bloc.dart';
 import '../../../bloc/my_product/my_product_event.dart';
@@ -28,13 +29,18 @@ class MyProductListPage extends StatelessWidget {
 
             if (state is MyProductLoadedState) {
               List<ProductResponse> data = state.products;
-              return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (_, index) {
-                  final product = data[index];
-                  return ProductCard(product: product);
-                },
-              );
+              if (data.isNotEmpty) {
+                return ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (_, index) {
+                    final product = data[index];
+                    return ProductCard(product: product);
+                  },
+                );
+              } else {
+                return const CenterTextInfo(
+                    message: 'You haven\'t uploaded a product yet');
+              }
             }
 
             return Container();
