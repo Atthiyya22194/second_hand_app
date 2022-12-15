@@ -46,19 +46,35 @@ class RegisterPage extends StatelessWidget {
   }
 }
 
-class RegisterForm extends StatelessWidget {
+class RegisterForm extends StatefulWidget {
   final String? errorMessage;
   const RegisterForm({super.key, this.errorMessage});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController fullNameController = TextEditingController();
-    final TextEditingController phoneNumberController = TextEditingController();
-    final TextEditingController addressController = TextEditingController();
-    final TextEditingController cityController = TextEditingController();
+  State<RegisterForm> createState() => _RegisterFormState();
+}
 
+class _RegisterFormState extends State<RegisterForm> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    fullNameController.dispose();
+    phoneNumberController.dispose();
+    addressController.dispose();
+    cityController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
       child: Column(

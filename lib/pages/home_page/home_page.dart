@@ -33,13 +33,24 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class SearchBar extends StatelessWidget {
+class SearchBar extends StatefulWidget {
   const SearchBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController searchController = TextEditingController();
+  State<SearchBar> createState() => _SearchBarState();
+}
 
+class _SearchBarState extends State<SearchBar> {
+  final TextEditingController searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(20.0),
       child: TextField(

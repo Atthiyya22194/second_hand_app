@@ -71,28 +71,39 @@ class ProductDetailpage extends StatelessWidget {
   }
 }
 
-class Content extends StatelessWidget {
+class Content extends StatefulWidget {
   final ProductDetailResponse product;
   const Content({super.key, required this.product});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController bidController = TextEditingController();
+  State<Content> createState() => _ContentState();
+}
 
+class _ContentState extends State<Content> {
+  final TextEditingController bidController = TextEditingController();
+
+  @override
+  void dispose() {
+    bidController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
               padding: const EdgeInsets.only(bottom: 8.0),
-              child: ImageLoader(product: product)),
+              child: ImageLoader(product: widget.product)),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(product.name),
-                Text(product.basePrice.toString())
+                Text(widget.product.name),
+                Text(widget.product.basePrice.toString())
               ],
             ),
           ),
@@ -101,8 +112,8 @@ class Content extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(product.user?.fullName ?? "No user information"),
-                Text(product.user?.city ?? "No user information")
+                Text(widget.product.user?.fullName ?? "No user information"),
+                Text(widget.product.user?.city ?? "No user information")
               ],
             ),
           ),
@@ -110,7 +121,10 @@ class Content extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [const Text('Description'), Text(product.description)],
+              children: [
+                const Text('Description'),
+                Text(widget.product.description)
+              ],
             ),
           ),
           Container(
@@ -127,7 +141,7 @@ class Content extends StatelessWidget {
                     if (bidController.text.trim().isNotEmpty) {
                       BlocProvider.of<ProductDetailBloc>(context).add(
                         Order(
-                          product.id.toString(),
+                          widget.product.id.toString(),
                           bidController.text.trim(),
                         ),
                       );
