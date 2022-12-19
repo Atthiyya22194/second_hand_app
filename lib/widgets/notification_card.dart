@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:second_hand_app/models/notification_response.dart';
+import '../models/notification_response.dart';
 
 import '../pages/product_detail/product_detail_page.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationResponse notification;
 
-  const NotificationCard({Key? key, required this.notification}) : super(key: key);
+  const NotificationCard({Key? key, required this.notification})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +15,12 @@ class NotificationCard extends StatelessWidget {
       child: ListTile(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        leading: Image.network(
-          notification.imageUrl,
-          width: 100,
+        leading: Hero(
+          tag: 'notification image',
+          child: Image.network(
+            notification.imageUrl,
+            width: 100,
+          ),
         ),
         title: Text(
           notification.productName,
@@ -32,7 +36,8 @@ class NotificationCard extends StatelessWidget {
         ),
         onTap: () => Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
-            builder: (context) => ProductDetailpage(id: notification.id.toString()),
+            builder: (context) =>
+                ProductDetailpage(id: notification.id.toString()),
           ),
         ),
       ),

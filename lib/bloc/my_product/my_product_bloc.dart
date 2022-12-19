@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/bloc/my_product/my_product_event.dart';
-import 'package:second_hand_app/bloc/my_product/my_product_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../repositories/market_repository.dart';
+import 'my_product_event.dart';
+import 'my_product_state.dart';
 
 class MyProductBloc extends Bloc<MyProductPageEvent, MyProductState> {
   final MarketRepository _repository;

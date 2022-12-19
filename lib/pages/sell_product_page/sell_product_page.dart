@@ -1,13 +1,13 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/bloc/sell_product/sell_product_bloc.dart';
-import 'package:second_hand_app/bloc/sell_product/sell_product_event.dart';
-import 'package:second_hand_app/bloc/sell_product/sell_product_state.dart';
-import 'package:second_hand_app/common/common.dart';
-import 'package:second_hand_app/repositories/market_repository.dart';
-import 'package:second_hand_app/widgets/show_loading.dart';
-import 'package:second_hand_app/widgets/show_snack_bar.dart';
+import '../../bloc/sell_product/sell_product_bloc.dart';
+import '../../bloc/sell_product/sell_product_event.dart';
+import '../../bloc/sell_product/sell_product_state.dart';
+import '../../common/common.dart';
+import '../../repositories/market_repository.dart';
+import '../../widgets/show_loading.dart';
+import '../../widgets/show_snack_bar.dart';
 
 class SellProductPage extends StatelessWidget {
   const SellProductPage({super.key});
@@ -33,7 +33,7 @@ class _SellProductForm extends State<SellProductForm> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
 
-  String? categoryId;
+  String? categoryId = "1";
   String? selectedCategory;
   var list = [
     'Elektronik',
@@ -120,14 +120,16 @@ class _SellProductForm extends State<SellProductForm> {
               if (state is LoadImageState) {
                 return ElevatedButton(
                     onPressed: () {
-                      BlocProvider.of<SellProductBloc>(context).add(
-                          UploadProduct(
-                              productName: nameController.text,
-                              description: descController.text,
-                              basePrice: priceController.text,
-                              category: categoryId!,
-                              location: locationController.text,
-                              image: state.image));
+                      if (_formValidation() == true) {
+                        BlocProvider.of<SellProductBloc>(context).add(
+                            UploadProduct(
+                                productName: nameController.text,
+                                description: descController.text,
+                                basePrice: priceController.text,
+                                category: categoryId!,
+                                location: locationController.text,
+                                image: state.image));
+                      }
                     },
                     child: const Text('Upload'));
               }
@@ -150,5 +152,18 @@ class _SellProductForm extends State<SellProductForm> {
         ],
       ),
     );
+  }
+
+  _formValidation<bool>() {
+    if (nameController.text.isEmpty &&
+        descController.text.isEmpty &&
+        priceController.text.isEmpty &&
+        locationController.text.isEmpty) {
+      showSnackBar(context, 'Something went wrong...', 'Please fill all form',
+          ContentType.failure);
+      return false;
+    } else {
+      return true;
+    }
   }
 }

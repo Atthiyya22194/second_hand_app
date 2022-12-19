@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/bloc/offer_detail/offer_detail_event.dart';
-import 'package:second_hand_app/bloc/offer_detail/offer_detail_state.dart';
-import 'package:second_hand_app/repositories/market_repository.dart';
+import 'offer_detail_event.dart';
+import 'offer_detail_state.dart';
+import '../../repositories/market_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OfferDetailBloc extends Bloc<OfferDetailEvent, OfferDetailState> {

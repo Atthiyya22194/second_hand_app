@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:second_hand_app/models/notification_response.dart';
+import '../../models/notification_response.dart';
 
 @immutable
 abstract class NotificationState extends Equatable {}

@@ -2,10 +2,10 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/models/order_response.dart';
-import 'package:second_hand_app/widgets/bidder_info.dart';
-import 'package:second_hand_app/widgets/bottom_nav_bar.dart';
-import 'package:second_hand_app/widgets/product_info.dart';
+import '../../models/order_response.dart';
+import '../../widgets/bidder_info.dart';
+import '../../widgets/bottom_nav_bar.dart';
+import '../../widgets/product_info.dart';
 
 import '../../bloc/offer_detail/offer_detail_bloc.dart';
 import '../../bloc/offer_detail/offer_detail_event.dart';

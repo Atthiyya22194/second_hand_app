@@ -1,14 +1,14 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/models/product_detail_response.dart';
-import 'package:second_hand_app/repositories/market_repository.dart';
-import 'package:second_hand_app/widgets/show_loading.dart';
 
 import '../../bloc/product_detail/product_detail_page_bloc.dart';
 import '../../bloc/product_detail/product_detail_page_events.dart';
 import '../../bloc/product_detail/product_detail_page_states.dart';
+import '../../models/product_detail_response.dart';
+import '../../repositories/market_repository.dart';
 import '../../widgets/image_loader.dart';
+import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 
 class ProductDetailpage extends StatelessWidget {

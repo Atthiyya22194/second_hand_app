@@ -1,18 +1,18 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/bloc/offer_detail/offer_detail_bloc.dart';
-import 'package:second_hand_app/bloc/offer_detail/offer_detail_event.dart';
-import 'package:second_hand_app/bloc/offer_detail/offer_detail_state.dart';
-import 'package:second_hand_app/models/order_response.dart';
-import 'package:second_hand_app/pages/patch_result_page/patch_result_page.dart';
-import 'package:second_hand_app/repositories/market_repository.dart';
-import 'package:second_hand_app/widgets/show_snack_bar.dart';
 
+import '../../bloc/offer_detail/offer_detail_bloc.dart';
+import '../../bloc/offer_detail/offer_detail_event.dart';
+import '../../bloc/offer_detail/offer_detail_state.dart';
+import '../../models/order_response.dart';
+import '../../repositories/market_repository.dart';
 import '../../widgets/action_button.dart';
 import '../../widgets/bidder_info.dart';
 import '../../widgets/product_info.dart';
 import '../../widgets/show_loading.dart';
+import '../../widgets/show_snack_bar.dart';
+import '../patch_result_page/patch_result_page.dart';
 
 class OfferDetailPage extends StatelessWidget {
   final String orderId;

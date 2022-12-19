@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:second_hand_app/pages/login_page/login_page.dart';
-import 'package:second_hand_app/widgets/bottom_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'pages/login_page/login_page.dart';
+import 'widgets/bottom_nav_bar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -5,9 +5,9 @@ import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 
 import 'package:http_parser/http_parser.dart';
-import 'package:second_hand_app/models/notification_response.dart';
-import 'package:second_hand_app/models/order_response.dart';
-import 'package:second_hand_app/models/product_response.dart';
+import '../models/notification_response.dart';
+import '../models/order_response.dart';
+import '../models/product_response.dart';
 
 import '../common/common.dart';
 import '../models/product_detail_response.dart';
