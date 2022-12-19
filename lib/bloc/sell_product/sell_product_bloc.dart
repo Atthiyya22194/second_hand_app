@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:second_hand_app/bloc/sell_product/sell_product_event.dart';
-import 'package:second_hand_app/bloc/sell_product/sell_product_state.dart';
-import 'package:second_hand_app/repositories/market_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../repositories/market_repository.dart';
+import 'sell_product_event.dart';
+import 'sell_product_state.dart';
 
 class SellProductBloc extends Bloc<SellProductEvent, SellProductState> {
   final MarketRepository _repository;

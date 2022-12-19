@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/bloc/register/register_events.dart';
-import 'package:second_hand_app/bloc/register/register_states.dart';
-import 'package:second_hand_app/repositories/auth_repository.dart';
+import 'register_events.dart';
+import 'register_states.dart';
+import '../../repositories/auth_repository.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthRepository authRepository;

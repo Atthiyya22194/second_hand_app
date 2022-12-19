@@ -2,15 +2,15 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/bloc/login/login_bloc.dart';
-import 'package:second_hand_app/bloc/login/login_events.dart';
-import 'package:second_hand_app/pages/register_page/register_page.dart';
-import 'package:second_hand_app/widgets/bottom_nav_bar.dart';
-import 'package:second_hand_app/widgets/show_loading.dart';
-import 'package:second_hand_app/widgets/show_snack_bar.dart';
 
+import '../../bloc/login/login_bloc.dart';
+import '../../bloc/login/login_events.dart';
 import '../../bloc/login/login_states.dart';
 import '../../repositories/auth_repository.dart';
+import '../../widgets/bottom_nav_bar.dart';
+import '../../widgets/show_loading.dart';
+import '../../widgets/show_snack_bar.dart';
+import '../register_page/register_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -85,8 +85,12 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: () => BlocProvider.of<LoginBloc>(context)
-                    .add(Login(emailController.text, passwordController.text)),
+                onPressed: () {
+                  if (_formValidation() == true) {
+                    BlocProvider.of<LoginBloc>(context).add(
+                        Login(emailController.text, passwordController.text));
+                  }
+                },
                 child: const Text("Login"),
               ),
               ElevatedButton(
@@ -111,5 +115,15 @@ class _LoginFormState extends State<LoginForm> {
         ],
       ),
     );
+  }
+
+  _formValidation<bool>() {
+    if (emailController.text.isEmpty && passwordController.text.isEmpty) {
+      showSnackBar(context, 'Something went wrong...', 'Please fill all form',
+          ContentType.failure);
+      return false;
+    } else {
+      return true;
+    }
   }
 }

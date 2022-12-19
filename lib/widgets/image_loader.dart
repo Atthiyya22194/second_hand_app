@@ -7,7 +7,7 @@ class ImageLoader extends StatelessWidget {
   final double width;
   const ImageLoader(
       {super.key,
-      required this.imageUrl,
+      this.imageUrl,
       required this.height,
       required this.width});
 

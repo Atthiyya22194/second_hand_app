@@ -1,10 +1,11 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:second_hand_app/pages/my_product_page/completed/completed_order_page.dart';
-import 'package:second_hand_app/pages/my_product_page/declined/declined_order_page.dart';
-import 'package:second_hand_app/pages/my_product_page/pending/pending_order_page.dart';
-import 'package:second_hand_app/pages/my_product_page/product_list/product_list_page.dart';
+
+import 'completed/completed_order_page.dart';
+import 'declined/declined_order_page.dart';
+import 'pending/pending_order_page.dart';
+import 'product_list/product_list_page.dart';
 
 class MyProductPage extends StatelessWidget {
   const MyProductPage({super.key});

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:second_hand_app/models/order_response.dart';
-import 'package:second_hand_app/pages/offer_detail_page/offer_detail_page.dart';
-
+import '../models/order_response.dart';
+import '../pages/offer_detail_page/offer_detail_page.dart';
 
 class OrderCard extends StatelessWidget {
   final OrderResponse order;
@@ -14,9 +13,12 @@ class OrderCard extends StatelessWidget {
       child: ListTile(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        leading: Image.network(
-          order.imageProduct,
-          width: 100,
+        leading: Hero(
+          tag: 'order image',
+          child: Image.network(
+            order.imageProduct,
+            width: 100,
+          ),
         ),
         title: Text(
           order.productName,

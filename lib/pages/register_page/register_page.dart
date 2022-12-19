@@ -2,8 +2,8 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/pages/login_page/login_page.dart';
-import 'package:second_hand_app/widgets/show_loading.dart';
+import '../login_page/login_page.dart';
+import '../../widgets/show_loading.dart';
 
 import '../../bloc/register/register_bloc.dart';
 import '../../bloc/register/register_events.dart';
@@ -117,14 +117,17 @@ class _RegisterFormState extends State<RegisterForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: () => BlocProvider.of<RegisterBloc>(context).add(
-                    Register(
+                onPressed: () {
+                  if (_formValidation() == true) {
+                    BlocProvider.of<RegisterBloc>(context).add(Register(
                         email: emailController.text,
                         password: passwordController.text,
                         fullName: fullNameController.text,
                         phoneNumber: phoneNumberController.text,
                         address: addressController.text,
-                        city: cityController.text)),
+                        city: cityController.text));
+                  }
+                },
                 child: const Text("Register"),
               ),
               ElevatedButton(
@@ -139,5 +142,20 @@ class _RegisterFormState extends State<RegisterForm> {
         ],
       ),
     );
+  }
+
+  _formValidation<bool>() {
+    if (emailController.text.isEmpty &&
+        passwordController.text.isEmpty &&
+        fullNameController.text.isEmpty &&
+        phoneNumberController.text.isEmpty &&
+        addressController.text.isEmpty &&
+        cityController.text.isEmpty) {
+      showSnackBar(context, 'Something went wrong...', 'Please fill all form',
+          ContentType.failure);
+      return false;
+    } else {
+      return true;
+    }
   }
 }
