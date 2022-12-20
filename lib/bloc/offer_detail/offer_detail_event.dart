@@ -17,3 +17,10 @@ class PatchOffer extends OfferDetailEvent {
 
   PatchOffer(this.orderId, this.status);
 }
+
+class OpenWhatsApp extends OfferDetailEvent {
+  final String phoneNumber;
+  final String message;
+
+  OpenWhatsApp(this.phoneNumber, this.message);
+}

@@ -39,17 +39,7 @@ class OfferDetailPage extends StatelessWidget {
                 order: order,
               );
             }
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text('Something went wrong...'),
-                  ],
-                ),
-              ],
-            );
+            return Container();
           },
           listener: (context, state) {
             if (state is OfferDetailErrorState) {
@@ -62,6 +52,10 @@ class OfferDetailPage extends StatelessWidget {
                   builder: (context) => PatchResultPage(orderId: orderId),
                 ),
               );
+            }
+            if (state is WhatAppLaunchedState) {
+              BlocProvider.of<OfferDetailBloc>(context)
+                  .add(GetOfferDetail(orderId));
             }
           },
         ),
@@ -76,6 +70,8 @@ class Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String message =
+        'Halo ${order.user?.fullName}, saya ${order.product.user?.fullName} penjual dari Second Hand App tertarik dengan harga yang ditawarkan atas barang ${order.productName}';
     return Container(
       margin: const EdgeInsets.all(8.0),
       child: Column(
@@ -94,6 +90,8 @@ class Content extends StatelessWidget {
             child: ActionButton(
               orderId: order.id.toString(),
               status: order.status,
+              phoneNumber: order.user?.phoneNumber,
+              message: message,
             ),
           )
         ],
