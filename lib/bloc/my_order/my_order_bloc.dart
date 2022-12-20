@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/bloc/my_order/my_order_event.dart';
-import 'package:second_hand_app/bloc/my_order/my_order_state.dart';
-import 'package:second_hand_app/repositories/market_repository.dart';
+import 'my_order_event.dart';
+import 'my_order_state.dart';
+import '../../repositories/market_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyOrderBloc extends Bloc<MyOrderEvent, MyOrderState> {

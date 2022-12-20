@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '../models/product_response.dart';
 
-import '../pages/product_detail/product_detail_page.dart';
+import '../models/product_response.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductResponse product;
+  final Widget route;
 
-  const ProductCard({Key? key, required this.product}) : super(key: key);
+  const ProductCard({Key? key, required this.product, required this.route}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class ProductCard extends StatelessWidget {
         subtitle: Text(product.basePrice.toString()),
         onTap: () => Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
-            builder: (context) => ProductDetailpage(id: product.id.toString()),
+            builder: (context) => route,
           ),
         ),
       ),

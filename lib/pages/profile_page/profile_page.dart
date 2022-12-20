@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:second_hand_app/pages/my_order_page/my_order_page.dart';
+import '../my_order_page/my_order_page.dart';
 import '../edit_profile_page/edit_profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

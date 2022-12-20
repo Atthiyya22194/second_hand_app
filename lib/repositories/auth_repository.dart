@@ -1,9 +1,10 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
-import '../models/login_response.dart';
-import '../models/user_response.dart';
 
 import '../common/common.dart';
+import '../models/login_response.dart';
+import '../models/user_response.dart';
 
 class AuthRepository {
   Future<LoginResponse> login(

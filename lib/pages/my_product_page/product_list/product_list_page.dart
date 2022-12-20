@@ -1,6 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../my_product_detail_page/my_product_detail_page.dart';
 
 import '../../../bloc/my_product/my_product_bloc.dart';
 import '../../../bloc/my_product/my_product_event.dart';
@@ -34,7 +35,7 @@ class MyProductListPage extends StatelessWidget {
                   itemCount: data.length,
                   itemBuilder: (_, index) {
                     final product = data[index];
-                    return ProductCard(product: product);
+                    return ProductCard(product: product, route: MyProductDetailPage(id: data[index].id.toString()),);
                   },
                 );
               } else {
