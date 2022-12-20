@@ -5,6 +5,7 @@ import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 
 import 'package:http_parser/http_parser.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/notification_response.dart';
 import '../models/order_response.dart';
 import '../models/product_response.dart';
@@ -243,6 +244,18 @@ class MarketRepository {
       return 'Product Deleted';
     } else {
       throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future<bool> launchWhatsApp(
+      {required String phoneNumber, required String message}) async {
+    final androidUrl =
+        Uri.parse("https://wa.me/$phoneNumber/?text=${Uri.parse(message)}");
+
+    if (await canLaunchUrl(androidUrl)) {
+      return await launchUrl(androidUrl);
+    } else {
+      throw Exception('Cannot launch WhatsApp');
     }
   }
 }

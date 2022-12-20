@@ -24,6 +24,14 @@ class PatchSuccessState extends OfferDetailState {
   List<Object?> get props => [message];
 }
 
+class WhatAppLaunchedState extends OfferDetailState {
+  WhatAppLaunchedState(this.launch);
+  final bool launch;
+
+  @override
+  List<Object?> get props => [launch];
+}
+
 class OfferDetailErrorState extends OfferDetailState {
   final String error;
 

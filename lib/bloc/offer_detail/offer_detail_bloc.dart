@@ -10,6 +10,7 @@ class OfferDetailBloc extends Bloc<OfferDetailEvent, OfferDetailState> {
   OfferDetailBloc(this._repository) : super(OfferDetailInitState()) {
     on<GetOfferDetail>(_getOfferDetail);
     on<PatchOffer>(_patchOffer);
+    on<OpenWhatsApp>(_openWhatsApp);
   }
 
   Future<void> _getOfferDetail(
@@ -37,6 +38,18 @@ class OfferDetailBloc extends Bloc<OfferDetailEvent, OfferDetailState> {
           orderId: event.orderId,
           status: event.status);
       emit(PatchSuccessState(data));
+    } catch (e) {
+      emit(OfferDetailErrorState(e.toString()));
+    }
+  }
+
+  Future<void> _openWhatsApp(
+      OpenWhatsApp event, Emitter<OfferDetailState> emit) async {
+    emit(OfferDetailLoadingState());
+    try {
+      final launch = await _repository.launchWhatsApp(
+          phoneNumber: event.phoneNumber, message: event.message);
+      emit(WhatAppLaunchedState(launch));
     } catch (e) {
       emit(OfferDetailErrorState(e.toString()));
     }
