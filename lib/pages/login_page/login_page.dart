@@ -120,7 +120,7 @@ class _LoginFormState extends State<LoginForm> {
   _formValidation<bool>() {
     if (emailController.text.isEmpty && passwordController.text.isEmpty) {
       showSnackBar(context, 'Something went wrong...', 'Please fill all form',
-          ContentType.failure);
+          ContentType.warning);
       return false;
     } else {
       return true;

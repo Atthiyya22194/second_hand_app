@@ -11,6 +11,7 @@ import '../../../models/order_response.dart';
 import '../../../repositories/market_repository.dart';
 import '../../../widgets/show_loading.dart';
 import '../../../widgets/show_snack_bar.dart';
+import '../../offer_detail_page/offer_detail_page.dart';
 
 class CompletedOrderPage extends StatelessWidget {
   const CompletedOrderPage({super.key});
@@ -34,7 +35,11 @@ class CompletedOrderPage extends StatelessWidget {
                   itemCount: data.length,
                   itemBuilder: (_, index) {
                     final order = data[index];
-                    return OrderCard(order: order);
+                    return OrderCard(
+                      order: order,
+                      route:
+                          OfferDetailPage(orderId: order.id.toString().trim()),
+                    );
                   },
                 );
               } else {

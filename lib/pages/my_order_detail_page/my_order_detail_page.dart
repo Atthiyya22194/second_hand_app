@@ -1,19 +1,20 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:second_hand_app/bloc/my_detail_order/my_order_detail_event.dart';
+import 'package:second_hand_app/models/order_response.dart';
 
-import '../../bloc/product_detail/product_detail_page_bloc.dart';
-import '../../bloc/product_detail/product_detail_page_events.dart';
-import '../../bloc/product_detail/product_detail_page_states.dart';
-import '../../models/product_detail_response.dart';
+import '../../bloc/my_detail_order/my_order_detail_bloc.dart';
+import '../../bloc/my_detail_order/my_order_detail_state.dart';
 import '../../repositories/market_repository.dart';
 import '../../widgets/image_loader.dart';
 import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 
-class ProductDetailpage extends StatelessWidget {
+class MyOrderDetailpage extends StatelessWidget {
   final String id;
-  const ProductDetailpage({Key? key, required this.id})
+  const MyOrderDetailpage({Key? key, required this.id})
       : super(
           key: key,
         );
@@ -22,43 +23,39 @@ class ProductDetailpage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          ProductDetailBloc(MarketRepository())..add(GetData(id)),
+          MyOrderDetailBloc(MarketRepository())..add(GetMyOrderDetail(id: id)),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Detail'),
+          title: const Text('Order Detail'),
         ),
-        body: BlocConsumer<ProductDetailBloc, ProductDetailPageState>(
+        body: BlocConsumer<MyOrderDetailBloc, MyOrderDetailState>(
           builder: (context, state) {
-            if (state is ProductDetailPageLoadingState) {
+            if (state is MyOrderDetailLoadingState) {
               return const ShowLoading();
             }
 
-            if (state is ProductDetailPageLoadedState) {
-              final ProductDetailResponse product = state.products;
+            if (state is MyOrderDetailLoadedState) {
+              final OrderResponse product = state.response;
               return Content(
                 product: product,
               );
             }
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text('Something went wrong...'),
-                  ],
-                ),
-              ],
-            );
+            return Container();
           },
           listener: (context, state) {
-            if (state is ProductDetailPageErrorState) {
+            if (state is MyOrderDetailErrorState) {
               showSnackBar(context, 'Something went wrong', state.error,
                   ContentType.failure);
             }
-            if (state is BidSuccessState) {
-              BlocProvider.of<ProductDetailBloc>(context).add(GetData(id));
+            if (state is PatchBidSuccessState) {
               showSnackBar(context, 'Bid Successful', state.response,
+                  ContentType.success);
+              BlocProvider.of<MyOrderDetailBloc>(context)
+                  .add(GetMyOrderDetail(id: id));
+            }
+            if (state is DeleteOrderSuccessState) {
+              Navigator.pop(context);
+              showSnackBar(context, 'Order Deleted', state.response,
                   ContentType.success);
             }
           },
@@ -69,7 +66,7 @@ class ProductDetailpage extends StatelessWidget {
 }
 
 class Content extends StatefulWidget {
-  final ProductDetailResponse product;
+  final OrderResponse product;
   const Content({super.key, required this.product});
 
   @override
@@ -95,7 +92,7 @@ class _ContentState extends State<Content> {
           Container(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: ImageLoader(
-                imageUrl: widget.product.imageUrl,
+                imageUrl: widget.product.imageProduct,
                 height: size.height * 0.4,
                 width: size.width,
               )),
@@ -104,8 +101,17 @@ class _ContentState extends State<Content> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.product.name),
-                Text(widget.product.basePrice.toString())
+                Text(widget.product.productName),
+                const Padding(
+                  padding: EdgeInsets.only(top: 8.0),
+                  child: Text('Base price'),
+                ),
+                Text(widget.product.basePrice.toString()),
+                const Padding(
+                  padding: EdgeInsets.only(top: 8.0),
+                  child: Text('Your bid price'),
+                ),
+                Text(widget.product.price.toString())
               ],
             ),
           ),
@@ -114,8 +120,13 @@ class _ContentState extends State<Content> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.product.user?.fullName ?? "No user information"),
-                Text(widget.product.user?.city ?? "No user information")
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 8.0),
+                  child: Text('Seller Info'),
+                ),
+                Text(widget.product.product.user?.fullName ??
+                    "No user information"),
+                Text(widget.product.product.user?.city ?? "No user information")
               ],
             ),
           ),
@@ -125,7 +136,7 @@ class _ContentState extends State<Content> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text('Description'),
-                Text(widget.product.description)
+                Text(widget.product.product.description)
               ],
             ),
           ),
@@ -141,18 +152,26 @@ class _ContentState extends State<Content> {
                 ElevatedButton(
                   onPressed: () {
                     if (bidController.text.trim().isNotEmpty) {
-                      BlocProvider.of<ProductDetailBloc>(context).add(
-                        Order(
-                          widget.product.id.toString(),
-                          bidController.text.trim(),
-                        ),
-                      );
+                      BlocProvider.of<MyOrderDetailBloc>(context).add(
+                          PutMyBidPrice(
+                              id: widget.product.id.toString(),
+                              bidPrice: bidController.text.trim()));
                     } else {
                       showSnackBar(context, 'Something went wrong...',
                           'Fill bid price', ContentType.warning);
                     }
                   },
-                  child: const Text("Start Bargain"),
+                  child: const Text("Change Bid Price"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    BlocProvider.of<MyOrderDetailBloc>(context).add(
+                      DeleteMyOrder(id: widget.product.id.toString()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: CupertinoColors.destructiveRed),
+                  child: const Text("Delete Order"),
                 ),
               ],
             ),

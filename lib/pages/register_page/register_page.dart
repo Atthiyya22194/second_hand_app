@@ -152,7 +152,7 @@ class _RegisterFormState extends State<RegisterForm> {
         addressController.text.isEmpty &&
         cityController.text.isEmpty) {
       showSnackBar(context, 'Something went wrong...', 'Please fill all form',
-          ContentType.failure);
+          ContentType.warning);
       return false;
     } else {
       return true;

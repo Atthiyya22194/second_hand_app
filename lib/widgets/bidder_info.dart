@@ -15,7 +15,7 @@ class BidderInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ImageLoader(
-          imageUrl: order.user.imageUrl,
+          imageUrl: order.user?.imageUrl,
           height: size.height * 0.1,
           width: size.width * 0.2,
         ),
@@ -24,7 +24,10 @@ class BidderInfo extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [Text(order.user.fullName), Text(order.user.city)],
+            children: [
+              Text(order.user?.fullName ?? "No user information"),
+              Text(order.user?.city ?? "No user information"),
+            ],
           ),
         )
       ],

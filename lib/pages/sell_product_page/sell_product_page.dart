@@ -160,7 +160,7 @@ class _SellProductForm extends State<SellProductForm> {
         priceController.text.isEmpty &&
         locationController.text.isEmpty) {
       showSnackBar(context, 'Something went wrong...', 'Please fill all form',
-          ContentType.failure);
+          ContentType.warning);
       return false;
     } else {
       return true;

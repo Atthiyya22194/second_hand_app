@@ -15,36 +15,34 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: BlocProvider<EditProfileBloc>(
-          create: (context) => EditProfileBloc(AuthRepository()),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                BlocConsumer<EditProfileBloc, EditProfileState>(
-                  builder: (context, state) {
-                    if (state is EditProfileLoadingState) {
-                      const ShowLoading();
-                    }
-                    return Container();
-                  },
-                  listener: (context, state) {
-                    if (state is EditProfileSuccessState) {
-                      showSnackBar(context, 'Succesfully Updated',
-                          state.response, ContentType.success);
-                    }
-                    if (state is EditProfileErrorState) {
-                      showSnackBar(context, 'Something went wrong...',
-                          state.error, ContentType.failure);
-                    }
-                  },
-                ),
-                const EditProfileForm(),
-              ],
-            ),
+    return Scaffold(appBar: AppBar(title: const Text('Edit Profile')),
+      body: BlocProvider<EditProfileBloc>(
+        create: (context) => EditProfileBloc(AuthRepository()),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              BlocConsumer<EditProfileBloc, EditProfileState>(
+                builder: (context, state) {
+                  if (state is EditProfileLoadingState) {
+                    const ShowLoading();
+                  }
+                  return Container();
+                },
+                listener: (context, state) {
+                  if (state is EditProfileSuccessState) {
+                    showSnackBar(context, 'Succesfully Updated',
+                        state.response, ContentType.success);
+                  }
+                  if (state is EditProfileErrorState) {
+                    showSnackBar(context, 'Something went wrong...',
+                        state.error, ContentType.failure);
+                  }
+                },
+              ),
+              const EditProfileForm(),
+            ],
           ),
         ),
       ),
