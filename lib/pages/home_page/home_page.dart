@@ -10,6 +10,7 @@ import '../../bloc/home_page/home_page_events.dart';
 import '../../bloc/home_page/home_page_states.dart';
 import '../../repositories/market_repository.dart';
 import '../../widgets/product_card.dart';
+import '../product_detail/product_detail_page.dart';
 
 class HomePage extends StatelessWidget {
   static const routName = '/home_page';
@@ -87,7 +88,7 @@ class ProductList extends StatelessWidget {
               itemCount: data.length,
               itemBuilder: (_, index) {
                 final product = data[index];
-                return ProductCard(product: product);
+                return ProductCard(product: product, route: ProductDetailpage(id: product.id.toString()),);
               },
             ),
           );

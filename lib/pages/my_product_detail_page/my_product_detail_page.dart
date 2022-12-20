@@ -2,19 +2,20 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/my_order_detail/my_order_detail_event.dart';
-import '../../models/order_response.dart';
+import '../../bloc/my_product-detail/my_product_detail_bloc.dart';
+import '../../bloc/my_product-detail/my_product_detail_event.dart';
+import '../my_product_page/my_product_page.dart';
 
-import '../../bloc/my_order_detail/my_order_detail_bloc.dart';
-import '../../bloc/my_order_detail/my_order_detail_state.dart';
+import '../../bloc/my_product-detail/my_product_detail_state.dart';
+import '../../models/product_detail_response.dart';
 import '../../repositories/market_repository.dart';
 import '../../widgets/image_loader.dart';
 import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 
-class MyOrderDetailpage extends StatelessWidget {
+class MyProductDetailPage extends StatelessWidget {
   final String id;
-  const MyOrderDetailpage({Key? key, required this.id})
+  const MyProductDetailPage({Key? key, required this.id})
       : super(
           key: key,
         );
@@ -22,20 +23,20 @@ class MyOrderDetailpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          MyOrderDetailBloc(MarketRepository())..add(GetMyOrderDetail(id: id)),
+      create: (context) => MyProductDetailBloc(MarketRepository())
+        ..add(GetMyProductDetail(id: id)),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Order Detail'),
+          title: const Text('Product Detail'),
         ),
-        body: BlocConsumer<MyOrderDetailBloc, MyOrderDetailState>(
+        body: BlocConsumer<MyProductDetailBloc, MyProductDetailState>(
           builder: (context, state) {
-            if (state is MyOrderDetailLoadingState) {
+            if (state is MyProductDetailLoadingState) {
               return const ShowLoading();
             }
 
-            if (state is MyOrderDetailLoadedState) {
-              final OrderResponse product = state.response;
+            if (state is MyProductDetailLoadedState) {
+              final ProductDetailResponse product = state.response;
               return Content(
                 product: product,
               );
@@ -43,19 +44,16 @@ class MyOrderDetailpage extends StatelessWidget {
             return Container();
           },
           listener: (context, state) {
-            if (state is MyOrderDetailErrorState) {
+            if (state is MyProductDetailErrorState) {
               showSnackBar(context, 'Something went wrong', state.error,
                   ContentType.failure);
             }
-            if (state is PatchBidSuccessState) {
-              showSnackBar(context, 'Bid Successful', state.response,
-                  ContentType.success);
-              BlocProvider.of<MyOrderDetailBloc>(context)
-                  .add(GetMyOrderDetail(id: id));
-            }
-            if (state is DeleteOrderSuccessState) {
-              Navigator.pop(context);
-              showSnackBar(context, 'Order Deleted', state.response,
+            if (state is DeleteProductSuccessState) {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MyProductPage()));
+              showSnackBar(context, 'Product Deleted', state.response,
                   ContentType.success);
             }
           },
@@ -66,7 +64,7 @@ class MyOrderDetailpage extends StatelessWidget {
 }
 
 class Content extends StatefulWidget {
-  final OrderResponse product;
+  final ProductDetailResponse product;
   const Content({super.key, required this.product});
 
   @override
@@ -92,7 +90,7 @@ class _ContentState extends State<Content> {
           Container(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: ImageLoader(
-                imageUrl: widget.product.imageProduct,
+                imageUrl: widget.product.imageUrl,
                 height: size.height * 0.4,
                 width: size.width,
               )),
@@ -101,7 +99,7 @@ class _ContentState extends State<Content> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.product.productName),
+                Text(widget.product.name),
                 const Padding(
                   padding: EdgeInsets.only(top: 8.0),
                   child: Text('Base price'),
@@ -111,7 +109,7 @@ class _ContentState extends State<Content> {
                   padding: EdgeInsets.only(top: 8.0),
                   child: Text('Your bid price'),
                 ),
-                Text(widget.product.price.toString())
+                Text(widget.product.basePrice.toString())
               ],
             ),
           ),
@@ -124,9 +122,8 @@ class _ContentState extends State<Content> {
                   padding: EdgeInsets.only(bottom: 8.0),
                   child: Text('Seller Info'),
                 ),
-                Text(widget.product.product.user?.fullName ??
-                    "No user information"),
-                Text(widget.product.product.user?.city ?? "No user information")
+                Text(widget.product.user?.fullName ?? "No user information"),
+                Text(widget.product.user?.city ?? "No user information")
               ],
             ),
           ),
@@ -136,42 +133,24 @@ class _ContentState extends State<Content> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text('Description'),
-                Text(widget.product.product.description)
+                Text(widget.product.description)
               ],
             ),
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                TextField(
-                  keyboardType: TextInputType.number,
-                  controller: bidController,
-                  decoration: const InputDecoration(labelText: 'Bid Price'),
-                ),
                 ElevatedButton(
                   onPressed: () {
-                    if (bidController.text.trim().isNotEmpty) {
-                      BlocProvider.of<MyOrderDetailBloc>(context).add(
-                          PutMyBidPrice(
-                              id: widget.product.id.toString(),
-                              bidPrice: bidController.text.trim()));
-                    } else {
-                      showSnackBar(context, 'Something went wrong...',
-                          'Fill bid price', ContentType.warning);
-                    }
-                  },
-                  child: const Text("Change Bid Price"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<MyOrderDetailBloc>(context).add(
-                      DeleteMyOrder(id: widget.product.id.toString()),
+                    BlocProvider.of<MyProductDetailBloc>(context).add(
+                      DeleteMyProduct(id: widget.product.id.toString()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
                       primary: CupertinoColors.destructiveRed),
-                  child: const Text("Delete Order"),
+                  child: const Text("Delete Product"),
                 ),
               ],
             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/notification_response.dart';
 
+import '../models/notification_response.dart';
 import '../pages/product_detail/product_detail_page.dart';
 
 class NotificationCard extends StatelessWidget {

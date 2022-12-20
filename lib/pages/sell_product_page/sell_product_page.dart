@@ -1,6 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../bloc/sell_product/sell_product_bloc.dart';
 import '../../bloc/sell_product/sell_product_event.dart';
 import '../../bloc/sell_product/sell_product_state.dart';

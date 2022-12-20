@@ -1,16 +1,16 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/bloc/my_order/my_order_bloc.dart';
-import 'package:second_hand_app/bloc/my_order/my_order_event.dart';
-import 'package:second_hand_app/bloc/my_order/my_order_state.dart';
-import 'package:second_hand_app/models/order_response.dart';
-import 'package:second_hand_app/pages/my_order_detail_page/my_order_detail_page.dart';
-import 'package:second_hand_app/repositories/market_repository.dart';
-import 'package:second_hand_app/widgets/center_text_info.dart';
-import 'package:second_hand_app/widgets/order_card.dart';
-import 'package:second_hand_app/widgets/show_loading.dart';
-import 'package:second_hand_app/widgets/show_snack_bar.dart';
+import '../../bloc/my_order/my_order_bloc.dart';
+import '../../bloc/my_order/my_order_event.dart';
+import '../../bloc/my_order/my_order_state.dart';
+import '../../models/order_response.dart';
+import '../my_order_detail_page/my_order_detail_page.dart';
+import '../../repositories/market_repository.dart';
+import '../../widgets/center_text_info.dart';
+import '../../widgets/order_card.dart';
+import '../../widgets/show_loading.dart';
+import '../../widgets/show_snack_bar.dart';
 
 class MyOrderPage extends StatelessWidget {
   const MyOrderPage({super.key});

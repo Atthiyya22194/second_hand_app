@@ -2,15 +2,15 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../models/order_response.dart';
-import '../../widgets/bidder_info.dart';
-import '../../widgets/bottom_nav_bar.dart';
-import '../../widgets/product_info.dart';
 
 import '../../bloc/offer_detail/offer_detail_bloc.dart';
 import '../../bloc/offer_detail/offer_detail_event.dart';
 import '../../bloc/offer_detail/offer_detail_state.dart';
+import '../../models/order_response.dart';
 import '../../repositories/market_repository.dart';
+import '../../widgets/bidder_info.dart';
+import '../../widgets/bottom_nav_bar.dart';
+import '../../widgets/product_info.dart';
 import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 

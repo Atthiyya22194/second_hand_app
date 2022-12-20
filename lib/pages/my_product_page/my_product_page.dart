@@ -1,6 +1,7 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../widgets/bottom_nav_bar.dart';
 
 import 'completed/completed_order_page.dart';
 import 'declined/declined_order_page.dart';
@@ -13,7 +14,15 @@ class MyProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const BottomNavBar()));
+          },
+        ),
+      ),
       body: DefaultTabController(
         length: 4,
         child: Column(

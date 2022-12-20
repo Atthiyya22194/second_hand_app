@@ -201,7 +201,7 @@ class MarketRepository {
     }
   }
 
-  Future<String> putMyOrderDetail(
+  Future<String> putBidOrder(
       {required String accessToken,
       required String orderId,
       required String bidPrice}) async {
@@ -219,16 +219,28 @@ class MarketRepository {
     }
   }
 
-  Future<String> deleteMyOrderDetail(
-      {required String accessToken,
-      required String orderId}) async {
+  Future<String> deleteMyOrder(
+      {required String accessToken, required String orderId}) async {
     final header = {'access_token': accessToken};
-    final response = await http.delete(
-        Uri.parse('${baseUrl()}buyer/order/$orderId'),
-        headers: header);
+    final response = await http
+        .delete(Uri.parse('${baseUrl()}buyer/order/$orderId'), headers: header);
 
     if (response.statusCode == 200) {
       return 'Order Deleted';
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future<String> deleteMyProduct(
+      {required String accessToken, required String productId}) async {
+    final header = {'access_token': accessToken};
+    final response = await http.delete(
+        Uri.parse('${baseUrl()}seller/product/$productId'),
+        headers: header);
+
+    if (response.statusCode == 200) {
+      return 'Product Deleted';
     } else {
       throw Exception(response.reasonPhrase);
     }

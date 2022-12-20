@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/bloc/my_detail_order/my_order_detail_event.dart';
-import 'package:second_hand_app/bloc/my_detail_order/my_order_detail_state.dart';
-import 'package:second_hand_app/repositories/market_repository.dart';
+import 'my_order_detail_event.dart';
+import 'my_order_detail_state.dart';
+import '../../repositories/market_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyOrderDetailBloc extends Bloc<MyOrderDetailEvent, MyOrderDetailState> {
@@ -32,7 +32,7 @@ class MyOrderDetailBloc extends Bloc<MyOrderDetailEvent, MyOrderDetailState> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final accessToken = prefs.getString('accessToken');
-      final data = await _repository.putMyOrderDetail(
+      final data = await _repository.putBidOrder(
           accessToken: accessToken!,
           orderId: event.id,
           bidPrice: event.bidPrice);
@@ -48,7 +48,7 @@ class MyOrderDetailBloc extends Bloc<MyOrderDetailEvent, MyOrderDetailState> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final accessToken = prefs.getString('accessToken');
-      final data = await _repository.deleteMyOrderDetail(
+      final data = await _repository.deleteMyOrder(
           accessToken: accessToken!, orderId: event.id);
       emit(DeleteOrderSuccessState(data));
     } catch (e) {
