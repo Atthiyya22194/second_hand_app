@@ -157,14 +157,33 @@ class MarketRepository {
   }
 
   Future<String> patchOffered(
-      {required String accessToken, required String orderId,required String status}) async {
+      {required String accessToken,
+      required String orderId,
+      required String status}) async {
     final header = {'access_token': accessToken};
-    final body = {'status':status};
-    final response = await http
-        .patch(Uri.parse('${baseUrl()}seller/order/$orderId'), headers: header,body: body);
+    final body = {'status': status};
+    final response = await http.patch(
+        Uri.parse('${baseUrl()}seller/order/$orderId'),
+        headers: header,
+        body: body);
 
     if (response.statusCode == 200) {
       return status;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+
+  Future<List<OrderResponse>> getMyOrders(
+      {required String accessToken}) async {
+    final header = {'access_token': accessToken};
+    final response =
+        await http.get(Uri.parse('${baseUrl()}buyer/order'), headers: header);
+
+    if (response.statusCode == 200) {
+      final List result = jsonDecode(response.body);
+      return result.map((e) => OrderResponse.fromJson(e)).toList();
     } else {
       throw Exception(response.reasonPhrase);
     }
