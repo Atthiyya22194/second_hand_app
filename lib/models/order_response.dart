@@ -36,7 +36,7 @@ class OrderResponse {
   dynamic createdAt;
   dynamic updatedAt;
   Product product;
-  User user;
+  User? user;
 
   factory OrderResponse.fromJson(Map<String, dynamic> json) => OrderResponse(
         id: json["id"],
@@ -67,7 +67,7 @@ class OrderResponse {
         "createdAt": createdAt ?? "null",
         "updatedAt": updatedAt ?? "null",
         "Product": product.toJson(),
-        "User": user.toJson(),
+        "User": user?.toJson() ?? "No user information",
       };
 }
 
@@ -92,7 +92,7 @@ class Product {
   String location;
   int userId;
   String status;
-  User user;
+  User? user;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         name: json["name"],
@@ -115,7 +115,7 @@ class Product {
         "location": location,
         "user_id": userId,
         "status": status,
-        "User": user.toJson(),
+        "User": user?.toJson() ?? "No user information",
       };
 }
 
@@ -136,7 +136,7 @@ class User {
   String phoneNumber;
   String address;
   String? imageUrl;
-  String city;
+  String? city;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -155,6 +155,6 @@ class User {
         "phone_number": phoneNumber,
         "address": address,
         "image_url": imageUrl,
-        "city": city,
+        "city": city ?? "No user information",
       };
 }

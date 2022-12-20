@@ -5,6 +5,7 @@ import 'package:second_hand_app/bloc/my_order/my_order_bloc.dart';
 import 'package:second_hand_app/bloc/my_order/my_order_event.dart';
 import 'package:second_hand_app/bloc/my_order/my_order_state.dart';
 import 'package:second_hand_app/models/order_response.dart';
+import 'package:second_hand_app/pages/my_order_detail_page/my_order_detail_page.dart';
 import 'package:second_hand_app/repositories/market_repository.dart';
 import 'package:second_hand_app/widgets/center_text_info.dart';
 import 'package:second_hand_app/widgets/order_card.dart';
@@ -18,14 +19,12 @@ class MyOrderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text('My Order')),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: BlocProvider(
-              create: (context) =>
-                  MyOrderBloc(MarketRepository())..add(GetMyOrder()),
-              child: const MyOrderList(),
-            ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: BlocProvider(
+            create: (context) =>
+                MyOrderBloc(MarketRepository())..add(GetMyOrder()),
+            child: const MyOrderList(),
           ),
         ));
   }
@@ -48,7 +47,7 @@ class MyOrderList extends StatelessWidget {
               itemCount: data.length,
               itemBuilder: (_, index) {
                 final order = data[index];
-                return OrderCard(order: order);
+                return OrderCard(order: order, route:  MyOrderDetailpage(id: order.id.toString().trim()),);
               },
             );
           } else {

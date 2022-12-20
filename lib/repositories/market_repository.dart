@@ -174,9 +174,7 @@ class MarketRepository {
     }
   }
 
-
-  Future<List<OrderResponse>> getMyOrders(
-      {required String accessToken}) async {
+  Future<List<OrderResponse>> getMyOrders({required String accessToken}) async {
     final header = {'access_token': accessToken};
     final response =
         await http.get(Uri.parse('${baseUrl()}buyer/order'), headers: header);
@@ -184,6 +182,53 @@ class MarketRepository {
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);
       return result.map((e) => OrderResponse.fromJson(e)).toList();
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future<OrderResponse> getMyOrderDetail(
+      {required String accessToken, required String orderId}) async {
+    final header = {'access_token': accessToken};
+    final response = await http
+        .get(Uri.parse('${baseUrl()}buyer/order/$orderId'), headers: header);
+
+    if (response.statusCode == 200) {
+      final result = OrderResponse.fromJson(json.decode(response.body));
+      return result;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future<String> putMyOrderDetail(
+      {required String accessToken,
+      required String orderId,
+      required String bidPrice}) async {
+    final header = {'access_token': accessToken};
+    final body = {'bid_price': bidPrice};
+    final response = await http.put(
+        Uri.parse('${baseUrl()}buyer/order/$orderId'),
+        headers: header,
+        body: body);
+
+    if (response.statusCode == 200) {
+      return 'Bid Success';
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future<String> deleteMyOrderDetail(
+      {required String accessToken,
+      required String orderId}) async {
+    final header = {'access_token': accessToken};
+    final response = await http.delete(
+        Uri.parse('${baseUrl()}buyer/order/$orderId'),
+        headers: header);
+
+    if (response.statusCode == 200) {
+      return 'Order Deleted';
     } else {
       throw Exception(response.reasonPhrase);
     }

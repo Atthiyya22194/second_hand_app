@@ -32,14 +32,6 @@ class BidSuccessState extends ProductDetailPageState {
   List<Object?> get props => [response];
 }
 
-class BidFailedState extends ProductDetailPageState {
-  BidFailedState(this.error);
-  final String error;
-
-  @override
-  List<Object?> get props => [error];
-}
-
 class ProductDetailPageErrorState extends ProductDetailPageState {
   ProductDetailPageErrorState(this.error);
   final String error;

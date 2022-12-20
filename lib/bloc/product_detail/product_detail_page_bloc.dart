@@ -35,10 +35,8 @@ class ProductDetailBloc
           productId: event.productId,
           bidPrice: event.bidPrice);
       emit(BidSuccessState(data));
-      await _getData(GetData(event.productId), emit);
     } catch (e) {
-      emit(BidFailedState(e.toString()));
-      await _getData(GetData(event.productId), emit);
+      emit(ProductDetailPageErrorState(e.toString()));
     }
   }
 }

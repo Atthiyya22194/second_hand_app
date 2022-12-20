@@ -11,6 +11,7 @@ import '../../../widgets/center_text_info.dart';
 import '../../../widgets/order_card.dart';
 import '../../../widgets/show_loading.dart';
 import '../../../widgets/show_snack_bar.dart';
+import '../../offer_detail_page/offer_detail_page.dart';
 
 class PendingOrderPage extends StatelessWidget {
   const PendingOrderPage({super.key});
@@ -35,7 +36,7 @@ class PendingOrderPage extends StatelessWidget {
                   itemBuilder: (_, index) {
                     final order = data[index];
                     return OrderCard(
-                      order: order,
+                      order: order, route:  OfferDetailPage(orderId: order.id.toString().trim()),
                     );
                   },
                 );
