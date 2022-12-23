@@ -30,7 +30,10 @@ class ListMenu extends StatelessWidget {
                 Container(
                   margin:
                       EdgeInsets.fromLTRB(0 * fem, 0 * fem, 8 * fem, 0 * fem),
-                  child: Icon(icon),
+                  child: Icon(
+                    icon,
+                    color: const Color(0xff7126b5),
+                  ),
                 ),
                 PoppinsText(text: title)
               ],

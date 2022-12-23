@@ -1,6 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:second_hand_app/widgets/poppins_text.dart';
 import '../../bloc/my_order/my_order_bloc.dart';
 import '../../bloc/my_order/my_order_event.dart';
 import '../../bloc/my_order/my_order_state.dart';
@@ -17,16 +18,30 @@ class MyOrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
     return Scaffold(
-        appBar: AppBar(title: const Text('My Order')),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
+      body: SafeArea(
+        child: Container(
+          margin: EdgeInsets.fromLTRB(24 * fem, 16 * fem, 24 * fem, 8 * fem),
           child: BlocProvider(
             create: (context) =>
                 MyOrderBloc(MarketRepository())..add(GetMyOrder()),
-            child: const MyOrderList(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                PoppinsText(
+                  text: 'My Ordered Product',
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+                
+              ],
+            ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -47,7 +62,10 @@ class MyOrderList extends StatelessWidget {
               itemCount: data.length,
               itemBuilder: (_, index) {
                 final order = data[index];
-                return OrderCard(order: order, route:  MyOrderDetailpage(id: order.id.toString().trim()),);
+                return OrderCard(
+                  order: order,
+                  route: MyOrderDetailpage(id: order.id.toString().trim()),
+                );
               },
             );
           } else {

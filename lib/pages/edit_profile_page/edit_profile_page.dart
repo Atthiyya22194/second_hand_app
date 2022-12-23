@@ -2,9 +2,12 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:second_hand_app/widgets/rounded_button.dart';
+import 'package:second_hand_app/widgets/rounded_text_field.dart';
 import '../../bloc/edit_profile/edit_profile_bloc.dart';
 import '../../bloc/edit_profile/edit_profile_event.dart';
 import '../../bloc/edit_profile/edit_profile_state.dart';
+import '../../widgets/poppins_text.dart';
 import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 
@@ -15,34 +18,44 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Edit Profile')),
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    return Scaffold(
       body: BlocProvider<EditProfileBloc>(
         create: (context) => EditProfileBloc(AuthRepository()),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              BlocConsumer<EditProfileBloc, EditProfileState>(
-                builder: (context, state) {
-                  if (state is EditProfileLoadingState) {
-                    const ShowLoading();
-                  }
-                  return Container();
-                },
-                listener: (context, state) {
-                  if (state is EditProfileSuccessState) {
-                    showSnackBar(context, 'Succesfully Updated',
-                        state.response, ContentType.success);
-                  }
-                  if (state is EditProfileErrorState) {
-                    showSnackBar(context, 'Something went wrong...',
-                        state.error, ContentType.failure);
-                  }
-                },
-              ),
-              const EditProfileForm(),
-            ],
+        child: SafeArea(
+          child: Container(
+            margin: EdgeInsets.fromLTRB(24 * fem, 16 * fem, 24 * fem, 8 * fem),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                const PoppinsText(
+                  text: 'Edit Profile',
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+                BlocConsumer<EditProfileBloc, EditProfileState>(
+                  builder: (context, state) {
+                    if (state is EditProfileLoadingState) {
+                      const ShowLoading();
+                    }
+                    return Container();
+                  },
+                  listener: (context, state) {
+                    if (state is EditProfileSuccessState) {
+                      showSnackBar(context, 'Succesfully Updated',
+                          state.response, ContentType.success);
+                    }
+                    if (state is EditProfileErrorState) {
+                      showSnackBar(context, 'Something went wrong...',
+                          state.error, ContentType.failure);
+                    }
+                  },
+                ),
+                const EditProfileForm(),
+              ],
+            ),
           ),
         ),
       ),
@@ -75,43 +88,49 @@ class _EditProfileFormState extends State<EditProfileForm> {
 
   @override
   Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+      padding: EdgeInsets.fromLTRB(0, 24 * fem, 0, 0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('EditProfile'),
-          TextField(
+          RoundedTextField(
+            hint: 'John Doe',
+            title: 'Full Name',
             controller: fullNameController,
-            decoration: const InputDecoration(
-                labelText: 'Full Name', icon: Icon(CupertinoIcons.person)),
           ),
-          TextField(
+          RoundedTextField(
+            hint: 'Your phone number',
+            title: 'Phone Number',
             controller: phoneNumberController,
-            decoration: const InputDecoration(
-                labelText: 'Phone Number', icon: Icon(CupertinoIcons.phone)),
           ),
-          TextField(
+          RoundedTextField(
+            hint: 'Your address',
+            title: 'Address',
             controller: addressController,
-            decoration: const InputDecoration(
-                labelText: 'Address', icon: Icon(CupertinoIcons.home)),
           ),
-          TextField(
+          RoundedTextField(
+            hint: 'Your City',
+            title: 'City',
             controller: cityController,
-            decoration: const InputDecoration(
-                labelText: 'City', icon: Icon(CupertinoIcons.location)),
           ),
-          ElevatedButton(
-            onPressed: () {
-              BlocProvider.of<EditProfileBloc>(context).add(EditProfile(
-                fullName: fullNameController.text,
-                phoneNumber: phoneNumberController.text,
-                address: addressController.text,
-                city: cityController.text,
-              ));
-            },
-            child: const Text("Edit Profile"),
+          SizedBox(
+            width: double.infinity,
+            child: RoundedButton(
+              onPressed: () {
+                BlocProvider.of<EditProfileBloc>(context).add(
+                  EditProfile(
+                    fullName: fullNameController.text,
+                    phoneNumber: phoneNumberController.text,
+                    address: addressController.text,
+                    city: cityController.text,
+                  ),
+                );
+              },
+              text: "Edit Profile",
+            ),
           )
         ],
       ),

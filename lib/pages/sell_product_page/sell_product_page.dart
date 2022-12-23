@@ -176,7 +176,12 @@ class _SellProductForm extends State<SellProductForm> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0),
-                      child: RoundedButton(text: 'Upload', onPressed: () {}),
+                      child: RoundedButton(
+                        text: 'Upload',
+                        onPressed: () {
+                          _formValidation();
+                        },
+                      ),
                     )
                   ],
                 );
