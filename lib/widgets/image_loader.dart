@@ -6,10 +6,7 @@ class ImageLoader extends StatelessWidget {
   final double height;
   final double width;
   const ImageLoader(
-      {super.key,
-      this.imageUrl,
-      required this.height,
-      required this.width});
+      {super.key, this.imageUrl, required this.height, required this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +19,7 @@ class ImageLoader extends StatelessWidget {
           progressIndicatorBuilder: (context, url, downloadProgress) =>
               const Center(child: Text('Loading image...')),
           errorWidget: (context, url, error) => const Icon(Icons.error),
-          fit: BoxFit.cover,
+          fit: BoxFit.fitHeight,
           height: height,
           width: width,
         )

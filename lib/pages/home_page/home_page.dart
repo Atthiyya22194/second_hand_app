@@ -39,7 +39,11 @@ class Content extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
-        children: const [HomeHeader(), CategoryList(), ProductList()],
+        children: const [
+          HomeHeader(),
+          CategoryList(),
+          ProductList(),
+        ],
       ),
     );
   }
