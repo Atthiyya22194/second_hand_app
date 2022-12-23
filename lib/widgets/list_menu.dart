@@ -35,14 +35,12 @@ class ListMenu extends StatelessWidget {
                 PoppinsText(text: title)
               ],
             ),
-            Container(
-              margin: EdgeInsets.fromLTRB(0 * fem, 16 * fem, 0 * fem, 0 * fem),
-              width: double.infinity,
-              height: 1 * fem,
-              decoration: const BoxDecoration(
-                color: Color(0xffe5e5e5),
+            Divider(
+              color: const Color(
+                0xffe5e5e5,
               ),
-            ),
+              thickness: 1 * fem,
+            )
           ],
         ),
       ),

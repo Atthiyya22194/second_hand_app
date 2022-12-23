@@ -61,25 +61,25 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
     PersistentBottomNavBarItem(
       icon: const Icon(CupertinoIcons.home),
       title: ("Home"),
-      activeColorPrimary: CupertinoColors.activeBlue,
+      activeColorPrimary: const Color(0xFFA06ECE),
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
       icon: const Icon(CupertinoIcons.bell),
       title: ("Notification"),
-      activeColorPrimary: CupertinoColors.activeBlue,
+      activeColorPrimary: const Color(0xFFA06ECE),
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
       icon: const Icon(CupertinoIcons.add),
       title: ("Sell"),
-      activeColorPrimary: CupertinoColors.activeBlue,
+      activeColorPrimary: const Color(0xFFA06ECE),
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
       icon: const Icon(CupertinoIcons.person),
       title: ("Profile"),
-      activeColorPrimary: CupertinoColors.activeBlue,
+      activeColorPrimary: const Color(0xFFA06ECE),
       inactiveColorPrimary: CupertinoColors.systemGrey,
     ),
   ];

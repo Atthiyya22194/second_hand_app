@@ -79,7 +79,6 @@ class Content extends StatefulWidget {
 }
 
 class _ContentState extends State<Content> {
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -93,7 +92,7 @@ class _ContentState extends State<Content> {
             width: size.width,
           ),
           ProductInfo(product: widget.product),
-          SellertInfo(product: widget.product),
+          SellerInfo(product: widget.product),
           ProductDescription(product: widget.product),
           BidForm(product: widget.product)
         ],
@@ -143,9 +142,9 @@ class ProductInfo extends StatelessWidget {
   }
 }
 
-class SellertInfo extends StatelessWidget {
+class SellerInfo extends StatelessWidget {
   final ProductDetailResponse product;
-  const SellertInfo({super.key, required this.product});
+  const SellerInfo({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -156,13 +155,21 @@ class SellertInfo extends StatelessWidget {
       product: product,
       child: Row(
         children: [
-          ImageLoader(
-            height: 60 * ffem,
-            width: 60 * ffem,
-            imageUrl: product.user?.imageUrl,
+          Container(
+            margin: EdgeInsets.fromLTRB(0 * ffem, 0 * ffem, 8 * ffem, 0 * ffem),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12 * fem),
+              child: ImageLoader(
+                height: 70 * fem,
+                width: 70 * fem,
+                imageUrl: product.user?.imageUrl,
+              ),
+            ),
           ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: [
               Container(
                 padding:
@@ -172,14 +179,10 @@ class SellertInfo extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              Container(
-                padding:
-                    EdgeInsets.fromLTRB(0 * ffem, 0 * ffem, 0 * ffem, 4 * ffem),
-                child: PoppinsText(
-                  text: product.user?.city ?? "No user information",
-                  fontSize: 13,
-                  color: const Color(0xff8a8a8a),
-                ),
+              PoppinsText(
+                text: product.user?.city ?? "No user information",
+                fontSize: 13,
+                color: const Color(0xff8a8a8a),
               ),
             ],
           ),

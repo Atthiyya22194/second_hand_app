@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/my_product-detail/my_product_detail_bloc.dart';
 import '../../bloc/my_product-detail/my_product_detail_event.dart';
+import '../../widgets/poppins_text.dart';
+import '../../widgets/rounded_border_container.dart';
+import '../../widgets/rounded_button.dart';
+import '../../widgets/rounded_text_field.dart';
 import '../my_product_page/my_product_page.dart';
 
 import '../../bloc/my_product-detail/my_product_detail_state.dart';
@@ -26,9 +30,6 @@ class MyProductDetailPage extends StatelessWidget {
       create: (context) => MyProductDetailBloc(MarketRepository())
         ..add(GetMyProductDetail(id: id)),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Product Detail'),
-        ),
         body: BlocConsumer<MyProductDetailBloc, MyProductDetailState>(
           builder: (context, state) {
             if (state is MyProductDetailLoadingState) {
@@ -41,20 +42,24 @@ class MyProductDetailPage extends StatelessWidget {
                 product: product,
               );
             }
-            return Container();
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text('Something went wrong...'),
+                  ],
+                ),
+              ],
+            );
           },
           listener: (context, state) {
             if (state is MyProductDetailErrorState) {
+              BlocProvider.of<MyProductDetailBloc>(context)
+                  .add(GetMyProductDetail(id: id));
               showSnackBar(context, 'Something went wrong', state.error,
                   ContentType.failure);
-            }
-            if (state is DeleteProductSuccessState) {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MyProductPage()));
-              showSnackBar(context, 'Product Deleted', state.response,
-                  ContentType.success);
             }
           },
         ),
@@ -72,14 +77,6 @@ class Content extends StatefulWidget {
 }
 
 class _ContentState extends State<Content> {
-  final TextEditingController bidController = TextEditingController();
-
-  @override
-  void dispose() {
-    bidController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -87,76 +84,165 @@ class _ContentState extends State<Content> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          ImageLoader(
+            imageUrl: widget.product.imageUrl,
+            height: size.height * 0.4,
+            width: size.width,
+          ),
+          ProductInfo(product: widget.product),
+          SellertInfo(product: widget.product),
+          ProductDescription(product: widget.product),
+          const EditProductButton()
+        ],
+      ),
+    );
+  }
+}
+
+class ProductInfo extends StatelessWidget {
+  final ProductDetailResponse product;
+  const ProductInfo({super.key, required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: RoundedBorderContainer(
+        product: product,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding:
+                  EdgeInsets.fromLTRB(0 * ffem, 0 * ffem, 0 * ffem, 4 * ffem),
+              child: PoppinsText(
+                text: product.name,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Container(
+              padding:
+                  EdgeInsets.fromLTRB(0 * ffem, 0 * ffem, 0 * ffem, 4 * ffem),
+              child: PoppinsText(
+                text: product.categories[0].name,
+                fontSize: 13,
+                color: const Color(0xff8a8a8a),
+              ),
+            ),
+            PoppinsText(text: 'Rp. ${product.basePrice}'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SellertInfo extends StatelessWidget {
+  final ProductDetailResponse product;
+  const SellertInfo({super.key, required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+    return RoundedBorderContainer(
+      product: product,
+      child: Row(
+        children: [
           Container(
-              padding: const EdgeInsets.only(bottom: 8.0),
+            padding:
+                EdgeInsets.fromLTRB(0 * ffem, 0 * ffem, 8 * ffem, 0 * ffem),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12 * fem),
               child: ImageLoader(
-                imageUrl: widget.product.imageUrl,
-                height: size.height * 0.4,
-                width: size.width,
-              )),
+                height: 70 * fem,
+                width: 70 * fem,
+                imageUrl: product.user?.imageUrl,
+              ),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding:
+                    EdgeInsets.fromLTRB(0 * ffem, 0 * ffem, 0 * ffem, 4 * ffem),
+                child: PoppinsText(
+                  text: product.user?.fullName ?? "No user information",
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Container(
+                padding:
+                    EdgeInsets.fromLTRB(0 * ffem, 0 * ffem, 0 * ffem, 4 * ffem),
+                child: PoppinsText(
+                  text: product.user?.city ?? "No user information",
+                  fontSize: 13,
+                  color: const Color(0xff8a8a8a),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProductDescription extends StatelessWidget {
+  final ProductDetailResponse product;
+  const ProductDescription({super.key, required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+    return RoundedBorderContainer(
+      product: product,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.product.name),
-                const Padding(
-                  padding: EdgeInsets.only(top: 8.0),
-                  child: Text('Base price'),
-                ),
-                Text(widget.product.basePrice.toString()),
-                const Padding(
-                  padding: EdgeInsets.only(top: 8.0),
-                  child: Text('Your bid price'),
-                ),
-                Text(widget.product.basePrice.toString())
-              ],
+            padding:
+                EdgeInsets.fromLTRB(0 * ffem, 0 * ffem, 0 * ffem, 4 * ffem),
+            child: const PoppinsText(
+              text: 'Description',
+              fontWeight: FontWeight.w500,
             ),
           ),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
-                  child: Text('Seller Info'),
-                ),
-                Text(widget.product.user?.fullName ?? "No user information"),
-                Text(widget.product.user?.city ?? "No user information")
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Description'),
-                Text(widget.product.description)
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<MyProductDetailBloc>(context).add(
-                      DeleteMyProduct(id: widget.product.id.toString()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: CupertinoColors.destructiveRed),
-                  child: const Text("Delete Product"),
-                ),
-              ],
+            padding:
+                EdgeInsets.fromLTRB(0 * ffem, 0 * ffem, 0 * ffem, 4 * ffem),
+            child: PoppinsText(
+              text: product.description,
+              fontSize: 13,
+              color: const Color(0xff8a8a8a),
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class EditProductButton extends StatelessWidget {
+  const EditProductButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    return Container(
+      margin: EdgeInsets.fromLTRB(24 * fem, 0 * fem, 24 * fem, 0 * fem),
+      width: double.infinity,
+      child: RoundedButton(onPressed: () {}, text: 'Edit Product'),
     );
   }
 }

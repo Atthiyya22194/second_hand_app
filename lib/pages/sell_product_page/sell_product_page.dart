@@ -1,12 +1,16 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:second_hand_app/widgets/rounded_button.dart';
+import 'package:second_hand_app/widgets/rounded_text_field.dart';
 
 import '../../bloc/sell_product/sell_product_bloc.dart';
 import '../../bloc/sell_product/sell_product_event.dart';
 import '../../bloc/sell_product/sell_product_state.dart';
 import '../../common/common.dart';
 import '../../repositories/market_repository.dart';
+import '../../widgets/dropdown_category.dart';
 import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 
@@ -74,83 +78,122 @@ class _SellProductForm extends State<SellProductForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Upload a product'),
-          TextField(
-            controller: nameController,
-            decoration: const InputDecoration(labelText: 'Product Name'),
-          ),
-          TextField(
-            controller: descController,
-            decoration: const InputDecoration(labelText: 'Description'),
-          ),
-          TextField(
-            controller: priceController,
-            decoration: const InputDecoration(labelText: 'Price'),
-          ),
-          DropdownButton(
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    return SingleChildScrollView(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RoundedTextField(
+              hint: 'Product name',
+              title: 'Product name',
+              controller: nameController,
+            ),
+            RoundedTextField(
+              hint: 'Rp. 10.000',
+              title: 'Product price',
+              controller: priceController,
+            ),
+            DropdownCategory(
               value: selectedCategory,
-              hint: const Text('Select Category'),
               items: list.map((String items) {
                 return DropdownMenuItem(value: items, child: Text(items));
               }).toList(),
-              onChanged: (String? newValue) {
+              onchanged: (String? newValue) {
                 setState(() {
                   categoryItems();
                   int id = list.indexOf(newValue!) + 1;
                   categoryId = id.toString();
                   selectedCategory = newValue;
                 });
-              }),
-          TextField(
-            controller: locationController,
-            decoration: const InputDecoration(labelText: 'location'),
-          ),
-          ElevatedButton(
-              onPressed: () {
-                BlocProvider.of<SellProductBloc>(context).add(GetImage());
               },
-              child: const Text('Choose Image')),
-          BlocConsumer<SellProductBloc, SellProductState>(
-            builder: (context, state) {
-              if (state is LoadImageState) {
-                return ElevatedButton(
-                    onPressed: () {
-                      if (_formValidation() == true) {
-                        BlocProvider.of<SellProductBloc>(context).add(
-                            UploadProduct(
-                                productName: nameController.text,
-                                description: descController.text,
-                                basePrice: priceController.text,
-                                category: categoryId!,
-                                location: locationController.text,
-                                image: state.image));
-                      }
-                    },
-                    child: const Text('Upload'));
-              }
-              if (state is SellProductLoadingState) {
-                return const ShowLoading();
-              }
-              return Container();
-            },
-            listener: (context, state) {
-              if (state is SellProductSuccessState) {
-                showSnackBar(
-                    context, 'Success!', state.response, ContentType.success);
-              }
-              if (state is SellProductErrorState) {
-                showSnackBar(
-                    context, 'Failed', state.error, ContentType.failure);
-              }
-            },
-          )
-        ],
+            ),
+            RoundedTextField(
+              hint: 'Jakarta',
+              title: 'Your location',
+              controller: locationController,
+            ),
+            RoundedTextField(
+              hint: 'Description',
+              title: 'Product description',
+              controller: descController,
+            ),
+            BlocConsumer<SellProductBloc, SellProductState>(
+              builder: (context, state) {
+                if (state is LoadImageState) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () => BlocProvider.of<SellProductBloc>(context)
+                            .add(GetImage()),
+                        child: SizedBox(
+                            width: 120 * fem,
+                            height: 120 * fem,
+                            child: Image.file(state.image)),
+                      ),
+                      RoundedButton(
+                        onPressed: () {
+                          if (_formValidation() == true) {
+                            BlocProvider.of<SellProductBloc>(context).add(
+                              UploadProduct(
+                                  productName: nameController.text,
+                                  description: descController.text,
+                                  basePrice: priceController.text,
+                                  category: categoryId!,
+                                  location: locationController.text,
+                                  image: state.image),
+                            );
+                          }
+                        },
+                        text: 'Upload',
+                      ),
+                    ],
+                  );
+                }
+                if (state is SellProductLoadingState) {
+                  return const ShowLoading();
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () => BlocProvider.of<SellProductBloc>(context)
+                          .add(GetImage()),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            border: Border.all()),
+                        width: 120 * fem,
+                        height: 120 * fem,
+                        child: const Center(
+                          child: Icon(CupertinoIcons.add),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: RoundedButton(text: 'Upload', onPressed: () {}),
+                    )
+                  ],
+                );
+              },
+              listener: (context, state) {
+                if (state is SellProductSuccessState) {
+                  showSnackBar(
+                      context, 'Success!', state.response, ContentType.success);
+                }
+                if (state is SellProductErrorState) {
+                  showSnackBar(
+                      context, 'Failed', state.error, ContentType.failure);
+                }
+              },
+            )
+          ],
+        ),
       ),
     );
   }
