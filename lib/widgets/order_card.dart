@@ -15,7 +15,7 @@ class OrderCard extends StatelessWidget {
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         leading: Hero(
-          tag: 'order image',
+          tag: 'product ${order.id}',
           child: Image.network(
             order.imageProduct,
             width: 100,
