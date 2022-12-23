@@ -1,45 +1,75 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../login_page/login_page.dart';
-import '../../widgets/show_loading.dart';
-
-import '../../bloc/register/register_bloc.dart';
-import '../../bloc/register/register_events.dart';
-import '../../bloc/register/register_states.dart';
-import '../../repositories/auth_repository.dart';
-import '../../widgets/show_snack_bar.dart';
+import 'package:second_hand_app/bloc/register/register_bloc.dart';
+import 'package:second_hand_app/bloc/register/register_events.dart';
+import 'package:second_hand_app/bloc/register/register_states.dart';
+import 'package:second_hand_app/pages/login_page/login_page.dart';
+import 'package:second_hand_app/repositories/auth_repository.dart';
+import 'package:second_hand_app/widgets/poppins_text.dart';
+import 'package:second_hand_app/widgets/rounded_button.dart';
+import 'package:second_hand_app/widgets/rounded_text_field.dart';
+import 'package:second_hand_app/widgets/show_loading.dart';
+import 'package:second_hand_app/widgets/show_snack_bar.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RegisterBloc>(
-      create: (context) => RegisterBloc(authRepository: AuthRepository()),
-      child: Scaffold(
-        body: BlocConsumer<RegisterBloc, RegisterState>(
-          builder: (context, state) {
-            if (state is RegisterLoadingState) {
-              return const ShowLoading();
-            }
-            return const RegisterForm();
-          },
-          listener: (context, state) {
-            if (state is RegisterSuccessState) {
-              showSnackBar(context, "Successfully Register!",
-                  "You have register successfully", ContentType.success);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-              );
-            }
-            if (state is RegisterErrorState) {
-              showSnackBar(context, "Register Failed!", state.error,
-                  ContentType.failure);
-            }
-          },
+    return const Scaffold(
+      body: Content(),
+    );
+  }
+}
+
+class Content extends StatelessWidget {
+  const Content({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: SizedBox(
+          width: double.infinity,
+          child: Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Color(0xffffffff),
+            ),
+            child: BlocProvider(
+              create: (context) => RegisterBloc(
+                authRepository: AuthRepository(),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      margin: EdgeInsets.fromLTRB(
+                          16 * fem, 24 * fem, 0 * fem, 0 * fem),
+                      child: const PoppinsText(
+                          text: 'Register',
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700)),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(
+                        16 * fem, 24 * fem, 16 * fem, 24 * fem),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        RegisterForm(),
+                        LoginButtonText(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -47,8 +77,7 @@ class RegisterPage extends StatelessWidget {
 }
 
 class RegisterForm extends StatefulWidget {
-  final String? errorMessage;
-  const RegisterForm({super.key, this.errorMessage});
+  const RegisterForm({super.key});
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
@@ -75,87 +104,135 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+      margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 24 * fem),
+      width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text('Register'),
-          TextField(
-            controller: emailController,
-            decoration: const InputDecoration(
-                labelText: 'Email', icon: Icon(CupertinoIcons.mail)),
-          ),
-          TextField(
-            controller: passwordController,
-            decoration: const InputDecoration(
-                labelText: 'Password', icon: Icon(CupertinoIcons.lock)),
-          ),
-          TextField(
-            controller: fullNameController,
-            decoration: const InputDecoration(
-                labelText: 'Full Name', icon: Icon(CupertinoIcons.person)),
-          ),
-          TextField(
-            controller: phoneNumberController,
-            decoration: const InputDecoration(
-                labelText: 'Phone Number', icon: Icon(CupertinoIcons.phone)),
-          ),
-          TextField(
-            controller: addressController,
-            decoration: const InputDecoration(
-                labelText: 'Address', icon: Icon(CupertinoIcons.home)),
-          ),
-          TextField(
-            controller: cityController,
-            decoration: const InputDecoration(
-                labelText: 'City', icon: Icon(CupertinoIcons.location)),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  if (_formValidation() == true) {
-                    BlocProvider.of<RegisterBloc>(context).add(Register(
-                        email: emailController.text,
-                        password: passwordController.text,
-                        fullName: fullNameController.text,
-                        phoneNumber: phoneNumberController.text,
-                        address: addressController.text,
-                        city: cityController.text));
-                  }
-                },
-                child: const Text("Register"),
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
+          BlocConsumer<RegisterBloc, RegisterState>(builder: (context, state) {
+            if (state is RegisterLoadingState) {
+              const ShowLoading();
+            }
+            return Container();
+          }, listener: (context, state) {
+            if (state is RegisterSuccessState) {
+              showSnackBar(
+                  context, 'Sucess', state.response, ContentType.success);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
                 ),
-                child: const Text("To login page"),
-              ),
-            ],
-          )
+              );
+            }
+            if (state is RegisterErrorState) {
+              showSnackBar(context, 'Something went wrong..', state.error, ContentType.failure);
+            }
+          }),
+          RoundedTextField(
+            hint: 'example@mail.com',
+            title: 'Email',
+            controller: emailController,
+          ),
+          RoundedTextField(
+            hint: 'Your Password',
+            title: 'Password',
+            controller: passwordController,
+          ),
+          RoundedTextField(
+            hint: 'Your Name',
+            title: 'Full Name',
+            controller: fullNameController,
+          ),
+          RoundedTextField(
+            hint: 'Your Phone Number',
+            title: 'Phone Number',
+            controller: phoneNumberController,
+          ),
+          RoundedTextField(
+            hint: 'Your Address',
+            title: 'Address',
+            controller: addressController,
+          ),
+          RoundedTextField(
+            hint: 'Your City',
+            title: 'Kota',
+            controller: cityController,
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: RoundedButton(
+              text: 'Register',
+              onPressed: () {
+                if (_formValidation() == true) {
+                  BlocProvider.of<RegisterBloc>(context).add(
+                    Register(
+                      email: emailController.text.trim(),
+                      password: passwordController.text.trim(),
+                      fullName: fullNameController.text.trim(),
+                      phoneNumber: phoneNumberController.text.trim(),
+                      address: addressController.text.trim(),
+                      city: cityController.text.trim(),
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
         ],
       ),
     );
   }
 
   _formValidation<bool>() {
-    if (emailController.text.isEmpty &&
-        passwordController.text.isEmpty &&
-        fullNameController.text.isEmpty &&
-        phoneNumberController.text.isEmpty &&
-        addressController.text.isEmpty &&
-        cityController.text.isEmpty) {
+    if (emailController.text.isEmpty && passwordController.text.isEmpty) {
       showSnackBar(context, 'Something went wrong...', 'Please fill all form',
           ContentType.warning);
       return false;
     } else {
       return true;
     }
+  }
+}
+
+class LoginButtonText extends StatelessWidget {
+  const LoginButtonText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    return Container(
+      margin: EdgeInsets.fromLTRB(45 * fem, 0 * fem, 45 * fem, 0 * fem),
+      width: double.infinity,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 4 * fem, 0 * fem),
+            child: const PoppinsText(
+              text: "Already have account ?",
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ),
+              );
+            },
+            child: const PoppinsText(
+              text: 'Login Here',
+              color: Color(0xff7126b5),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

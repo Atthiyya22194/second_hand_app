@@ -6,7 +6,8 @@ abstract class HomePageEvent extends Equatable {
 }
 
 class GetProducts extends HomePageEvent {
-  final String productName;
+  final String? productName;
+  final String? categoryId;
 
-  GetProducts(this.productName);
+  GetProducts({ this.productName, this.categoryId});
 }
