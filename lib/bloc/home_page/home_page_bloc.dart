@@ -15,7 +15,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       GetProducts event, Emitter<HomePageState> emit) async {
     emit(HomePageLoadingState());
     try {
-      final data = await _repository.getProducts(event.productName);
+      final data = await _repository.getProducts(event.productName,event.categoryId);
       emit(HomePageLoadedState(data));
     } catch (e) {
       emit(HomePageErrorState(e.toString()));

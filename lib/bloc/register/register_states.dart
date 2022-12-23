@@ -13,11 +13,11 @@ class RegisterLoadingState extends RegisterState {
 }
 
 class RegisterSuccessState extends RegisterState {
-  RegisterSuccessState(this._response);
-  final String _response;
+  RegisterSuccessState(this.response);
+  final String response;
 
   @override
-  List<Object?> get props => [_response];
+  List<Object?> get props => [response];
 }
 
 class RegisterErrorState extends RegisterState {

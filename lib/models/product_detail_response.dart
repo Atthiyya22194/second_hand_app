@@ -105,12 +105,12 @@ class User {
   });
 
   int? id;
-  String fullName;
+  String? fullName;
   String email;
   String phoneNumber;
   String address;
   String imageUrl;
-  String city;
+  String? city;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -124,11 +124,11 @@ class User {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "full_name": fullName,
+        "full_name": fullName ?? "No user information",
         "email": email,
         "phone_number": phoneNumber,
         "address": address,
         "image_url": imageUrl,
-        "city": city,
+        "city": city ?? "No user information",
       };
 }

@@ -1,42 +1,74 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:second_hand_app/pages/register_page/register_page.dart';
+import 'package:second_hand_app/repositories/auth_repository.dart';
+import 'package:second_hand_app/widgets/bottom_nav_bar.dart';
+import 'package:second_hand_app/widgets/poppins_text.dart';
+import 'package:second_hand_app/widgets/rounded_button.dart';
+import 'package:second_hand_app/widgets/rounded_text_field.dart';
+import 'package:second_hand_app/widgets/show_loading.dart';
+import 'package:second_hand_app/widgets/show_snack_bar.dart';
 
 import '../../bloc/login/login_bloc.dart';
 import '../../bloc/login/login_events.dart';
 import '../../bloc/login/login_states.dart';
-import '../../repositories/auth_repository.dart';
-import '../../widgets/bottom_nav_bar.dart';
-import '../../widgets/show_loading.dart';
-import '../../widgets/show_snack_bar.dart';
-import '../register_page/register_page.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => LoginBloc(authRepository: AuthRepository()),
-      child: Scaffold(
-        body: BlocConsumer<LoginBloc, LoginState>(
-          builder: (context, state) {
-            if (state is LoginLoadingState) {
-              return const ShowLoading();
-            }
-            return const LoginForm();
-          },
-          listener: (context, state) {
-            if (state is LoginSuccessState) {
-              Navigator.of(context, rootNavigator: true).push(
-                MaterialPageRoute(builder: (context) => const BottomNavBar()),
-              );
-            }
-            if (state is LoginErrorState) {
-              showSnackBar(
-                  context, "Login Failed!", state.error, ContentType.failure);
-            }
-          },
+    return const Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Content(),
+    );
+  }
+}
+
+class Content extends StatelessWidget {
+  const Content({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    return SafeArea(
+      child: SizedBox(
+        width: double.infinity,
+        child: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Color(0xffffffff),
+          ),
+          child: BlocProvider(
+            create: (context) => LoginBloc(authRepository: AuthRepository()),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    margin: EdgeInsets.fromLTRB(
+                        16 * fem, 0 * fem, 0 * fem, 0 * fem),
+                    child: const PoppinsText(
+                        text: 'Login',
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700)),
+                Container(
+                  padding: EdgeInsets.fromLTRB(
+                      16 * fem, 24 * fem, 16 * fem, 24 * fem),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      LoginForm(),
+                      RegisterButtonText(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -44,8 +76,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
-  final String? errorMessage;
-  const LoginForm({super.key, this.errorMessage});
+  const LoginForm({super.key});
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -64,54 +95,56 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+      margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 202 * fem),
+      width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text('Login'),
-          TextField(
+          BlocConsumer<LoginBloc, LoginState>(
+            builder: (context, state) {
+              if (state is LoginLoadingState) {
+                return const ShowLoading();
+              }
+              return Container();
+            },
+            listener: (context, state) {
+              if (state is LoginSuccessState) {
+                Navigator.of(context, rootNavigator: true).push(
+                  MaterialPageRoute(builder: (context) => const BottomNavBar()),
+                );
+              }
+              if (state is LoginErrorState) {
+                showSnackBar(
+                    context, "Login Failed!", state.error, ContentType.failure);
+              }
+            },
+          ),
+          RoundedTextField(
+            hint: 'example@mail.com',
+            title: 'Email',
             controller: emailController,
-            decoration: const InputDecoration(
-                labelText: 'Email', icon: Icon(CupertinoIcons.mail)),
           ),
-          TextField(
+          RoundedTextField(
+            hint: 'Your Password',
+            title: 'Password',
             controller: passwordController,
-            decoration: const InputDecoration(
-                labelText: 'Password', icon: Icon(CupertinoIcons.lock)),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  if (_formValidation() == true) {
-                    BlocProvider.of<LoginBloc>(context).add(
-                        Login(emailController.text, passwordController.text));
-                  }
-                },
-                child: const Text("Login"),
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const RegisterPage())),
-                child: const Text("Create accout"),
-              ),
-            ],
+          SizedBox(
+            width: double.infinity,
+            child: RoundedButton(
+              text: 'Login',
+              onPressed: () {
+                if (_formValidation() == true) {
+                  BlocProvider.of<LoginBloc>(context).add(
+                    Login(emailController.text, passwordController.text),
+                  );
+                }
+              },
+            ),
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                widget.errorMessage ?? "",
-                style: const TextStyle(color: CupertinoColors.destructiveRed),
-              )
-            ],
-          )
         ],
       ),
     );
@@ -125,5 +158,45 @@ class _LoginFormState extends State<LoginForm> {
     } else {
       return true;
     }
+  }
+}
+
+class RegisterButtonText extends StatelessWidget {
+  const RegisterButtonText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    return Container(
+      margin: EdgeInsets.fromLTRB(45 * fem, 0 * fem, 45 * fem, 0 * fem),
+      width: double.infinity,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 4 * fem, 0 * fem),
+            child: const PoppinsText(
+              text: "Don't have account ?",
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const RegisterPage(),
+                ),
+              );
+            },
+            child: const PoppinsText(
+              text: 'Register here',
+              color: Color(0xff7126b5),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
