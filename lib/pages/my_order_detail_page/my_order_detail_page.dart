@@ -1,14 +1,13 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/pages/my_order_page/my_order_page.dart';
+import '../my_order_page/my_order_page.dart';
 import '../../bloc/my_order_detail/my_order_detail_event.dart';
 import '../../models/order_response.dart';
 
 import '../../bloc/my_order_detail/my_order_detail_bloc.dart';
 import '../../bloc/my_order_detail/my_order_detail_state.dart';
 import '../../repositories/market_repository.dart';
-import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/image_loader.dart';
 import '../../widgets/poppins_text.dart';
 import '../../widgets/rounded_border_container.dart';

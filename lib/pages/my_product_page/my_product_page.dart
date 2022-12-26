@@ -91,7 +91,7 @@ class ButtonTab extends StatelessWidget {
           Expanded(
             child: Container(
               padding: EdgeInsets.fromLTRB(0, 16 * fem, 0, 0),
-              child: TabBarView(
+              child: const TabBarView(
                 children: [
                   MyProductListPage(),
                   PendingOrderPage(),

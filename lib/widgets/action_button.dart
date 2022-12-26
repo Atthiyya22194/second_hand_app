@@ -1,8 +1,8 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
-import 'package:second_hand_app/widgets/rounded_button.dart';
+import 'poppins_text.dart';
+import 'rounded_button.dart';
 import 'show_snack_bar.dart';
 
 import '../bloc/offer_detail/offer_detail_bloc.dart';

@@ -2,8 +2,6 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../widgets/rounded_button.dart';
-import '../../widgets/rounded_text_field.dart';
 
 import '../../bloc/sell_product/sell_product_bloc.dart';
 import '../../bloc/sell_product/sell_product_event.dart';
@@ -11,6 +9,8 @@ import '../../bloc/sell_product/sell_product_state.dart';
 import '../../common/common.dart';
 import '../../repositories/market_repository.dart';
 import '../../widgets/dropdown_category.dart';
+import '../../widgets/rounded_button.dart';
+import '../../widgets/rounded_text_field.dart';
 import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 

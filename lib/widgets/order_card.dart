@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
+import 'poppins_text.dart';
 import '../models/order_response.dart';
 import 'image_loader.dart';
 

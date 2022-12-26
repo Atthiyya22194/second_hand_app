@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:second_hand_app/pages/offer_detail_page/offer_detail_page.dart';
-import 'package:second_hand_app/pages/product_detail/product_detail_page.dart';
+import '../pages/offer_detail_page/offer_detail_page.dart';
+import '../pages/product_detail/product_detail_page.dart';
 import '../pages/my_product_detail_page/my_product_detail_page.dart';
 import 'image_loader.dart';
 import 'poppins_text.dart';

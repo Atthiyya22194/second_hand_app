@@ -1,20 +1,19 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../product_detail/product_detail_page.dart';
-import '../../widgets/poppins_text.dart';
-import '../../widgets/rounded_button.dart';
-import '../../widgets/rounded_text_field.dart';
-import '../../models/product_response.dart';
-import '../../widgets/show_loading.dart';
-import '../../widgets/show_snack_bar.dart';
 
 import '../../bloc/home_page/home_page_bloc.dart';
 import '../../bloc/home_page/home_page_events.dart';
 import '../../bloc/home_page/home_page_states.dart';
+import '../../models/product_response.dart';
 import '../../repositories/market_repository.dart';
+import '../../widgets/poppins_text.dart';
 import '../../widgets/product_card.dart';
+import '../../widgets/rounded_button.dart';
+import '../../widgets/rounded_text_field.dart';
+import '../../widgets/show_loading.dart';
+import '../../widgets/show_snack_bar.dart';
+import '../product_detail/product_detail_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../repositories/market_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../repositories/market_repository.dart';
 import 'my_product_detail_event.dart';
 import 'my_product_detail_state.dart';
 
