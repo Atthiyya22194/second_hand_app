@@ -1,9 +1,8 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/widgets/rounded_button.dart';
-import 'package:second_hand_app/widgets/rounded_text_field.dart';
+import '../../widgets/rounded_button.dart';
+import '../../widgets/rounded_text_field.dart';
 import '../../bloc/edit_profile/edit_profile_bloc.dart';
 import '../../bloc/edit_profile/edit_profile_event.dart';
 import '../../bloc/edit_profile/edit_profile_state.dart';
@@ -21,41 +20,42 @@ class EditProfilePage extends StatelessWidget {
     double baseWidth = 360;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return Scaffold(
+      appBar: AppBar(
+        title: const PoppinsText(
+          text: 'Edit Profile',
+          fontWeight: FontWeight.w700,
+          fontSize: 20,
+          height: 1.5,
+        ),
+      ),
       body: BlocProvider<EditProfileBloc>(
         create: (context) => EditProfileBloc(AuthRepository()),
-        child: SafeArea(
-          child: Container(
-            margin: EdgeInsets.fromLTRB(24 * fem, 16 * fem, 24 * fem, 8 * fem),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                const PoppinsText(
-                  text: 'Edit Profile',
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                ),
-                BlocConsumer<EditProfileBloc, EditProfileState>(
-                  builder: (context, state) {
-                    if (state is EditProfileLoadingState) {
-                      const ShowLoading();
-                    }
-                    return Container();
-                  },
-                  listener: (context, state) {
-                    if (state is EditProfileSuccessState) {
-                      showSnackBar(context, 'Succesfully Updated',
-                          state.response, ContentType.success);
-                    }
-                    if (state is EditProfileErrorState) {
-                      showSnackBar(context, 'Something went wrong...',
-                          state.error, ContentType.failure);
-                    }
-                  },
-                ),
-                const EditProfileForm(),
-              ],
-            ),
+        child: Container(
+          margin: EdgeInsets.fromLTRB(24 * fem, 16 * fem, 24 * fem, 8 * fem),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              BlocConsumer<EditProfileBloc, EditProfileState>(
+                builder: (context, state) {
+                  if (state is EditProfileLoadingState) {
+                    const ShowLoading();
+                  }
+                  return Container();
+                },
+                listener: (context, state) {
+                  if (state is EditProfileSuccessState) {
+                    showSnackBar(context, 'Succesfully Updated', state.response,
+                        ContentType.success);
+                  }
+                  if (state is EditProfileErrorState) {
+                    showSnackBar(context, 'Something went wrong...',
+                        state.error, ContentType.failure);
+                  }
+                },
+              ),
+              const EditProfileForm(),
+            ],
           ),
         ),
       ),

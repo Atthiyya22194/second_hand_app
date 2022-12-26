@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:second_hand_app/pages/my_product_detail_page/my_product_detail_page.dart';
-import 'package:second_hand_app/widgets/image_loader.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
+import 'package:second_hand_app/pages/offer_detail_page/offer_detail_page.dart';
+import 'package:second_hand_app/pages/product_detail/product_detail_page.dart';
+import '../pages/my_product_detail_page/my_product_detail_page.dart';
+import 'image_loader.dart';
+import 'poppins_text.dart';
 
 import '../models/notification_response.dart';
 
@@ -17,10 +19,9 @@ class NotificationCard extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return GestureDetector(
       onTap: () => Navigator.of(context, rootNavigator: true).push(
-        MaterialPageRoute(
-          builder: (context) =>
-              MyProductDetailPage(id: notification.product.id.toString()),
-        ),
+        MaterialPageRoute(builder: (context) {
+          return _navigation(notification.status);
+        }),
       ),
       child: Container(
         margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 8 * fem),
@@ -47,17 +48,11 @@ class NotificationCard extends StatelessWidget {
                     Container(
                         margin: EdgeInsets.fromLTRB(
                             0 * fem, 0 * fem, 0 * fem, 4 * fem),
-                        child: (notification.orderId == null)
-                            ? const PoppinsText(
-                                text: 'Upload Product',
-                                color: Color(0xff8a8a8a),
-                                fontSize: 13,
-                              )
-                            : const PoppinsText(
-                                text: 'Penawaran produk',
-                                color: Color(0xff8a8a8a),
-                                fontSize: 13,
-                              )),
+                        child: PoppinsText(
+                          text: _statusChecker(notification.status),
+                          color: const Color(0xff8a8a8a),
+                          fontSize: 13,
+                        )),
                     Container(
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 4 * fem),
@@ -93,37 +88,33 @@ class NotificationCard extends StatelessWidget {
         ),
       ),
     );
-    // return Material(
-    //   child: ListTile(
-    //     contentPadding:
-    //         const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-    //     leading: Hero(
-    //       tag: 'notification image',
-    //       child: Image.network(
-    //         notification.imageUrl,
-    //         width: 100,
-    //       ),
-    //     ),
-    //     title: Text(
-    //       notification.productName,
-    //     ),
-    //     subtitle: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         Padding(
-    //           padding: const EdgeInsets.only(bottom: 8.0),
-    //           child: Text("Base Price.${notification.basePrice.toString()}"),
-    //         ),
-    //         Text("Bid Price ${notification.basePrice}")
-    //       ],
-    //     ),
-    //     onTap: () => Navigator.of(context, rootNavigator: true).push(
-    //       MaterialPageRoute(
-    //         builder: (context) =>
-    //             ProductDetailpage(id: notification.id.toString()),
-    //       ),
-    //     ),
-    //   ),
-    // );
+  }
+
+  String _statusChecker(String status) {
+    if (status == "create") {
+      return 'Produk diupload';
+    } else if (status == "bid") {
+      return "Produk ditawar";
+    } else if (status == "accepted") {
+      return "Penawaran diterima";
+    } else if (status == "declined") {
+      return "Penawaran ditolak";
+    } else {
+      return "Something went wrong";
+    }
+  }
+
+  _navigation(String status) {
+    if (status == "create") {
+      return MyProductDetailPage(id: notification.productId.toString());
+    } else if (status == "bid") {
+      return OfferDetailPage(orderId: notification.orderId.toString());
+    } else if (status == "accepted") {
+      return ProductDetailpage(id: notification.productId.toString());
+    } else if (status == "declined") {
+      return ProductDetailpage(id: notification.productId.toString());
+    } else {
+      return null;
+    }
   }
 }

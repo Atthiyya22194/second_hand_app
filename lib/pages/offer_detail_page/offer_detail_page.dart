@@ -9,7 +9,10 @@ import '../../models/order_response.dart';
 import '../../repositories/market_repository.dart';
 import '../../widgets/action_button.dart';
 import '../../widgets/bidder_info.dart';
+import '../../widgets/image_loader.dart';
+import '../../widgets/poppins_text.dart';
 import '../../widgets/product_info.dart';
+import '../../widgets/rounded_border_container.dart';
 import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 import '../patch_result_page/patch_result_page.dart';
@@ -22,7 +25,12 @@ class OfferDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Offer Info'),
+        title: const PoppinsText(
+          text: 'Offer Detail',
+          fontWeight: FontWeight.w700,
+          fontSize: 20,
+          height: 1.5,
+        ),
       ),
       body: BlocProvider(
         create: (context) =>
@@ -70,30 +78,133 @@ class Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
     final String message =
         'Halo ${order.user?.fullName}, saya ${order.product.user?.fullName} penjual dari Second Hand App tertarik dengan harga yang ditawarkan atas barang ${order.productName}';
-    return Container(
-      margin: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        BuyerInfo(order: order),
+        ProductInfo(order: order),
+        Container(
+          padding: EdgeInsets.fromLTRB(16 * fem, 16 * fem * fem, 16 * fem, 0),
+          width: double.infinity,
+          child: ActionButton(
+            orderId: order.id.toString(),
+            status: order.status,
+            phoneNumber: order.user?.phoneNumber,
+            message: message,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class BuyerInfo extends StatelessWidget {
+  final OrderResponse order;
+  const BuyerInfo({super.key, required this.order});
+
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    return RoundedBorderContainer(
+      child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: BidderInfo(order: order),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: ProductInfo(order: order),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: ActionButton(
-              orderId: order.id.toString(),
-              status: order.status,
-              phoneNumber: order.user?.phoneNumber,
-              message: message,
+          Container(
+            padding: EdgeInsets.fromLTRB(0, 0, 8 * fem, 0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12 * fem),
+              child: ImageLoader(
+                height: 70 * fem,
+                width: 70 * fem,
+                imageUrl: order.user?.imageUrl,
+              ),
             ),
-          )
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              PoppinsText(
+                text: order.user?.fullName ?? "No user information",
+                fontWeight: FontWeight.w500,
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
+                child: PoppinsText(
+                  text: order.user?.city ?? "No user information",
+                  fontSize: 13,
+                  color: const Color(0xff8a8a8a),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProductInfo extends StatelessWidget {
+  final OrderResponse order;
+  const ProductInfo({super.key, required this.order});
+
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    return Container(
+      padding: EdgeInsets.fromLTRB(16 * fem, 0, 16 * fem, 0),
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.fromLTRB(0, 0, 8 * fem, 0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12 * fem),
+              child: ImageLoader(
+                height: 70 * fem,
+                width: 70 * fem,
+                imageUrl: order.imageProduct,
+              ),
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              const PoppinsText(
+                text: 'Penawaran produk',
+                fontSize: 13,
+                color: Color(0xff8a8a8a),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
+                child: PoppinsText(
+                  text: order.productName,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
+                child: PoppinsText(
+                  text: "Rp. ${order.basePrice}",
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
+                child: PoppinsText(
+                  text: "Ditawar. ${order.price}",
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

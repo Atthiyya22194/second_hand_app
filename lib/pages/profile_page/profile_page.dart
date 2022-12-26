@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
+import '../../widgets/poppins_text.dart';
 import '../../widgets/rounded_button.dart';
 import '../my_order_page/my_order_page.dart';
 import '../edit_profile_page/edit_profile_page.dart';

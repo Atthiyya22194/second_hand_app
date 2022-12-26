@@ -2,10 +2,10 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/pages/product_detail/product_detail_page.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
-import 'package:second_hand_app/widgets/rounded_button.dart';
-import 'package:second_hand_app/widgets/rounded_text_field.dart';
+import '../product_detail/product_detail_page.dart';
+import '../../widgets/poppins_text.dart';
+import '../../widgets/rounded_button.dart';
+import '../../widgets/rounded_text_field.dart';
 import '../../models/product_response.dart';
 import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
@@ -56,10 +56,8 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     return Container(
       width: double.infinity,
-      height: height * 0.39,
       decoration: const BoxDecoration(color: Color(0xffffffff)),
       child: Container(
         width: double.infinity,
@@ -102,7 +100,7 @@ class _SearchBarState extends State<SearchBar> {
     double baseWidth = 360;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return Container(
-      padding: EdgeInsets.fromLTRB(24 * fem, 0 * fem, 24 * fem, 0 * fem),
+      padding: EdgeInsets.fromLTRB(16 * fem, 0 * fem, 16 * fem, 0 * fem),
       child: RoundedTextField(
         hint: 'Search Product',
         title: '',
@@ -127,14 +125,11 @@ class HomeBanner extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return Container(
       margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0 * fem),
-      padding: EdgeInsets.fromLTRB(24 * fem, 0 * fem, 24 * fem, 0 * fem),
-      child: GridView.count(
-        crossAxisCount: 2,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        children: const [
-          BannerItem1(),
-          BannerItem2(),
+      padding: EdgeInsets.fromLTRB(16 * fem, 0 * fem, 16 * fem, 16 * fem),
+      child: Row(
+        children: [
+          const Expanded(child: BannerItem1()),
+          Expanded(child: Container())
         ],
       ),
     );
@@ -167,21 +162,6 @@ class BannerItem1 extends StatelessWidget {
           color: Color(0xfffa2c5a),
         )
       ],
-    );
-  }
-}
-
-class BannerItem2 extends StatelessWidget {
-  const BannerItem2({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    double baseWidth = 360;
-    double fem = MediaQuery.of(context).size.width / baseWidth;
-    double ffem = fem * 0.97;
-    return Icon(
-      CupertinoIcons.gift_fill,
-      size: 100 * ffem,
     );
   }
 }
@@ -223,7 +203,7 @@ class CategoryList extends StatelessWidget {
     ];
 
     return Container(
-      padding: EdgeInsets.fromLTRB(24 * fem, 0 * fem, 24 * fem, 0 * fem),
+      padding: EdgeInsets.fromLTRB(16 * fem, 0 * fem, 16 * fem, 0 * fem),
       width: double.infinity,
       height: 45 * ffem,
       child: ListView.builder(
@@ -258,6 +238,8 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
     return BlocConsumer<HomePageBloc, HomePageState>(
       builder: (context, state) {
         if (state is HomePageInitState) {
@@ -274,9 +256,12 @@ class ProductList extends StatelessWidget {
               itemCount: data.length,
               itemBuilder: (_, index) {
                 final product = data[index];
-                return ProductCard(
-                  product: product,
-                  route: ProductDetailpage(id: product.id.toString()),
+                return Container(
+                  padding: EdgeInsets.fromLTRB(16 * fem, 16 * fem, 16 * fem, 0),
+                  child: ProductCard(
+                    product: product,
+                    route: ProductDetailpage(id: product.id.toString()),
+                  ),
                 );
               },
             ),

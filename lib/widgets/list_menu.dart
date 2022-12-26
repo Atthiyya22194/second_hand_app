@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
+import 'poppins_text.dart';
 
 class ListMenu extends StatelessWidget {
   final String title;

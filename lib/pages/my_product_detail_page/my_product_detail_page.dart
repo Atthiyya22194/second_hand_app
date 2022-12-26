@@ -1,5 +1,4 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/my_product-detail/my_product_detail_bloc.dart';
@@ -7,8 +6,6 @@ import '../../bloc/my_product-detail/my_product_detail_event.dart';
 import '../../widgets/poppins_text.dart';
 import '../../widgets/rounded_border_container.dart';
 import '../../widgets/rounded_button.dart';
-import '../../widgets/rounded_text_field.dart';
-import '../my_product_page/my_product_page.dart';
 
 import '../../bloc/my_product-detail/my_product_detail_state.dart';
 import '../../models/product_detail_response.dart';
@@ -30,6 +27,14 @@ class MyProductDetailPage extends StatelessWidget {
       create: (context) => MyProductDetailBloc(MarketRepository())
         ..add(GetMyProductDetail(id: id)),
       child: Scaffold(
+        appBar: AppBar(
+          title: const PoppinsText(
+            text: 'My Product',
+            fontWeight: FontWeight.w700,
+            fontSize: 20,
+            height: 1.5,
+          ),
+        ),
         body: BlocConsumer<MyProductDetailBloc, MyProductDetailState>(
           builder: (context, state) {
             if (state is MyProductDetailLoadingState) {
@@ -68,15 +73,10 @@ class MyProductDetailPage extends StatelessWidget {
   }
 }
 
-class Content extends StatefulWidget {
+class Content extends StatelessWidget {
   final ProductDetailResponse product;
   const Content({super.key, required this.product});
 
-  @override
-  State<Content> createState() => _ContentState();
-}
-
-class _ContentState extends State<Content> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -85,13 +85,13 @@ class _ContentState extends State<Content> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ImageLoader(
-            imageUrl: widget.product.imageUrl,
+            imageUrl: product.imageUrl,
             height: size.height * 0.4,
             width: size.width,
           ),
-          ProductInfo(product: widget.product),
-          SellertInfo(product: widget.product),
-          ProductDescription(product: widget.product),
+          ProductInfo(product: product),
+          SellertInfo(product: product),
+          ProductDescription(product: product),
           const EditProductButton()
         ],
       ),
@@ -111,7 +111,6 @@ class ProductInfo extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: RoundedBorderContainer(
-        product: product,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -150,7 +149,6 @@ class SellertInfo extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return RoundedBorderContainer(
-      product: product,
       child: Row(
         children: [
           Container(
@@ -203,7 +201,6 @@ class ProductDescription extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return RoundedBorderContainer(
-      product: product,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -18,16 +18,16 @@ class UserResponse {
         required this.updatedAt,
     });
 
-    int id;
-    String fullName;
-    String email;
-    String password;
-    int phoneNumber;
-    String address;
+    int? id;
+    String? fullName;
+    String? email;
+    String? password;
+    int? phoneNumber;
+    String? address;
     dynamic imageUrl;
-    String city;
-    DateTime createdAt;
-    DateTime updatedAt;
+    String? city;
+    DateTime? createdAt;
+    DateTime? updatedAt;
 
     factory UserResponse.fromJson(Map<String, dynamic> json) => UserResponse(
         id: json["id"],
@@ -43,15 +43,15 @@ class UserResponse {
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id,
-        "full_name": fullName,
-        "email": email,
-        "password": password,
-        "phone_number": phoneNumber,
-        "address": address,
+        "id": id ?? "No user information given",
+        "full_name": fullName ?? "No user information given",
+        "email": email ?? "No user information given",
+        "password": password ?? "No user information given",
+        "phone_number": phoneNumber ?? "No user information given",
+        "address": address ?? "No user information given",
         "image_url": imageUrl,
-        "city": city,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
+        "city": city ?? "No user information given",
+        "createdAt": createdAt ?? "No user information given",
+        "updatedAt": updatedAt ?? "No user information given",
     };
 }

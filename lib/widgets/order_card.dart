@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:second_hand_app/widgets/poppins_text.dart';
 import '../models/order_response.dart';
+import 'image_loader.dart';
 
 class OrderCard extends StatelessWidget {
   final OrderResponse order;
@@ -10,35 +12,89 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        leading: Hero(
-          tag: 'product ${order.id}',
-          child: Image.network(
-            order.imageProduct,
-            width: 100,
-          ),
-        ),
-        title: Text(
-          order.productName,
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    double baseWidth = 360;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    return GestureDetector(
+      onTap: () => Navigator.of(context, rootNavigator: true).push(
+        MaterialPageRoute(builder: (context) {
+          return route;
+        }),
+      ),
+      child: Container(
+        margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 8 * fem),
+        child: Column(
           children: [
-            Text("Price ${order.basePrice}"),
-            Text("Bid Price ${order.price}"),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin:
+                      EdgeInsets.fromLTRB(0 * fem, 0 * fem, 16 * fem, 0 * fem),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12 * fem),
+                    child: ImageLoader(
+                      height: 70 * fem,
+                      width: 70 * fem,
+                      imageUrl: order.product.imageUrl,
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(
+                          0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                      child: PoppinsText(
+                        text: _statusChecker(order.status),
+                        color: const Color(0xff8a8a8a),
+                        fontSize: 13,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(
+                          0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                      child: PoppinsText(
+                        text: order.productName,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(
+                          0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                      child: PoppinsText(
+                        text: "Rp. ${order.basePrice}",
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(
+                          0 * fem, 0 * fem, 0 * fem, 8 * fem),
+                      child: PoppinsText(
+                        text: "Ditawar ${order.price}",
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+            Divider(
+              color: const Color(0xffe5e5e5),
+              thickness: 1 * fem,
+            )
           ],
         ),
-        onTap: () => {
-          Navigator.of(context, rootNavigator: true).push(
-            MaterialPageRoute(
-              builder: (context) => route,
-            ),
-          )
-        },
       ),
     );
+  }
+
+  String _statusChecker(String status) {
+    if (status == "pending") {
+      return 'Produk ditawar';
+    } else if (status == "accepted") {
+      return "Penawaran diterima";
+    } else if (status == "declined") {
+      return "Penawaran ditolak";
+    } else {
+      return "Something went wrong";
+    }
   }
 }

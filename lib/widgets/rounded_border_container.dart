@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../models/product_detail_response.dart';
-
 class RoundedBorderContainer extends StatelessWidget {
   const RoundedBorderContainer({
     Key? key,
-    required this.product,
     required this.child,
   }) : super(key: key);
 
-  final ProductDetailResponse product;
   final Widget child;
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
+import '../../widgets/poppins_text.dart';
 
 import '../../bloc/notification/notification_page_bloc.dart';
 import '../../repositories/market_repository.dart';

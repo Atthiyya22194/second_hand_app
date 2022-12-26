@@ -130,11 +130,11 @@ class User {
     required this.city,
   });
 
-  int id;
-  String fullName;
-  String email;
-  String phoneNumber;
-  String address;
+  int? id;
+  String? fullName;
+  String? email;
+  String? phoneNumber;
+  String? address;
   String? imageUrl;
   String? city;
 
@@ -149,11 +149,11 @@ class User {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "full_name": fullName,
-        "email": email,
-        "phone_number": phoneNumber,
-        "address": address,
+        "id": id ?? "No user information given",
+        "full_name": fullName ?? "No user information given",
+        "email": email ?? "No user information given",
+        "phone_number": phoneNumber ,
+        "address": address ?? "No user information given",
         "image_url": imageUrl,
         "city": city ?? "No user information",
       };

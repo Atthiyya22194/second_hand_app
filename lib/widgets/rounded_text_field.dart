@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
+import 'poppins_text.dart';
 
 class RoundedTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -20,14 +20,12 @@ class RoundedTextField extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return Container(
-      // inputL8v (4:1241)
       margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 16 * fem),
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              // emailShk (4:1242)
               margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 4 * fem),
               child: PoppinsText(text: title)),
           TextField(

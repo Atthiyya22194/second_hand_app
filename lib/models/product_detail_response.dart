@@ -106,10 +106,10 @@ class User {
 
   int? id;
   String? fullName;
-  String email;
-  String phoneNumber;
-  String address;
-  String imageUrl;
+  String? email;
+  String? phoneNumber;
+  String? address;
+  String? imageUrl;
   String? city;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -123,12 +123,12 @@ class User {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "id": id ?? "No user information given",
         "full_name": fullName ?? "No user information",
-        "email": email,
-        "phone_number": phoneNumber,
-        "address": address,
-        "image_url": imageUrl,
+        "email": email ?? "No user information given",
+        "phone_number": phoneNumber ?? "No user information given",
+        "address": address ?? "No user information given",
+        "image_url": imageUrl ?? "No user information given",
         "city": city ?? "No user information",
       };
 }

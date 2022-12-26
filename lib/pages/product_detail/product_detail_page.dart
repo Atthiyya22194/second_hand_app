@@ -1,9 +1,9 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
-import 'package:second_hand_app/widgets/rounded_button.dart';
-import 'package:second_hand_app/widgets/rounded_text_field.dart';
+import '../../widgets/poppins_text.dart';
+import '../../widgets/rounded_button.dart';
+import '../../widgets/rounded_text_field.dart';
 
 import '../../bloc/product_detail/product_detail_page_bloc.dart';
 import '../../bloc/product_detail/product_detail_page_events.dart';
@@ -28,6 +28,8 @@ class ProductDetailpage extends StatelessWidget {
       create: (context) =>
           ProductDetailBloc(MarketRepository())..add(GetData(id)),
       child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(),
         body: BlocConsumer<ProductDetailBloc, ProductDetailPageState>(
           builder: (context, state) {
             if (state is ProductDetailPageLoadingState) {
@@ -113,7 +115,6 @@ class ProductInfo extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: RoundedBorderContainer(
-        product: product,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -123,15 +124,6 @@ class ProductInfo extends StatelessWidget {
               child: PoppinsText(
                 text: product.name,
                 fontWeight: FontWeight.w500,
-              ),
-            ),
-            Container(
-              padding:
-                  EdgeInsets.fromLTRB(0 * ffem, 0 * ffem, 0 * ffem, 4 * ffem),
-              child: PoppinsText(
-                text: product.categories[0].name,
-                fontSize: 13,
-                color: const Color(0xff8a8a8a),
               ),
             ),
             PoppinsText(text: 'Rp. ${product.basePrice}'),
@@ -152,7 +144,6 @@ class SellerInfo extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return RoundedBorderContainer(
-      product: product,
       child: Row(
         children: [
           Container(
@@ -202,7 +193,6 @@ class ProductDescription extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
     return RoundedBorderContainer(
-      product: product,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

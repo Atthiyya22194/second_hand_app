@@ -1,14 +1,14 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/pages/register_page/register_page.dart';
-import 'package:second_hand_app/repositories/auth_repository.dart';
-import 'package:second_hand_app/widgets/bottom_nav_bar.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
-import 'package:second_hand_app/widgets/rounded_button.dart';
-import 'package:second_hand_app/widgets/rounded_text_field.dart';
-import 'package:second_hand_app/widgets/show_loading.dart';
-import 'package:second_hand_app/widgets/show_snack_bar.dart';
+import '../register_page/register_page.dart';
+import '../../repositories/auth_repository.dart';
+import '../../widgets/bottom_nav_bar.dart';
+import '../../widgets/poppins_text.dart';
+import '../../widgets/rounded_button.dart';
+import '../../widgets/rounded_text_field.dart';
+import '../../widgets/show_loading.dart';
+import '../../widgets/show_snack_bar.dart';
 
 import '../../bloc/login/login_bloc.dart';
 import '../../bloc/login/login_events.dart';
@@ -34,39 +34,41 @@ class Content extends StatelessWidget {
     double baseWidth = 360;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return SafeArea(
-      child: SizedBox(
-        width: double.infinity,
-        child: Container(
+      child: SingleChildScrollView(
+        child: SizedBox(
           width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Color(0xffffffff),
-          ),
-          child: BlocProvider(
-            create: (context) => LoginBloc(authRepository: AuthRepository()),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    margin: EdgeInsets.fromLTRB(
-                        16 * fem, 0 * fem, 0 * fem, 0 * fem),
-                    child: const PoppinsText(
-                        text: 'Login',
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700)),
-                Container(
-                  padding: EdgeInsets.fromLTRB(
-                      16 * fem, 24 * fem, 16 * fem, 24 * fem),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      LoginForm(),
-                      RegisterButtonText(),
-                    ],
+          child: Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Color(0xffffffff),
+            ),
+            child: BlocProvider(
+              create: (context) => LoginBloc(authRepository: AuthRepository()),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      margin: EdgeInsets.fromLTRB(
+                          16 * fem, 0 * fem, 0 * fem, 0 * fem),
+                      child: const PoppinsText(
+                          text: 'Login',
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700)),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(
+                        16 * fem, 24 * fem, 16 * fem, 24 * fem),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        LoginForm(),
+                        RegisterButtonText(),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

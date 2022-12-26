@@ -1,16 +1,16 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/bloc/register/register_bloc.dart';
-import 'package:second_hand_app/bloc/register/register_events.dart';
-import 'package:second_hand_app/bloc/register/register_states.dart';
-import 'package:second_hand_app/pages/login_page/login_page.dart';
-import 'package:second_hand_app/repositories/auth_repository.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
-import 'package:second_hand_app/widgets/rounded_button.dart';
-import 'package:second_hand_app/widgets/rounded_text_field.dart';
-import 'package:second_hand_app/widgets/show_loading.dart';
-import 'package:second_hand_app/widgets/show_snack_bar.dart';
+import '../../bloc/register/register_bloc.dart';
+import '../../bloc/register/register_events.dart';
+import '../../bloc/register/register_states.dart';
+import '../login_page/login_page.dart';
+import '../../repositories/auth_repository.dart';
+import '../../widgets/poppins_text.dart';
+import '../../widgets/rounded_button.dart';
+import '../../widgets/rounded_text_field.dart';
+import '../../widgets/show_loading.dart';
+import '../../widgets/show_snack_bar.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);

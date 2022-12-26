@@ -32,6 +32,7 @@ class PendingOrderPage extends StatelessWidget {
               List<OrderResponse> data = state.products;
               if (data.isNotEmpty) {
                 return ListView.builder(
+                  shrinkWrap: true,
                   itemCount: data.length,
                   itemBuilder: (_, index) {
                     final order = data[index];

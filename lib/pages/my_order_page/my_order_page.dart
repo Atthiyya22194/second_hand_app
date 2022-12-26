@@ -1,7 +1,8 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/widgets/poppins_text.dart';
+import '../../widgets/bottom_nav_bar.dart';
+import '../../widgets/poppins_text.dart';
 import '../../bloc/my_order/my_order_bloc.dart';
 import '../../bloc/my_order/my_order_event.dart';
 import '../../bloc/my_order/my_order_state.dart';
@@ -21,24 +22,31 @@ class MyOrderPage extends StatelessWidget {
     double baseWidth = 360;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.fromLTRB(24 * fem, 16 * fem, 24 * fem, 8 * fem),
-          child: BlocProvider(
-            create: (context) =>
-                MyOrderBloc(MarketRepository())..add(GetMyOrder()),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                PoppinsText(
-                  text: 'My Ordered Product',
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                ),
-                
-              ],
-            ),
-          ),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const BottomNavBar(),
+              ),
+            );
+          },
+        ),
+        title: const PoppinsText(
+          text: 'My Order',
+          fontWeight: FontWeight.w700,
+          fontSize: 20,
+          height: 1.5,
+        ),
+      ),
+      body: Container(
+        margin: EdgeInsets.fromLTRB(24 * fem, 16 * fem, 24 * fem, 8 * fem),
+        child: BlocProvider(
+          create: (context) =>
+              MyOrderBloc(MarketRepository())..add(GetMyOrder()),
+          child: const MyOrderList(),
         ),
       ),
     );
@@ -59,6 +67,7 @@ class MyOrderList extends StatelessWidget {
           List<OrderResponse> data = state.response;
           if (data.isNotEmpty) {
             return ListView.builder(
+              shrinkWrap: true,
               itemCount: data.length,
               itemBuilder: (_, index) {
                 final order = data[index];

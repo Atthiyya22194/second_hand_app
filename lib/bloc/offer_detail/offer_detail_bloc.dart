@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../repositories/market_repository.dart';
 import 'offer_detail_event.dart';
 import 'offer_detail_state.dart';
-import '../../repositories/market_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OfferDetailBloc extends Bloc<OfferDetailEvent, OfferDetailState> {
   final MarketRepository _repository;

@@ -22,6 +22,15 @@ class MyApp extends StatelessWidget {
       title: 'Second Hand',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          color: Colors.transparent,
+          iconTheme: IconThemeData(
+            color: Color(
+              0xFF151515,
+            ),
+          ),
+        ),
       ),
       home: Container(
           color: CupertinoColors.white,

@@ -32,10 +32,14 @@ class MyProductListPage extends StatelessWidget {
               List<ProductResponse> data = state.products;
               if (data.isNotEmpty) {
                 return ListView.builder(
+                  shrinkWrap: true,
                   itemCount: data.length,
                   itemBuilder: (_, index) {
                     final product = data[index];
-                    return ProductCard(product: product, route: MyProductDetailPage(id: data[index].id.toString()),);
+                    return ProductCard(
+                      product: product,
+                      route: MyProductDetailPage(id: data[index].id.toString()),
+                    );
                   },
                 );
               } else {
