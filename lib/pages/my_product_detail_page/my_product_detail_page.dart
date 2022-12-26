@@ -15,11 +15,12 @@ import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 
 class MyProductDetailPage extends StatelessWidget {
-  final String id;
   const MyProductDetailPage({Key? key, required this.id})
       : super(
           key: key,
         );
+
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +75,9 @@ class MyProductDetailPage extends StatelessWidget {
 }
 
 class Content extends StatelessWidget {
-  final ProductDetailResponse product;
   const Content({super.key, required this.product});
+
+  final ProductDetailResponse product;
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +102,9 @@ class Content extends StatelessWidget {
 }
 
 class ProductInfo extends StatelessWidget {
-  final ProductDetailResponse product;
   const ProductInfo({super.key, required this.product});
+
+  final ProductDetailResponse product;
 
   @override
   Widget build(BuildContext context) {
@@ -140,8 +143,9 @@ class ProductInfo extends StatelessWidget {
 }
 
 class SellertInfo extends StatelessWidget {
-  final ProductDetailResponse product;
   const SellertInfo({super.key, required this.product});
+
+  final ProductDetailResponse product;
 
   @override
   Widget build(BuildContext context) {
@@ -192,8 +196,9 @@ class SellertInfo extends StatelessWidget {
 }
 
 class ProductDescription extends StatelessWidget {
-  final ProductDetailResponse product;
   const ProductDescription({super.key, required this.product});
+
+  final ProductDetailResponse product;
 
   @override
   Widget build(BuildContext context) {

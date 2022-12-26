@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'poppins_text.dart';
 
 class ListMenu extends StatelessWidget {
-  final String title;
-  final Widget page;
-  final IconData icon;
   const ListMenu(
       {super.key, required this.title, required this.page, required this.icon});
+
+  final IconData icon;
+  final Widget page;
+  final String title;
 
   @override
   Widget build(BuildContext context) {

@@ -24,20 +24,6 @@ class ProductDetailResponse {
      this.user,
   });
 
-  int id;
-  String name;
-  String description;
-  int basePrice;
-  String imageUrl;
-  String imageName;
-  String location;
-  int userId;
-  String status;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<Category> categories;
-  User? user;
-
   factory ProductDetailResponse.fromJson(Map<String, dynamic> json) =>
       ProductDetailResponse(
         id: json["id"],
@@ -55,6 +41,20 @@ class ProductDetailResponse {
             json["Categories"].map((x) => Category.fromJson(x))),
         user: User.fromJson(json["User"]),
       );
+
+  int basePrice;
+  List<Category> categories;
+  DateTime createdAt;
+  String description;
+  int id;
+  String imageName;
+  String imageUrl;
+  String location;
+  String name;
+  String status;
+  DateTime updatedAt;
+  User? user;
+  int userId;
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -79,13 +79,13 @@ class Category {
     required this.name,
   });
 
-  int id;
-  String name;
-
   factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: json["id"],
         name: json["name"],
       );
+
+  int id;
+  String name;
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -104,14 +104,6 @@ class User {
     required this.city,
   });
 
-  int? id;
-  String? fullName;
-  String? email;
-  String? phoneNumber;
-  String? address;
-  String? imageUrl;
-  String? city;
-
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         fullName: json["full_name"],
@@ -121,6 +113,14 @@ class User {
         imageUrl: json["image_url"],
         city: json["city"],
       );
+
+  String? address;
+  String? city;
+  String? email;
+  String? fullName;
+  int? id;
+  String? imageUrl;
+  String? phoneNumber;
 
   Map<String, dynamic> toJson() => {
         "id": id ?? "No user information given",

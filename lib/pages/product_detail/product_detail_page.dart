@@ -16,11 +16,12 @@ import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 
 class ProductDetailpage extends StatelessWidget {
-  final String id;
   const ProductDetailpage({Key? key, required this.id})
       : super(
           key: key,
         );
+
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +74,9 @@ class ProductDetailpage extends StatelessWidget {
 }
 
 class Content extends StatefulWidget {
-  final ProductDetailResponse product;
   const Content({super.key, required this.product});
+
+  final ProductDetailResponse product;
 
   @override
   State<Content> createState() => _ContentState();
@@ -104,8 +106,9 @@ class _ContentState extends State<Content> {
 }
 
 class ProductInfo extends StatelessWidget {
-  final ProductDetailResponse product;
   const ProductInfo({super.key, required this.product});
+
+  final ProductDetailResponse product;
 
   @override
   Widget build(BuildContext context) {
@@ -135,8 +138,9 @@ class ProductInfo extends StatelessWidget {
 }
 
 class SellerInfo extends StatelessWidget {
-  final ProductDetailResponse product;
   const SellerInfo({super.key, required this.product});
+
+  final ProductDetailResponse product;
 
   @override
   Widget build(BuildContext context) {
@@ -184,8 +188,9 @@ class SellerInfo extends StatelessWidget {
 }
 
 class ProductDescription extends StatelessWidget {
-  final ProductDetailResponse product;
   const ProductDescription({super.key, required this.product});
+
+  final ProductDetailResponse product;
 
   @override
   Widget build(BuildContext context) {
@@ -220,8 +225,9 @@ class ProductDescription extends StatelessWidget {
 }
 
 class BidForm extends StatefulWidget {
-  final ProductDetailResponse product;
   const BidForm({super.key, required this.product});
+
+  final ProductDetailResponse product;
 
   @override
   State<BidForm> createState() => _BidFormState();
@@ -229,6 +235,7 @@ class BidForm extends StatefulWidget {
 
 class _BidFormState extends State<BidForm> {
   final TextEditingController bidController = TextEditingController();
+
   @override
   void dispose() {
     bidController.dispose();

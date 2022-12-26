@@ -18,6 +18,7 @@ class NotificationLoadingState extends NotificationState {
 
 class NotificationLoadedState extends NotificationState {
   NotificationLoadedState(this.products);
+
   final List<NotificationResponse> products;
 
   @override
@@ -26,7 +27,9 @@ class NotificationLoadedState extends NotificationState {
 
 class NotificationErrorState extends NotificationState {
   NotificationErrorState(this.error);
+
   final String error;
+
   @override
   List<Object?> get props => [error];
 }

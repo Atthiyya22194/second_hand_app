@@ -5,11 +5,11 @@ import '../models/product_response.dart';
 import 'image_loader.dart';
 
 class ProductCard extends StatelessWidget {
-  final ProductResponse product;
-  final Widget route;
-
   const ProductCard({Key? key, required this.product, required this.route})
       : super(key: key);
+
+  final ProductResponse product;
+  final Widget route;
 
   @override
   Widget build(BuildContext context) {

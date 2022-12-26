@@ -5,11 +5,11 @@ import '../../repositories/market_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyOrderBloc extends Bloc<MyOrderEvent, MyOrderState> {
-  final MarketRepository _repository;
-
   MyOrderBloc(this._repository) : super(MyOrderInitState()) {
     on<GetMyOrder>(_getMyOrders);
   }
+
+  final MarketRepository _repository;
 
   Future<void> _getMyOrders(
       GetMyOrder event, Emitter<MyOrderState> emit) async {

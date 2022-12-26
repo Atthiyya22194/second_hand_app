@@ -16,6 +16,7 @@ class EditProfileLoadingState extends EditProfileState {
 
 class EditProfileSuccessState extends EditProfileState {
   EditProfileSuccessState(this.response);
+
   final String response;
 
   @override
@@ -24,6 +25,7 @@ class EditProfileSuccessState extends EditProfileState {
 
 class EditProfileErrorState extends EditProfileState {
   EditProfileErrorState(this.error);
+
   final String error;
 
   @override

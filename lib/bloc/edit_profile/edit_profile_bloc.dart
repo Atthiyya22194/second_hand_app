@@ -6,11 +6,11 @@ import 'edit_profile_event.dart';
 import 'edit_profile_state.dart';
 
 class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
-  final AuthRepository _repository;
-
   EditProfileBloc(this._repository) : super(EditProfileInitState()) {
     on<EditProfile>(_editProfile);
   }
+
+  final AuthRepository _repository;
 
   Future<void> _editProfile(
       EditProfile event, Emitter<EditProfileState> emit) async {

@@ -64,18 +64,19 @@ class EditProfilePage extends StatelessWidget {
 }
 
 class EditProfileForm extends StatefulWidget {
-  final String? errorMessage;
   const EditProfileForm({super.key, this.errorMessage});
+
+  final String? errorMessage;
 
   @override
   State<EditProfileForm> createState() => _EditProfileFormState();
 }
 
 class _EditProfileFormState extends State<EditProfileForm> {
-  final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
 
   @override
   void dispose() {

@@ -8,13 +8,6 @@ abstract class SellProductEvent extends Equatable {
 }
 
 class UploadProduct extends SellProductEvent {
-  final String productName;
-  final String description;
-  final String basePrice;
-  final String category;
-  final String location;
-  final File image;
-
   UploadProduct(
       {required this.productName,
       required this.description,
@@ -22,6 +15,13 @@ class UploadProduct extends SellProductEvent {
       required this.category,
       required this.location,
       required this.image});
+
+  final String basePrice;
+  final String category;
+  final String description;
+  final File image;
+  final String location;
+  final String productName;
 }
 
 class GetImage extends SellProductEvent {}

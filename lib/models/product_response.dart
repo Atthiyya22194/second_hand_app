@@ -22,19 +22,6 @@ class ProductResponse {
       required this.updatedAt,
       required this.categories});
 
-  int id;
-  String name;
-  String description;
-  int basePrice;
-  String imageUrl;
-  String imageName;
-  String location;
-  int userId;
-  String status;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<Category> categories;
-
   factory ProductResponse.fromJson(Map<String, dynamic> json) =>
       ProductResponse(
           id: json["id"],
@@ -50,6 +37,19 @@ class ProductResponse {
           updatedAt: DateTime.parse(json["updatedAt"]),
           categories: List<Category>.from(
               json["Categories"].map((x) => Category.fromJson(x))));
+
+  int basePrice;
+  List<Category> categories;
+  DateTime createdAt;
+  String description;
+  int id;
+  String imageName;
+  String imageUrl;
+  String location;
+  String name;
+  String status;
+  DateTime updatedAt;
+  int userId;
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -73,13 +73,13 @@ class Category {
     required this.name,
   });
 
-  int id;
-  String name;
-
   factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: json["id"],
         name: json["name"],
       );
+
+  int id;
+  String name;
 
   Map<String, dynamic> toJson() => {
         "id": id,

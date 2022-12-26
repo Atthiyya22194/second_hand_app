@@ -9,12 +9,12 @@ import 'sell_product_event.dart';
 import 'sell_product_state.dart';
 
 class SellProductBloc extends Bloc<SellProductEvent, SellProductState> {
-  final MarketRepository _repository;
-
   SellProductBloc(this._repository) : super(SellProductInitState()) {
     on<UploadProduct>(_uploadProduct);
     on<GetImage>(_getImage);
   }
+
+  final MarketRepository _repository;
 
   Future<void> _uploadProduct(
       UploadProduct event, Emitter<SellProductState> emit) async {

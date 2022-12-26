@@ -5,11 +5,11 @@ import 'home_page_events.dart';
 import 'home_page_states.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
-  final MarketRepository _repository;
-
   HomePageBloc(this._repository) : super(HomePageInitState()) {
     on<GetProducts>(_getProduct);
   }
+
+  final MarketRepository _repository;
 
   Future<void> _getProduct(
       GetProducts event, Emitter<HomePageState> emit) async {

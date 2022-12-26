@@ -8,20 +8,20 @@ abstract class MyOrderDetailEvent extends Equatable {
 }
 
 class GetMyOrderDetail extends MyOrderDetailEvent {
-  final String id;
-
   GetMyOrderDetail({required this.id});
+
+  final String id;
 }
 
 class PutMyBidPrice extends MyOrderDetailEvent {
-  final String id;
-  final String bidPrice;
-
   PutMyBidPrice({required this.id, required this.bidPrice});
+
+  final String bidPrice;
+  final String id;
 }
 
 class DeleteMyOrder extends MyOrderDetailEvent {
-  final String id;
-
   DeleteMyOrder({required this.id});
+
+  final String id;
 }

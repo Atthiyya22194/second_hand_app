@@ -18,6 +18,7 @@ class ProductDetailPageLoadingState extends ProductDetailPageState {
 
 class ProductDetailPageLoadedState extends ProductDetailPageState {
   ProductDetailPageLoadedState(this.products);
+
   final ProductDetailResponse products;
 
   @override
@@ -26,6 +27,7 @@ class ProductDetailPageLoadedState extends ProductDetailPageState {
 
 class BidSuccessState extends ProductDetailPageState {
   BidSuccessState(this.response);
+
   final String response;
 
   @override
@@ -34,7 +36,9 @@ class BidSuccessState extends ProductDetailPageState {
 
 class ProductDetailPageErrorState extends ProductDetailPageState {
   ProductDetailPageErrorState(this.error);
+
   final String error;
+
   @override
   List<Object?> get props => [error];
 }

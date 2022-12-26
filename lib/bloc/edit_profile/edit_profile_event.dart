@@ -8,17 +8,17 @@ abstract class EditProfileEvent extends Equatable {
 class GetUser extends EditProfileEvent {}
 
 class EditProfile extends EditProfileEvent {
-  final String fullName;
-  final String phoneNumber;
-  final String address;
-  final String city;
-
   EditProfile(
       {
       required this.fullName,
       required this.phoneNumber,
       required this.address,
       required this.city});
+
+  final String address;
+  final String city;
+  final String fullName;
+  final String phoneNumber;
 }
 
 class GetImage extends EditProfileEvent {}

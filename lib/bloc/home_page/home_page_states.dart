@@ -18,6 +18,7 @@ class HomePageLoadingState extends HomePageState {
 
 class HomePageLoadedState extends HomePageState {
   HomePageLoadedState(this.products);
+
   final List<ProductResponse> products;
 
   @override
@@ -26,7 +27,9 @@ class HomePageLoadedState extends HomePageState {
 
 class HomePageErrorState extends HomePageState {
   HomePageErrorState(this.error);
+
   final String error;
+
   @override
   List<Object?> get props => [error];
 }

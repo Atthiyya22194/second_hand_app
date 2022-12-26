@@ -17,11 +17,12 @@ import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 
 class MyOrderDetailpage extends StatelessWidget {
-  final String id;
   const MyOrderDetailpage({Key? key, required this.id})
       : super(
           key: key,
         );
+
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +82,9 @@ class MyOrderDetailpage extends StatelessWidget {
 }
 
 class Content extends StatelessWidget {
-  final OrderResponse order;
   const Content({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -107,8 +109,9 @@ class Content extends StatelessWidget {
 }
 
 class ProductInfo extends StatelessWidget {
-  final OrderResponse order;
   const ProductInfo({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -138,8 +141,9 @@ class ProductInfo extends StatelessWidget {
 }
 
 class SellerInfo extends StatelessWidget {
-  final OrderResponse order;
   const SellerInfo({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -187,8 +191,9 @@ class SellerInfo extends StatelessWidget {
 }
 
 class ProductDescription extends StatelessWidget {
-  final OrderResponse order;
   const ProductDescription({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -223,8 +228,9 @@ class ProductDescription extends StatelessWidget {
 }
 
 class BidForm extends StatefulWidget {
-  final OrderResponse order;
   const BidForm({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   State<BidForm> createState() => _BidFormState();
@@ -232,6 +238,7 @@ class BidForm extends StatefulWidget {
 
 class _BidFormState extends State<BidForm> {
   final TextEditingController bidController = TextEditingController();
+
   @override
   void dispose() {
     bidController.dispose();

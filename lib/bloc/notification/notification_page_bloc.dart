@@ -6,11 +6,11 @@ import 'notification_page_events.dart';
 import 'notification_page_states.dart';
 
 class NotificationBloc extends Bloc<NotificationPageEvent, NotificationState> {
-  final MarketRepository _repository;
-
   NotificationBloc(this._repository) : super(NotificationInitState()) {
     on<GetNotification>(_getNotification);
   }
+
+  final MarketRepository _repository;
 
   Future<void> _getNotification(
       GetNotification event, Emitter<NotificationState> emit) async {

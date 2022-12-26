@@ -6,8 +6,6 @@ import 'login_events.dart';
 import 'login_states.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final AuthRepository authRepository;
-
   LoginBloc({required this.authRepository}) : super(LoginInitState()) {
     on<Login>((event, emit) async {
       emit(LoginLoadingState());
@@ -22,4 +20,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     });
   }
+
+  final AuthRepository authRepository;
 }

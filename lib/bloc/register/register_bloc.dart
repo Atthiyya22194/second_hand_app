@@ -5,8 +5,6 @@ import 'register_events.dart';
 import 'register_states.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  final AuthRepository authRepository;
-
   RegisterBloc({required this.authRepository}) : super(RegisterInitState()) {
     on<Register>((event, emit) async {
       emit(RegisterLoadingState());
@@ -24,4 +22,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       }
     });
   }
+
+  final AuthRepository authRepository;
 }

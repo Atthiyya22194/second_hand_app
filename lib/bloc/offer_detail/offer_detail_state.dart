@@ -17,15 +17,17 @@ class OfferDetailLoadingState extends OfferDetailState {
 }
 
 class PatchSuccessState extends OfferDetailState {
+  PatchSuccessState(this.message);
+
   final String message;
 
-  PatchSuccessState(this.message);
   @override
   List<Object?> get props => [message];
 }
 
 class WhatAppLaunchedState extends OfferDetailState {
   WhatAppLaunchedState(this.launch);
+
   final bool launch;
 
   @override
@@ -33,17 +35,19 @@ class WhatAppLaunchedState extends OfferDetailState {
 }
 
 class OfferDetailErrorState extends OfferDetailState {
+  OfferDetailErrorState(this.error);
+
   final String error;
 
-  OfferDetailErrorState(this.error);
   @override
   List<Object?> get props => [error];
 }
 
 class OfferDetailLoadedState extends OfferDetailState {
+  OfferDetailLoadedState(this.order);
+
   final OrderResponse order;
 
-  OfferDetailLoadedState(this.order);
   @override
   List<Object?> get props => [order];
 }

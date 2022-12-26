@@ -4,11 +4,23 @@ import '../models/order_response.dart';
 import 'image_loader.dart';
 
 class OrderCard extends StatelessWidget {
+  const OrderCard({Key? key, required this.order, required this.route})
+      : super(key: key);
+
   final OrderResponse order;
   final Widget route;
 
-  const OrderCard({Key? key, required this.order, required this.route})
-      : super(key: key);
+  String _statusChecker(String status) {
+    if (status == "pending") {
+      return 'Produk ditawar';
+    } else if (status == "accepted") {
+      return "Penawaran diterima";
+    } else if (status == "declined") {
+      return "Penawaran ditolak";
+    } else {
+      return "Something went wrong";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,17 +96,5 @@ class OrderCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _statusChecker(String status) {
-    if (status == "pending") {
-      return 'Produk ditawar';
-    } else if (status == "accepted") {
-      return "Penawaran diterima";
-    } else if (status == "declined") {
-      return "Penawaran ditolak";
-    } else {
-      return "Something went wrong";
-    }
   }
 }

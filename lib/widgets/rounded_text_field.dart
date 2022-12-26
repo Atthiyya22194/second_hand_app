@@ -3,16 +3,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'poppins_text.dart';
 
 class RoundedTextField extends StatelessWidget {
-  final TextEditingController? controller;
-  final String title;
-  final String hint;
-  final ValueChanged<String>? onSubmited;
   const RoundedTextField(
       {super.key,
       required this.hint,
       required this.title,
       this.controller,
       this.onSubmited});
+
+  final TextEditingController? controller;
+  final String hint;
+  final ValueChanged<String>? onSubmited;
+  final String title;
 
   @override
   Widget build(BuildContext context) {

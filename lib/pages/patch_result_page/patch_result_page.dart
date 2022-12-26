@@ -17,11 +17,12 @@ import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 
 class PatchResultPage extends StatelessWidget {
-  final String orderId;
   const PatchResultPage({Key? key, required this.orderId})
       : super(
           key: key,
         );
+
+  final String orderId;
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +76,9 @@ class PatchResultPage extends StatelessWidget {
 }
 
 class Content extends StatelessWidget {
-  final OrderResponse order;
   const Content({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -142,8 +144,9 @@ class Content extends StatelessWidget {
 }
 
 class PatchIcon extends StatelessWidget {
-  final OrderResponse order;
   const PatchIcon({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -190,8 +193,9 @@ class PatchIcon extends StatelessWidget {
 }
 
 class BuyerInfo extends StatelessWidget {
-  final OrderResponse order;
   const BuyerInfo({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -237,8 +241,9 @@ class BuyerInfo extends StatelessWidget {
 }
 
 class ProductInfo extends StatelessWidget {
-  final OrderResponse order;
   const ProductInfo({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {

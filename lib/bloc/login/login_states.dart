@@ -16,6 +16,7 @@ class LoginLoadingState extends LoginState {
 
 class LoginSuccessState extends LoginState {
   LoginSuccessState(this._loginResponse);
+
   final LoginResponse _loginResponse;
 
   @override
@@ -24,6 +25,7 @@ class LoginSuccessState extends LoginState {
 
 class LoginErrorState extends LoginState {
   LoginErrorState(this.error);
+
   final String error;
 
   @override

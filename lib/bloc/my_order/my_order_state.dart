@@ -16,17 +16,19 @@ class MyOrderLoadingState extends MyOrderState {
 }
 
 class MyOrderLoadedState extends MyOrderState {
+  MyOrderLoadedState(this.response);
+
   final List<OrderResponse> response;
 
-  MyOrderLoadedState(this.response);
   @override
   List<Object?> get props => [response];
 }
 
 class MyOrderErrorState extends MyOrderState {
+  MyOrderErrorState(this.error);
+
   final String error;
 
-  MyOrderErrorState(this.error);
   @override
   List<Object?> get props => [error];
 }

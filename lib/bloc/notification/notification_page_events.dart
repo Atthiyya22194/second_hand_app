@@ -6,7 +6,7 @@ abstract class NotificationPageEvent extends Equatable {
 }
 
 class GetNotification extends NotificationPageEvent {
-  final String type;
-
   GetNotification({required this.type});
+
+  final String type;
 }

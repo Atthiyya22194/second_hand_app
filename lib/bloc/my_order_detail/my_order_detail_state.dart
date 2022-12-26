@@ -17,33 +17,37 @@ class MyOrderDetailLoadingState extends MyOrderDetailState {
 }
 
 class MyOrderDetailLoadedState extends MyOrderDetailState {
+  MyOrderDetailLoadedState(this.response);
+
   final OrderResponse response;
 
-  MyOrderDetailLoadedState(this.response);
   @override
   List<Object?> get props => [response];
 }
 
 class PatchBidSuccessState extends MyOrderDetailState {
+  PatchBidSuccessState(this.response);
+
   final String response;
 
-  PatchBidSuccessState(this.response);
   @override
   List<Object?> get props => [response];
 }
 
 class DeleteOrderSuccessState extends MyOrderDetailState {
+  DeleteOrderSuccessState(this.response);
+
   final String response;
 
-  DeleteOrderSuccessState(this.response);
   @override
   List<Object?> get props => [response];
 }
 
 class MyOrderDetailErrorState extends MyOrderDetailState {
+  MyOrderDetailErrorState(this.error);
+
   final String error;
 
-  MyOrderDetailErrorState(this.error);
   @override
   List<Object?> get props => [error];
 }

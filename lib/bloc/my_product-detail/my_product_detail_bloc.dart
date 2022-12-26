@@ -6,11 +6,12 @@ import 'my_product_detail_event.dart';
 import 'my_product_detail_state.dart';
 
 class MyProductDetailBloc extends Bloc<MyProductDetailEvent, MyProductDetailState> {
-  final MarketRepository _repository;
   MyProductDetailBloc(this._repository) : super(MyProductDetailInitState()) {
     on<GetMyProductDetail>(_getMyProductDetail);
     on<DeleteMyProduct>(_deleteMyMyProductDetail);
   }
+
+  final MarketRepository _repository;
 
   Future<void> _getMyProductDetail(
       GetMyProductDetail event, Emitter<MyProductDetailState> emit) async {

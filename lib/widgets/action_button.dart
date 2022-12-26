@@ -9,16 +9,17 @@ import '../bloc/offer_detail/offer_detail_bloc.dart';
 import '../bloc/offer_detail/offer_detail_event.dart';
 
 class ActionButton extends StatelessWidget {
-  final String status;
-  final String orderId;
-  final String? phoneNumber;
-  final String? message;
   const ActionButton(
       {super.key,
       required this.status,
       required this.orderId,
       this.phoneNumber,
       this.message});
+
+  final String? message;
+  final String orderId;
+  final String? phoneNumber;
+  final String status;
 
   @override
   Widget build(BuildContext context) {

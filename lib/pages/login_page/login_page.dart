@@ -95,6 +95,16 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
+  _formValidation<bool>() {
+    if (emailController.text.isEmpty && passwordController.text.isEmpty) {
+      showSnackBar(context, 'Something went wrong...', 'Please fill all form',
+          ContentType.warning);
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 360;
@@ -150,16 +160,6 @@ class _LoginFormState extends State<LoginForm> {
         ],
       ),
     );
-  }
-
-  _formValidation<bool>() {
-    if (emailController.text.isEmpty && passwordController.text.isEmpty) {
-      showSnackBar(context, 'Something went wrong...', 'Please fill all form',
-          ContentType.warning);
-      return false;
-    } else {
-      return true;
-    }
   }
 }
 

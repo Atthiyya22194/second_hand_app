@@ -6,21 +6,21 @@ abstract class OfferDetailEvent extends Equatable {
 }
 
 class GetOfferDetail extends OfferDetailEvent {
-  final String orderId;
-
   GetOfferDetail(this.orderId);
+
+  final String orderId;
 }
 
 class PatchOffer extends OfferDetailEvent {
+  PatchOffer(this.orderId, this.status);
+
   final String orderId;
   final String status;
-
-  PatchOffer(this.orderId, this.status);
 }
 
 class OpenWhatsApp extends OfferDetailEvent {
-  final String phoneNumber;
-  final String message;
-
   OpenWhatsApp(this.phoneNumber, this.message);
+
+  final String message;
+  final String phoneNumber;
 }

@@ -16,8 +16,9 @@ import '../../widgets/show_snack_bar.dart';
 import '../patch_result_page/patch_result_page.dart';
 
 class OfferDetailPage extends StatelessWidget {
-  final String orderId;
   const OfferDetailPage({super.key, required this.orderId});
+
+  final String orderId;
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +72,9 @@ class OfferDetailPage extends StatelessWidget {
 }
 
 class Content extends StatelessWidget {
-  final OrderResponse order;
   const Content({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -101,8 +103,9 @@ class Content extends StatelessWidget {
 }
 
 class BuyerInfo extends StatelessWidget {
-  final OrderResponse order;
   const BuyerInfo({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {
@@ -148,8 +151,9 @@ class BuyerInfo extends StatelessWidget {
 }
 
 class ProductInfo extends StatelessWidget {
-  final OrderResponse order;
   const ProductInfo({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {

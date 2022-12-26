@@ -6,13 +6,13 @@ import 'offer_detail_event.dart';
 import 'offer_detail_state.dart';
 
 class OfferDetailBloc extends Bloc<OfferDetailEvent, OfferDetailState> {
-  final MarketRepository _repository;
-
   OfferDetailBloc(this._repository) : super(OfferDetailInitState()) {
     on<GetOfferDetail>(_getOfferDetail);
     on<PatchOffer>(_patchOffer);
     on<OpenWhatsApp>(_openWhatsApp);
   }
+
+  final MarketRepository _repository;
 
   Future<void> _getOfferDetail(
       GetOfferDetail event, Emitter<OfferDetailState> emit) async {

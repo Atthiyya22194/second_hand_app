@@ -24,20 +24,6 @@ class OrderResponse {
     required this.user,
   });
 
-  int id;
-  int productId;
-  int buyerId;
-  int price;
-  DateTime transactionDate;
-  String productName;
-  int basePrice;
-  String imageProduct;
-  String status;
-  dynamic createdAt;
-  dynamic updatedAt;
-  Product product;
-  User? user;
-
   factory OrderResponse.fromJson(Map<String, dynamic> json) => OrderResponse(
         id: json["id"],
         productId: json["product_id"],
@@ -53,6 +39,20 @@ class OrderResponse {
         product: Product.fromJson(json["Product"]),
         user: User.fromJson(json["User"]),
       );
+
+  int basePrice;
+  int buyerId;
+  dynamic createdAt;
+  int id;
+  String imageProduct;
+  int price;
+  Product product;
+  int productId;
+  String productName;
+  String status;
+  DateTime transactionDate;
+  dynamic updatedAt;
+  User? user;
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -84,16 +84,6 @@ class Product {
     required this.user,
   });
 
-  String name;
-  String description;
-  int basePrice;
-  String imageUrl;
-  String imageName;
-  String location;
-  int userId;
-  String status;
-  User? user;
-
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         name: json["name"],
         description: json["description"],
@@ -105,6 +95,16 @@ class Product {
         status: json["status"],
         user: User.fromJson(json["User"]),
       );
+
+  int basePrice;
+  String description;
+  String imageName;
+  String imageUrl;
+  String location;
+  String name;
+  String status;
+  User? user;
+  int userId;
 
   Map<String, dynamic> toJson() => {
         "name": name,
@@ -130,14 +130,6 @@ class User {
     required this.city,
   });
 
-  int? id;
-  String? fullName;
-  String? email;
-  String? phoneNumber;
-  String? address;
-  String? imageUrl;
-  String? city;
-
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         fullName: json["full_name"],
@@ -147,6 +139,14 @@ class User {
         imageUrl: json["image_url"],
         city: json["city"],
       );
+
+  String? address;
+  String? city;
+  String? email;
+  String? fullName;
+  int? id;
+  String? imageUrl;
+  String? phoneNumber;
 
   Map<String, dynamic> toJson() => {
         "id": id ?? "No user information given",

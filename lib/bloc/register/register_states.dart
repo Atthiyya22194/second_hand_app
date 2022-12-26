@@ -14,6 +14,7 @@ class RegisterLoadingState extends RegisterState {
 
 class RegisterSuccessState extends RegisterState {
   RegisterSuccessState(this.response);
+
   final String response;
 
   @override
@@ -22,6 +23,7 @@ class RegisterSuccessState extends RegisterState {
 
 class RegisterErrorState extends RegisterState {
   RegisterErrorState(this.error);
+
   final String error;
 
   @override

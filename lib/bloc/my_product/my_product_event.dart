@@ -8,7 +8,7 @@ abstract class MyProductPageEvent extends Equatable {
 class GetMyProduct extends MyProductPageEvent {}
 
 class GetOfferedProduct extends MyProductPageEvent {
-  final String status;
-
   GetOfferedProduct(this.status);
+
+  final String status;
 }

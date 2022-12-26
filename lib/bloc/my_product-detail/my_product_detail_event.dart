@@ -8,13 +8,13 @@ abstract class MyProductDetailEvent extends Equatable {
 }
 
 class GetMyProductDetail extends MyProductDetailEvent {
-  final String id;
-
   GetMyProductDetail({required this.id});
+
+  final String id;
 }
 
 class DeleteMyProduct extends MyProductDetailEvent {
-  final String id;
-
   DeleteMyProduct({required this.id});
+
+  final String id;
 }

@@ -6,15 +6,15 @@ abstract class ProductDetailPageEvent extends Equatable {
 }
 
 class GetData extends ProductDetailPageEvent {
-  final String id;
-
   GetData(this.id);
+
+  final String id;
 }
 
 class Order extends ProductDetailPageEvent {
-  final String productId;
-  final String bidPrice;
-
   Order(this.productId, this.bidPrice);
+
+  final String bidPrice;
+  final String productId;
 }
 

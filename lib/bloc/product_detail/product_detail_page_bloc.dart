@@ -7,12 +7,12 @@ import 'product_detail_page_states.dart';
 
 class ProductDetailBloc
     extends Bloc<ProductDetailPageEvent, ProductDetailPageState> {
-  final MarketRepository _repository;
-
   ProductDetailBloc(this._repository) : super(ProductDetailPageLoadingState()) {
     on<GetData>(_getData);
     on<Order>(_order);
   }
+
+  final MarketRepository _repository;
 
   Future<void> _getData(
       GetData event, Emitter<ProductDetailPageState> emit) async {

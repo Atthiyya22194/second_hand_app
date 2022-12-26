@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PoppinsText extends StatelessWidget {
-  final String? text;
-  final Color? color;
-  final double? fontSize;
-  final FontWeight? fontWeight;
-  final double? height;
   const PoppinsText(
       {super.key,
       required this.text,
@@ -14,6 +9,12 @@ class PoppinsText extends StatelessWidget {
       this.fontSize,
       this.fontWeight,
       this.height});
+
+  final Color? color;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  final double? height;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {

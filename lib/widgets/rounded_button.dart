@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'poppins_text.dart';
 
 class RoundedButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
   const RoundedButton({super.key, required this.text, required this.onPressed});
+
+  final VoidCallback onPressed;
+  final String text;
 
   @override
   Widget build(BuildContext context) {

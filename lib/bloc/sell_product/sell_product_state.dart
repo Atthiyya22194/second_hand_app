@@ -16,6 +16,7 @@ class SellProductLoadingState extends SellProductState {
 
 class SellProductSuccessState extends SellProductState {
   SellProductSuccessState(this.response);
+
   final String response;
 
   @override
@@ -24,6 +25,7 @@ class SellProductSuccessState extends SellProductState {
 
 class LoadImageState extends SellProductState {
   LoadImageState(this.image);
+
   final File image;
 
   @override
@@ -32,6 +34,7 @@ class LoadImageState extends SellProductState {
 
 class SellProductErrorState extends SellProductState {
   SellProductErrorState(this.error);
+
   final String error;
 
   @override

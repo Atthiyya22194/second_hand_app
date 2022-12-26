@@ -6,8 +6,8 @@ abstract class LoginEvent extends Equatable {
 }
 
 class Login extends LoginEvent {
+  Login(this.email, this.password);
+
   final String email;
   final String password;
-
-  Login(this.email, this.password);
 }

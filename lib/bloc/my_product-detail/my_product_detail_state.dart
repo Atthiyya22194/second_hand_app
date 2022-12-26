@@ -17,25 +17,28 @@ class MyProductDetailLoadingState extends MyProductDetailState {
 }
 
 class MyProductDetailLoadedState extends MyProductDetailState {
+  MyProductDetailLoadedState(this.response);
+
   final ProductDetailResponse response;
 
-  MyProductDetailLoadedState(this.response);
   @override
   List<Object?> get props => [response];
 }
 
 class DeleteProductSuccessState extends MyProductDetailState {
+  DeleteProductSuccessState(this.response);
+
   final String response;
 
-  DeleteProductSuccessState(this.response);
   @override
   List<Object?> get props => [response];
 }
 
 class MyProductDetailErrorState extends MyProductDetailState {
+  MyProductDetailErrorState(this.error);
+
   final String error;
 
-  MyProductDetailErrorState(this.error);
   @override
   List<Object?> get props => [error];
 }

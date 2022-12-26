@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'poppins_text.dart';
 
 class DropdownCategory extends StatelessWidget {
-  final String? value;
-  final List<DropdownMenuItem<String>> items;
-  final ValueChanged<String?>? onchanged;
   const DropdownCategory(
       {super.key, required this.value, required this.items, this.onchanged});
+
+  final List<DropdownMenuItem<String>> items;
+  final ValueChanged<String?>? onchanged;
+  final String? value;
 
   @override
   Widget build(BuildContext context) {

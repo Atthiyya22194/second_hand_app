@@ -6,12 +6,12 @@ import 'my_product_event.dart';
 import 'my_product_state.dart';
 
 class MyProductBloc extends Bloc<MyProductPageEvent, MyProductState> {
-  final MarketRepository _repository;
-
   MyProductBloc(this._repository) : super(MyProductInitState()) {
     on<GetMyProduct>(_getMyProducts);
     on<GetOfferedProduct>(_getOfferedProducts);
   }
+
+  final MarketRepository _repository;
 
   Future<void> _getMyProducts(
       GetMyProduct event, Emitter<MyProductState> emit) async {

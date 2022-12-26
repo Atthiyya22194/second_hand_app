@@ -16,6 +16,7 @@ class MyProductLoadingState extends MyProductState {
 
 class MyProductLoadedState extends MyProductState {
   MyProductLoadedState(this.products);
+
   final dynamic products;
 
   @override
@@ -24,7 +25,9 @@ class MyProductLoadedState extends MyProductState {
 
 class MyProductErrorState extends MyProductState {
   MyProductErrorState(this.error);
+
   final String error;
+
   @override
   List<Object?> get props => [error];
 }

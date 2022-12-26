@@ -8,10 +8,38 @@ import 'poppins_text.dart';
 import '../models/notification_response.dart';
 
 class NotificationCard extends StatelessWidget {
-  final NotificationResponse notification;
-
   const NotificationCard({Key? key, required this.notification})
       : super(key: key);
+
+  final NotificationResponse notification;
+
+  String _statusChecker(String status) {
+    if (status == "create") {
+      return 'Produk diupload';
+    } else if (status == "bid") {
+      return "Produk ditawar";
+    } else if (status == "accepted") {
+      return "Penawaran diterima";
+    } else if (status == "declined") {
+      return "Penawaran ditolak";
+    } else {
+      return "Something went wrong";
+    }
+  }
+
+  _navigation(String status) {
+    if (status == "create") {
+      return MyProductDetailPage(id: notification.productId.toString());
+    } else if (status == "bid") {
+      return OfferDetailPage(orderId: notification.orderId.toString());
+    } else if (status == "accepted") {
+      return ProductDetailpage(id: notification.productId.toString());
+    } else if (status == "declined") {
+      return ProductDetailpage(id: notification.productId.toString());
+    } else {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,33 +116,5 @@ class NotificationCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _statusChecker(String status) {
-    if (status == "create") {
-      return 'Produk diupload';
-    } else if (status == "bid") {
-      return "Produk ditawar";
-    } else if (status == "accepted") {
-      return "Penawaran diterima";
-    } else if (status == "declined") {
-      return "Penawaran ditolak";
-    } else {
-      return "Something went wrong";
-    }
-  }
-
-  _navigation(String status) {
-    if (status == "create") {
-      return MyProductDetailPage(id: notification.productId.toString());
-    } else if (status == "bid") {
-      return OfferDetailPage(orderId: notification.orderId.toString());
-    } else if (status == "accepted") {
-      return ProductDetailpage(id: notification.productId.toString());
-    } else if (status == "declined") {
-      return ProductDetailpage(id: notification.productId.toString());
-    } else {
-      return null;
-    }
   }
 }

@@ -13,8 +13,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final String? accessToken;
   const MyApp({Key? key, this.accessToken}) : super(key: key);
+
+  final String? accessToken;
 
   @override
   Widget build(BuildContext context) {

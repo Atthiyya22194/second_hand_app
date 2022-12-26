@@ -84,12 +84,12 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
 
   @override
   void dispose() {
@@ -100,6 +100,16 @@ class _RegisterFormState extends State<RegisterForm> {
     addressController.dispose();
     cityController.dispose();
     super.dispose();
+  }
+
+  _formValidation<bool>() {
+    if (emailController.text.isEmpty && passwordController.text.isEmpty) {
+      showSnackBar(context, 'Something went wrong...', 'Please fill all form',
+          ContentType.warning);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @override
@@ -185,16 +195,6 @@ class _RegisterFormState extends State<RegisterForm> {
         ],
       ),
     );
-  }
-
-  _formValidation<bool>() {
-    if (emailController.text.isEmpty && passwordController.text.isEmpty) {
-      showSnackBar(context, 'Something went wrong...', 'Please fill all form',
-          ContentType.warning);
-      return false;
-    } else {
-      return true;
-    }
   }
 }
 

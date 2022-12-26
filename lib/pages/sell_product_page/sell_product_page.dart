@@ -28,18 +28,14 @@ class SellProductPage extends StatelessWidget {
 
 class SellProductForm extends StatefulWidget {
   const SellProductForm({super.key});
+
   @override
   State<SellProductForm> createState() => _SellProductForm();
 }
 
 class _SellProductForm extends State<SellProductForm> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController descController = TextEditingController();
-  final TextEditingController priceController = TextEditingController();
-  final TextEditingController locationController = TextEditingController();
-
   String? categoryId = "1";
-  String? selectedCategory;
+  final TextEditingController descController = TextEditingController();
   var list = [
     'Elektronik',
     'Komputer dan Aksesoris',
@@ -67,6 +63,11 @@ class _SellProductForm extends State<SellProductForm> {
     'Fotografi'
   ];
 
+  final TextEditingController locationController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  String? selectedCategory;
+
   @override
   void dispose() {
     nameController.dispose();
@@ -74,6 +75,19 @@ class _SellProductForm extends State<SellProductForm> {
     priceController.dispose();
     locationController.dispose();
     super.dispose();
+  }
+
+  _formValidation<bool>() {
+    if (nameController.text.isEmpty &&
+        descController.text.isEmpty &&
+        priceController.text.isEmpty &&
+        locationController.text.isEmpty) {
+      showSnackBar(context, 'Something went wrong...', 'Please fill all form',
+          ContentType.warning);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @override
@@ -201,18 +215,5 @@ class _SellProductForm extends State<SellProductForm> {
         ),
       ),
     );
-  }
-
-  _formValidation<bool>() {
-    if (nameController.text.isEmpty &&
-        descController.text.isEmpty &&
-        priceController.text.isEmpty &&
-        locationController.text.isEmpty) {
-      showSnackBar(context, 'Something went wrong...', 'Please fill all form',
-          ContentType.warning);
-      return false;
-    } else {
-      return true;
-    }
   }
 }

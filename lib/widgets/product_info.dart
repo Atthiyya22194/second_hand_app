@@ -4,8 +4,9 @@ import '../models/order_response.dart';
 import 'image_loader.dart';
 
 class ProductInfo extends StatelessWidget {
-  final OrderResponse order;
   const ProductInfo({super.key, required this.order});
+
+  final OrderResponse order;
 
   @override
   Widget build(BuildContext context) {
