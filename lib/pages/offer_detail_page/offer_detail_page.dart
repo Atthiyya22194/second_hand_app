@@ -81,7 +81,7 @@ class Content extends StatelessWidget {
     double baseWidth = 360;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     final String message =
-        'Halo ${order.user?.fullName}, saya ${order.product.user?.fullName} penjual dari Second Hand App tertarik dengan harga yang ditawarkan atas barang ${order.productName}';
+        'Hi! ${order.user?.fullName}, I\'s ${order.product.user?.fullName} seller from Second Hand App interest with your bid price from ${order.productName}, would you mind to continue this transaction?';
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [

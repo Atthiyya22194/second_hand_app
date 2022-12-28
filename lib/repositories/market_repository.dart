@@ -105,12 +105,12 @@ class MarketRepository {
     request.fields['category_ids'] = category;
     request.fields['location'] = location;
 
-    final response = await request.send();
+    final response = await http.Response.fromStream(await request.send());
 
     if (response.statusCode == 201) {
-      return 'Successfuly upload';
+      return response.body;
     } else {
-      throw Exception(response.stream.bytesToString());
+      throw Exception(response.body);
     }
   }
 
@@ -267,34 +267,23 @@ class MarketRepository {
     request.fields['category_ids'] = category;
     request.fields['location'] = location;
 
-    final response = await request.send();
-
-    if (response.statusCode == 200) {
-      return 'Successfully Updated';
-    } else {
-      throw Exception(response.stream.bytesToString());
+    try {
+      final response = await request.send();
+      return response.reasonPhrase.toString();
+    } catch (e) {
+      print(e);
+      throw Exception(e);
     }
   }
 
   Future<bool> launchWhatsApp(
       {required String phoneNumber, required String message}) async {
-    String url() {
-      if (Platform.isAndroid) {
-        // add the [https]
-        return "https://wa.me/$phoneNumber/?text=${Uri.parse(message)}"; // new line
-      } else {
-        // add the [https]
-        return "https://api.whatsapp.com/send?phone=$phoneNumber=${Uri.parse(message)}"; // new line
-      }
-    }
-
-    // final url =
-    //     Uri.parse("https://wa.me/$phoneNumber/?text=${Uri.parse(message)}");
-    print(url());
-    if (await canLaunchUrl(Uri.parse(url()))) {
-      return await launchUrl(Uri.parse(url()));
-    } else {
-      throw Exception('Cannot launch WhatsApp');
+    var whatsappUrl = "whatsapp://send?phone=$phoneNumber" +
+        "&text=${Uri.encodeComponent(message)}";
+    try {
+      return await launchUrl(Uri.parse(whatsappUrl));
+    } catch (e) {
+      throw Exception(e);
     }
   }
 }
