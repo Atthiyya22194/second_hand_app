@@ -129,7 +129,7 @@ class ProductInfo extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            PoppinsText(text: 'Rp. ${product.basePrice}'),
+            PoppinsText(text: 'Tl. ${product.basePrice}'),
           ],
         ),
       ),
@@ -252,7 +252,7 @@ class _BidFormState extends State<BidForm> {
       child: Column(
         children: [
           RoundedTextField(
-            hint: 'Rp. 10.000',
+            hint: 'Tl. 10.000',
             title: 'Bid Price',
             controller: bidController,
           ),

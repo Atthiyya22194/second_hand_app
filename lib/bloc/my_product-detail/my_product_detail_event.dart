@@ -12,9 +12,3 @@ class GetMyProductDetail extends MyProductDetailEvent {
 
   final String id;
 }
-
-class DeleteMyProduct extends MyProductDetailEvent {
-  DeleteMyProduct({required this.id});
-
-  final String id;
-}

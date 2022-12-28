@@ -1,6 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:second_hand_app/common/common.dart';
 
 import '../../bloc/home_page/home_page_bloc.dart';
 import '../../bloc/home_page/home_page_events.dart';
@@ -144,13 +145,13 @@ class BannerItem1 extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
         PoppinsText(
-          text: 'Bulan Ramadhan Banyak Diskonnya!',
+          text: 'Get your product',
           fontSize: 18,
           fontWeight: FontWeight.w700,
           height: 1.5,
         ),
         PoppinsText(
-          text: 'Diskon hingga',
+          text: 'Discount up to',
           fontSize: 10,
           fontWeight: FontWeight.w400,
         ),
@@ -174,33 +175,6 @@ class CategoryList extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     double ffem = fem * 0.97;
 
-    var list = [
-      'Elektronik',
-      'Komputer dan Aksesoris',
-      'Handphone dan Aksesoris',
-      'Pakaian Pria',
-      'Sepatu Pria',
-      'Tas Pria',
-      'Aksesoris Fashion',
-      'Kesehatan',
-      'Hobi dan Koleksi',
-      'Makanan dan Minuman',
-      'Perawatan dan Kecantikan',
-      'Perlengkapan Rumah',
-      'Pakaian Wanita',
-      'Fashion Muslim',
-      'Fashion bayi dan Anak',
-      'Ibu dan Bayi',
-      'Sepatu Wanita',
-      'Tas Wanita',
-      'Otomotif',
-      'Olahraga dan Outdoor',
-      'Buku dan Alat Tulis',
-      'Voucher',
-      'Souvenir dan Pesta',
-      'Fotografi'
-    ];
-
     return Container(
       padding: EdgeInsets.fromLTRB(16 * fem, 0 * fem, 16 * fem, 0 * fem),
       width: double.infinity,
@@ -208,15 +182,15 @@ class CategoryList extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        itemCount: list.length,
+        itemCount: categoryItems().length,
         itemBuilder: (_, index) {
-          final category = list[index];
+          final category = categoryItems()[index];
           return Container(
             margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 4 * fem, 8 * fem),
             child: RoundedButton(
               text: category,
               onPressed: () {
-                final categoryId = list.indexOf(category) + 1;
+                final categoryId = categoryItems().indexOf(category) + 1;
 
                 BlocProvider.of<HomePageBloc>(context).add(
                   GetProducts(

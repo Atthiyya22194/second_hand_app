@@ -54,7 +54,7 @@ class ProductCard extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 4 * fem),
                       child: PoppinsText(
-                        text: "Rp. ${product.basePrice}",
+                        text: "Tl. ${product.basePrice}",
                       ),
                     ),
                   ],

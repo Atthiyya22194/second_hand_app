@@ -12,11 +12,11 @@ class OrderCard extends StatelessWidget {
 
   String _statusChecker(String status) {
     if (status == "pending") {
-      return 'Produk ditawar';
+      return 'Product Offered';
     } else if (status == "accepted") {
-      return "Penawaran diterima";
+      return "Offer Accepted";
     } else if (status == "declined") {
-      return "Penawaran ditolak";
+      return "Offer Declined";
     } else {
       return "Something went wrong";
     }
@@ -74,14 +74,14 @@ class OrderCard extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 4 * fem),
                       child: PoppinsText(
-                        text: "Rp. ${order.basePrice}",
+                        text: "Tl. ${order.basePrice}",
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 8 * fem),
                       child: PoppinsText(
-                        text: "Ditawar ${order.price}",
+                        text: "Offered Tl. ${order.price}",
                       ),
                     )
                   ],

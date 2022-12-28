@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:second_hand_app/widgets/bottom_nav_bar.dart';
 import '../home_page/home_page.dart';
 import '../../widgets/rounded_button.dart';
 
@@ -103,21 +104,21 @@ class Content extends StatelessWidget {
                   width: double.infinity,
                   padding: EdgeInsets.fromLTRB(8 * fem, 0, 0, 0),
                   child: RoundedButton(
-                      text: 'Contact Buyer',
-                      onPressed: () {
-                        if (order.user!.phoneNumber!.isNotEmpty) {
-                          BlocProvider.of<OfferDetailBloc>(context).add(
-                            OpenWhatsApp(
-                                "62${order.user?.phoneNumber}", message),
-                          );
-                        } else {
-                          showSnackBar(
-                              context,
-                              "Something went wrong...",
-                              "buyer doesn't have phone number",
-                              ContentType.warning);
-                        }
-                      }),
+                    text: 'Contact Buyer',
+                    onPressed: () {
+                      if (order.user!.phoneNumber!.isNotEmpty) {
+                        BlocProvider.of<OfferDetailBloc>(context).add(
+                          OpenWhatsApp("62${order.user?.phoneNumber}", message),
+                        );
+                      } else {
+                        showSnackBar(
+                            context,
+                            "Something went wrong...",
+                            "buyer doesn't have phone number",
+                            ContentType.warning);
+                      }
+                    },
+                  ),
                 ),
               ),
               Expanded(
@@ -129,7 +130,7 @@ class Content extends StatelessWidget {
                     onPressed: () => Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HomePage(),
+                        builder: (context) => const BottomNavBar(),
                       ),
                     ),
                   ),
@@ -270,7 +271,7 @@ class ProductInfo extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               const PoppinsText(
-                text: 'Penawaran produk',
+                text: 'Offered Product',
                 fontSize: 13,
                 color: Color(0xff8a8a8a),
               ),
@@ -284,14 +285,14 @@ class ProductInfo extends StatelessWidget {
               Container(
                 padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
                 child: PoppinsText(
-                  text: "Rp. ${order.basePrice}",
+                  text: "Tl. ${order.basePrice}",
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
                 child: PoppinsText(
-                  text: "Ditawar. ${order.price}",
+                  text: "Offered Tl. ${order.price}",
                   fontWeight: FontWeight.w500,
                 ),
               ),

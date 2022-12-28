@@ -235,17 +235,44 @@ class MarketRepository {
     }
   }
 
-  Future<String> deleteMyProduct(
-      {required String accessToken, required String productId}) async {
-    final header = {'access_token': accessToken};
-    final response = await http.delete(
-        Uri.parse('${baseUrl()}seller/product/$productId'),
-        headers: header);
+  Future<String> editProduct(
+      {required String accessToken,
+      required String productId,
+      required String productname,
+      required String description,
+      required String basePrice,
+      required String category,
+      required String location,
+      required File? image}) async {
+    final request = http.MultipartRequest(
+        'PUT', Uri.parse('${baseUrl()}seller/product/$productId'));
+
+    if (image == null) {
+      request.fields['images'];
+    } else {
+      var stream = http.ByteStream(image.openRead());
+      stream.cast();
+      var length = await image.length();
+
+      var multipartFile = http.MultipartFile('image', stream, length,
+          filename: path.basename(image.path),
+          contentType: MediaType('image', 'png'));
+
+      request.files.add(multipartFile);
+    }
+    request.headers['access_token'] = accessToken;
+    request.fields['name'] = productname;
+    request.fields['description'] = description;
+    request.fields['base_price'] = basePrice;
+    request.fields['category_ids'] = category;
+    request.fields['location'] = location;
+
+    final response = await request.send();
 
     if (response.statusCode == 200) {
-      return 'Product Deleted';
+      return 'Successfully Updated';
     } else {
-      throw Exception(response.reasonPhrase);
+      throw Exception(response.stream.bytesToString());
     }
   }
 

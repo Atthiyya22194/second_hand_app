@@ -3,37 +3,51 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/sell_product/sell_product_bloc.dart';
-import '../../bloc/sell_product/sell_product_event.dart';
-import '../../bloc/sell_product/sell_product_state.dart';
+import '../../bloc/edit_product/edit_product_bloc.dart';
+import '../../bloc/edit_product/edit_product_event.dart';
+import '../../bloc/edit_product/edit_product_state.dart';
 import '../../common/common.dart';
 import '../../repositories/market_repository.dart';
 import '../../widgets/dropdown_category.dart';
+import '../../widgets/poppins_text.dart';
 import '../../widgets/rounded_button.dart';
 import '../../widgets/rounded_text_field.dart';
 import '../../widgets/show_loading.dart';
 import '../../widgets/show_snack_bar.dart';
 
-class SellProductPage extends StatelessWidget {
-  const SellProductPage({super.key});
+class EditProductPage extends StatelessWidget {
+  final String productId;
+  const EditProductPage({super.key, required this.productId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SellProductBloc>(
-      create: (context) => SellProductBloc(MarketRepository()),
-      child: const Scaffold(body: SellProductForm()),
+    return BlocProvider<EditProductBloc>(
+      create: (context) => EditProductBloc(MarketRepository()),
+      child: Scaffold(
+          appBar: AppBar(
+            title: const PoppinsText(
+              text: 'My Product',
+              fontWeight: FontWeight.w700,
+              fontSize: 20,
+              height: 1.5,
+            ),
+          ),
+          body: EditProductForm(
+            productId: productId,
+          )),
     );
   }
 }
 
-class SellProductForm extends StatefulWidget {
-  const SellProductForm({super.key});
+class EditProductForm extends StatefulWidget {
+  final String productId;
+  const EditProductForm({super.key, required this.productId});
 
   @override
-  State<SellProductForm> createState() => _SellProductForm();
+  State<EditProductForm> createState() => _EditProductForm();
 }
 
-class _SellProductForm extends State<SellProductForm> {
+class _EditProductForm extends State<EditProductForm> {
   String? categoryId = "1";
   final TextEditingController descController = TextEditingController();
 
@@ -49,19 +63,6 @@ class _SellProductForm extends State<SellProductForm> {
     priceController.dispose();
     locationController.dispose();
     super.dispose();
-  }
-
-  _formValidation<bool>() {
-    if (nameController.text.isEmpty &&
-        descController.text.isEmpty &&
-        priceController.text.isEmpty &&
-        locationController.text.isEmpty) {
-      showSnackBar(context, 'Something went wrong...', 'Please fill all form',
-          ContentType.warning);
-      return false;
-    } else {
-      return true;
-    }
   }
 
   @override
@@ -109,14 +110,14 @@ class _SellProductForm extends State<SellProductForm> {
               title: 'Product description',
               controller: descController,
             ),
-            BlocConsumer<SellProductBloc, SellProductState>(
+            BlocConsumer<EditProductBloc, EditProductState>(
               builder: (context, state) {
                 if (state is LoadImageState) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GestureDetector(
-                        onTap: () => BlocProvider.of<SellProductBloc>(context)
+                        onTap: () => BlocProvider.of<EditProductBloc>(context)
                             .add(GetImage()),
                         child: SizedBox(
                             width: 120 * fem,
@@ -125,31 +126,31 @@ class _SellProductForm extends State<SellProductForm> {
                       ),
                       RoundedButton(
                         onPressed: () {
-                          if (_formValidation() == true) {
-                            BlocProvider.of<SellProductBloc>(context).add(
-                              UploadProduct(
-                                  productName: nameController.text,
-                                  description: descController.text,
-                                  basePrice: priceController.text,
-                                  category: categoryId!,
-                                  location: locationController.text,
-                                  image: state.image),
-                            );
-                          }
+                          BlocProvider.of<EditProductBloc>(context).add(
+                            EditProduct(
+                              productId: widget.productId,
+                              productName: nameController.text,
+                              description: descController.text,
+                              basePrice: priceController.text,
+                              category: categoryId!,
+                              location: locationController.text,
+                              image: state.image,
+                            ),
+                          );
                         },
                         text: 'Upload',
                       ),
                     ],
                   );
                 }
-                if (state is SellProductLoadingState) {
+                if (state is EditProductLoadingState) {
                   return const ShowLoading();
                 }
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: () => BlocProvider.of<SellProductBloc>(context)
+                      onTap: () => BlocProvider.of<EditProductBloc>(context)
                           .add(GetImage()),
                       child: Container(
                         decoration: BoxDecoration(
@@ -165,9 +166,19 @@ class _SellProductForm extends State<SellProductForm> {
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0),
                       child: RoundedButton(
-                        text: 'Upload',
+                        text: 'Edit Product',
                         onPressed: () {
-                          _formValidation();
+                          BlocProvider.of<EditProductBloc>(context).add(
+                            EditProduct(
+                              productId: widget.productId,
+                              productName: nameController.text,
+                              description: descController.text,
+                              basePrice: priceController.text,
+                              category: categoryId!,
+                              location: locationController.text,
+                              image: null,
+                            ),
+                          );
                         },
                       ),
                     )
@@ -175,11 +186,11 @@ class _SellProductForm extends State<SellProductForm> {
                 );
               },
               listener: (context, state) {
-                if (state is SellProductSuccessState) {
+                if (state is EditProductSuccessState) {
                   showSnackBar(
                       context, 'Success!', state.response, ContentType.success);
                 }
-                if (state is SellProductErrorState) {
+                if (state is EditProductErrorState) {
                   showSnackBar(
                       context, 'Failed', state.error, ContentType.failure);
                 }

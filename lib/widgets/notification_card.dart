@@ -15,13 +15,13 @@ class NotificationCard extends StatelessWidget {
 
   String _statusChecker(String status) {
     if (status == "create") {
-      return 'Produk diupload';
+      return 'Product Uploaded';
     } else if (status == "bid") {
-      return "Produk ditawar";
+      return "Offered Product";
     } else if (status == "accepted") {
-      return "Penawaran diterima";
+      return "Offer Accepted";
     } else if (status == "declined") {
-      return "Penawaran ditolak";
+      return "Offer Declined";
     } else {
       return "Something went wrong";
     }
@@ -47,13 +47,16 @@ class NotificationCard extends StatelessWidget {
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return GestureDetector(
       onTap: () => Navigator.of(context, rootNavigator: true).push(
-        MaterialPageRoute(builder: (context) {
-          return _navigation(notification.status);
-        }),
+        MaterialPageRoute(
+          builder: (context) {
+            return _navigation(notification.status);
+          },
+        ),
       ),
       child: Container(
         margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 8 * fem),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,13 +77,14 @@ class NotificationCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                        margin: EdgeInsets.fromLTRB(
-                            0 * fem, 0 * fem, 0 * fem, 4 * fem),
-                        child: PoppinsText(
-                          text: _statusChecker(notification.status),
-                          color: const Color(0xff8a8a8a),
-                          fontSize: 13,
-                        )),
+                      margin: EdgeInsets.fromLTRB(
+                          0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                      child: PoppinsText(
+                        text: _statusChecker(notification.status),
+                        color: const Color(0xff8a8a8a),
+                        fontSize: 13,
+                      ),
+                    ),
                     Container(
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 4 * fem),
@@ -92,7 +96,7 @@ class NotificationCard extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 4 * fem),
                       child: PoppinsText(
-                        text: "Rp. ${notification.basePrice}",
+                        text: "Tl. ${notification.basePrice}",
                       ),
                     ),
                     Container(
@@ -101,12 +105,23 @@ class NotificationCard extends StatelessWidget {
                       child: (notification.orderId == null)
                           ? Container()
                           : PoppinsText(
-                              text: "Ditawar ${notification.bidPrice}",
+                              text: "Offered Tl. ${notification.bidPrice}",
                             ),
                     )
                   ],
                 )
               ],
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 8 * fem),
+              child: (notification.notificationType == "buyer" &&
+                      notification.status == "accepted")
+                  ? const PoppinsText(
+                      text: "Seller will contact you soon",
+                      color: Color(0xff8a8a8a),
+                      fontSize: 13,
+                    )
+                  : Container(),
             ),
             Divider(
               color: const Color(0xffe5e5e5),

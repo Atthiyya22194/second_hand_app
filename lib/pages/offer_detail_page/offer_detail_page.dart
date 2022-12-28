@@ -180,7 +180,7 @@ class ProductInfo extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               const PoppinsText(
-                text: 'Penawaran produk',
+                text: 'Offered Product',
                 fontSize: 13,
                 color: Color(0xff8a8a8a),
               ),
@@ -194,14 +194,14 @@ class ProductInfo extends StatelessWidget {
               Container(
                 padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
                 child: PoppinsText(
-                  text: "Rp. ${order.basePrice}",
+                  text: "Tl. ${order.basePrice}",
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
                 child: PoppinsText(
-                  text: "Ditawar. ${order.price}",
+                  text: "Offered Tl. ${order.price}",
                   fontWeight: FontWeight.w500,
                 ),
               ),

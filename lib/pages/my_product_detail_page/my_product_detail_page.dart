@@ -1,6 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:second_hand_app/pages/edit_product_page/edit_product_page.dart';
 import '../../bloc/my_product-detail/my_product_detail_bloc.dart';
 import '../../bloc/my_product-detail/my_product_detail_event.dart';
 import '../../widgets/poppins_text.dart';
@@ -94,7 +95,7 @@ class Content extends StatelessWidget {
           ProductInfo(product: product),
           SellertInfo(product: product),
           ProductDescription(product: product),
-          const EditProductButton()
+          EditProductButton(productId: product.id.toString())
         ],
       ),
     );
@@ -125,16 +126,7 @@ class ProductInfo extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            Container(
-              padding:
-                  EdgeInsets.fromLTRB(0 * ffem, 0 * ffem, 0 * ffem, 4 * ffem),
-              child: PoppinsText(
-                text: product.categories[0].name,
-                fontSize: 13,
-                color: const Color(0xff8a8a8a),
-              ),
-            ),
-            PoppinsText(text: 'Rp. ${product.basePrice}'),
+            PoppinsText(text: 'Tl. ${product.basePrice}'),
           ],
         ),
       ),
@@ -233,8 +225,10 @@ class ProductDescription extends StatelessWidget {
 }
 
 class EditProductButton extends StatelessWidget {
+  final String productId;
   const EditProductButton({
     Key? key,
+    required this.productId,
   }) : super(key: key);
 
   @override
@@ -244,7 +238,17 @@ class EditProductButton extends StatelessWidget {
     return Container(
       margin: EdgeInsets.fromLTRB(24 * fem, 0 * fem, 24 * fem, 0 * fem),
       width: double.infinity,
-      child: RoundedButton(onPressed: () {}, text: 'Edit Product'),
+      child: RoundedButton(
+          onPressed: () {
+            print(productId);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditProductPage(productId: productId),
+              ),
+            );
+          },
+          text: 'Edit Product'),
     );
   }
 }
