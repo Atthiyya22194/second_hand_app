@@ -108,7 +108,7 @@ class Content extends StatelessWidget {
                     onPressed: () {
                       if (order.user!.phoneNumber!.isNotEmpty) {
                         BlocProvider.of<OfferDetailBloc>(context).add(
-                          OpenWhatsApp("62${order.user?.phoneNumber}", message),
+                          OpenWhatsApp("${order.user?.phoneNumber}", message),
                         );
                       } else {
                         showSnackBar(

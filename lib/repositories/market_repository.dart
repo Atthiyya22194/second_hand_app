@@ -278,11 +278,21 @@ class MarketRepository {
 
   Future<bool> launchWhatsApp(
       {required String phoneNumber, required String message}) async {
-    final androidUrl =
-        Uri.parse("https://wa.me/$phoneNumber/?text=${Uri.parse(message)}");
+    String url() {
+      if (Platform.isAndroid) {
+        // add the [https]
+        return "https://wa.me/$phoneNumber/?text=${Uri.parse(message)}"; // new line
+      } else {
+        // add the [https]
+        return "https://api.whatsapp.com/send?phone=$phoneNumber=${Uri.parse(message)}"; // new line
+      }
+    }
 
-    if (await canLaunchUrl(androidUrl)) {
-      return await launchUrl(androidUrl);
+    // final url =
+    //     Uri.parse("https://wa.me/$phoneNumber/?text=${Uri.parse(message)}");
+    print(url());
+    if (await canLaunchUrl(Uri.parse(url()))) {
+      return await launchUrl(Uri.parse(url()));
     } else {
       throw Exception('Cannot launch WhatsApp');
     }

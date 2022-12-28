@@ -34,7 +34,7 @@ class ActionButton extends StatelessWidget {
               onPressed: () {
                 if (phoneNumber!.isNotEmpty) {
                   BlocProvider.of<OfferDetailBloc>(context).add(
-                    OpenWhatsApp("62$phoneNumber", message ?? "null"),
+                    OpenWhatsApp("$phoneNumber", message ?? "null"),
                   );
                 } else {
                   showSnackBar(context, "Something went wrong...",
@@ -46,7 +46,9 @@ class ActionButton extends StatelessWidget {
           const PoppinsText(text: 'Offer Declined')
         ] else if (status == 'pending') ...[
           Expanded(
-            child: Container(width: double.infinity, padding: EdgeInsets.fromLTRB(0, 0, 8*fem, 0),
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.fromLTRB(0, 0, 8 * fem, 0),
               child: RoundedButton(
                   onPressed: () {
                     BlocProvider.of<OfferDetailBloc>(context).add(
@@ -57,7 +59,9 @@ class ActionButton extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Container(width: double.infinity, padding: EdgeInsets.fromLTRB(0, 0, 8*fem, 0),
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.fromLTRB(0, 0, 8 * fem, 0),
               child: RoundedButton(
                   onPressed: () {
                     BlocProvider.of<OfferDetailBloc>(context).add(
