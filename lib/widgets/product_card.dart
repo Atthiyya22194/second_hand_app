@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'poppins_text.dart';
 
 import '../models/product_response.dart';
 import 'image_loader.dart';
+import 'poppins_text.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({Key? key, required this.product, required this.route})
@@ -54,7 +54,7 @@ class ProductCard extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 4 * fem),
                       child: PoppinsText(
-                        text: "Tl. ${product.basePrice}",
+                        text: "TL. ${product.basePrice}",
                       ),
                     ),
                   ],

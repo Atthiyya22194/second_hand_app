@@ -82,7 +82,7 @@ class _EditProductForm extends State<EditProductForm> {
               controller: nameController,
             ),
             RoundedTextField(
-              hint: 'Tl. 10.000',
+              hint: 'TL. 10.000',
               title: 'Product price',
               controller: priceController,
             ),
@@ -101,7 +101,7 @@ class _EditProductForm extends State<EditProductForm> {
               },
             ),
             RoundedTextField(
-              hint: 'Jakarta',
+              hint: 'Konya',
               title: 'Your location',
               controller: locationController,
             ),

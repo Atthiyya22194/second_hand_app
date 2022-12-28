@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../pages/offer_detail_page/offer_detail_page.dart';
-import '../pages/product_detail/product_detail_page.dart';
-import '../pages/my_product_detail_page/my_product_detail_page.dart';
-import 'image_loader.dart';
-import 'poppins_text.dart';
 
 import '../models/notification_response.dart';
+import '../pages/my_product_detail_page/my_product_detail_page.dart';
+import '../pages/offer_detail_page/offer_detail_page.dart';
+import '../pages/product_detail/product_detail_page.dart';
+import 'image_loader.dart';
+import 'poppins_text.dart';
 
 class NotificationCard extends StatelessWidget {
   const NotificationCard({Key? key, required this.notification})
@@ -96,7 +96,7 @@ class NotificationCard extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 4 * fem),
                       child: PoppinsText(
-                        text: "Tl. ${notification.basePrice}",
+                        text: "TL. ${notification.basePrice}",
                       ),
                     ),
                     Container(
@@ -105,7 +105,7 @@ class NotificationCard extends StatelessWidget {
                       child: (notification.orderId == null)
                           ? Container()
                           : PoppinsText(
-                              text: "Offered Tl. ${notification.bidPrice}",
+                              text: "Offered TL. ${notification.bidPrice}",
                             ),
                     )
                   ],

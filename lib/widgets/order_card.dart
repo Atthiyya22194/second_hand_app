@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'poppins_text.dart';
+
 import '../models/order_response.dart';
 import 'image_loader.dart';
+import 'poppins_text.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({Key? key, required this.order, required this.route})
@@ -74,14 +75,14 @@ class OrderCard extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 4 * fem),
                       child: PoppinsText(
-                        text: "Tl. ${order.basePrice}",
+                        text: "TL. ${order.basePrice}",
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(
                           0 * fem, 0 * fem, 0 * fem, 8 * fem),
                       child: PoppinsText(
-                        text: "Offered Tl. ${order.price}",
+                        text: "Offered TL. ${order.price}",
                       ),
                     )
                   ],

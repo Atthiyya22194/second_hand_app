@@ -2,7 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/widgets/bottom_nav_bar.dart';
+import '../../widgets/bottom_nav_bar.dart';
 import '../home_page/home_page.dart';
 import '../../widgets/rounded_button.dart';
 
@@ -285,14 +285,14 @@ class ProductInfo extends StatelessWidget {
               Container(
                 padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
                 child: PoppinsText(
-                  text: "Tl. ${order.basePrice}",
+                  text: "TL. ${order.basePrice}",
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
                 child: PoppinsText(
-                  text: "Offered Tl. ${order.price}",
+                  text: "Offered TL. ${order.price}",
                   fontWeight: FontWeight.w500,
                 ),
               ),

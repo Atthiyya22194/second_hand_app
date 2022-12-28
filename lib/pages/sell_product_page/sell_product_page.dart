@@ -81,7 +81,7 @@ class _SellProductForm extends State<SellProductForm> {
               controller: nameController,
             ),
             RoundedTextField(
-              hint: 'Tl. 10.000',
+              hint: 'TL. 10.000',
               title: 'Product price',
               controller: priceController,
             ),
@@ -100,7 +100,7 @@ class _SellProductForm extends State<SellProductForm> {
               },
             ),
             RoundedTextField(
-              hint: 'Jakarta',
+              hint: 'Konya',
               title: 'Your location',
               controller: locationController,
             ),

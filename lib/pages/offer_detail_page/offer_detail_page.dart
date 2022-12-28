@@ -194,14 +194,14 @@ class ProductInfo extends StatelessWidget {
               Container(
                 padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
                 child: PoppinsText(
-                  text: "Tl. ${order.basePrice}",
+                  text: "TL. ${order.basePrice}",
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(0, 4 * fem, 0, 0),
                 child: PoppinsText(
-                  text: "Offered Tl. ${order.price}",
+                  text: "Offered TL. ${order.price}",
                   fontWeight: FontWeight.w500,
                 ),
               ),

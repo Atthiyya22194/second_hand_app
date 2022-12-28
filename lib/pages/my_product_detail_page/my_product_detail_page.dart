@@ -1,7 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_app/pages/edit_product_page/edit_product_page.dart';
+import '../edit_product_page/edit_product_page.dart';
 import '../../bloc/my_product-detail/my_product_detail_bloc.dart';
 import '../../bloc/my_product-detail/my_product_detail_event.dart';
 import '../../widgets/poppins_text.dart';
@@ -126,7 +126,7 @@ class ProductInfo extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            PoppinsText(text: 'Tl. ${product.basePrice}'),
+            PoppinsText(text: 'TL. ${product.basePrice}'),
           ],
         ),
       ),

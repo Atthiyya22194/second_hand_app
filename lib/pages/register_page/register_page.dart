@@ -169,7 +169,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           RoundedTextField(
             hint: 'Your City',
-            title: 'Kota',
+            title: 'City',
             controller: cityController,
           ),
           SizedBox(
